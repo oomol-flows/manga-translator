@@ -1,0 +1,60 @@
+nodes:
+  - task: self::translate-manga
+    title: "Translate Manga #1"
+    node_id: translate-manga#1
+    inputs_from:
+      - handle: sourceDir
+        value: /oomol-driver/oomol-storage/manga
+        from_node:
+          - node_id: pdf2images#1
+            output_handle: image_dir
+      - handle: outputDir
+        value: /oomol-driver/oomol-storage/output
+      - handle: outputLanguage
+        value: CHT
+    icon: ":twemoji:globe-with-meridians:"
+  - task: pdf::pdf2images
+    title: "pdf2images #1"
+    node_id: pdf2images#1
+    inputs_from:
+      - handle: pdf_path
+        value: /oomol-driver/oomol-storage/1.pdf
+      - handle: image_dir
+        value: /oomol-driver/oomol-storage/images
+  - task: pdf::images2pdf
+    title: "Merge into PDF file #1"
+    node_id: images2pdf#1
+    inputs_from:
+      - handle: image_paths
+        value:
+          []
+        from_node:
+          - node_id: dir-to-path-list#1
+            output_handle: path_array
+      - handle: pdf_file_path
+        value:
+      - handle: title
+        value:
+      - handle: author
+        value:
+  - task: read-file::dir-to-path-list
+    title: "Dir To Path List #1"
+    node_id: dir-to-path-list#1
+    inputs_from:
+      - handle: dir
+        value: /oomol-driver/oomol-storage/images
+        from_node:
+          - node_id: translate-manga#1
+            output_handle: outputDir
+      - handle: sort
+        value: true
+  - task: read-file::copy-file
+    title: "Copy File  #1"
+    node_id: copy-file#1
+    inputs_from:
+      - handle: source_file
+        from_node:
+          - node_id: images2pdf#1
+            output_handle: pdf_file_path
+      - handle: destination_dir
+        value: /oomol-driver/oomol-storage/output

@@ -1,0 +1,40 @@
+executor:
+  name: python
+  options:
+    entry: __init__.py
+inputs_def:
+  - handle: sourceDir
+    json_schema:
+      type: string
+      ui:widget: dir
+    nullable: false
+  - handle: outputDir
+    json_schema:
+      type: string
+      ui:widget: dir
+  - handle: outputLanguage
+    json_schema:
+      enum:
+        - CHS
+        - CHT
+        - ENG
+        - JPN
+        - KOR
+        - FRA
+        - DEU
+        - RUS
+      ui:options:
+        labels:
+          - Simplified Chinese
+          - Traditional Chinese
+          - English
+          - Japanese
+          - Korean
+          - French
+          - German
+          - Russian
+outputs_def:
+  - handle: outputDir
+    json_schema:
+      type: string
+title: Translate Manga

@@ -1,0 +1,49 @@
+{
+  "nodes": {
+    "translate-manga#1": {
+      "contentWidth": 474.453125,
+      "rfNode": {
+        "position": {
+          "x": 463,
+          "y": 171
+        }
+      }
+    },
+    "pdf2images#1": {
+      "contentWidth": 450,
+      "rfNode": {
+        "position": {
+          "x": -41.111726897773224,
+          "y": 171
+        }
+      }
+    },
+    "images2pdf#1": {
+      "contentWidth": 610.1898321641047,
+      "rfNode": {
+        "position": {
+          "x": 1495.4406937552444,
+          "y": 176.51260219726652
+        }
+      }
+    },
+    "dir-to-path-list#1": {
+      "contentWidth": 450,
+      "rfNode": {
+        "position": {
+          "x": 991.2424744190441,
+          "y": 176.51260219726652
+        }
+      }
+    },
+    "copy-file#1": {
+      "contentWidth": 450,
+      "rfNode": {
+        "position": {
+          "x": 2163.7458152608815,
+          "y": 176.51260219726652
+        }
+      }
+    }
+  }
+}
