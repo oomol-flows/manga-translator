@@ -11,16 +11,22 @@ nodes:
       - handle: outputDir
         value: /oomol-driver/oomol-storage/output
       - handle: outputLanguage
-        value: CHT
+        value: CHS
     icon: ":twemoji:globe-with-meridians:"
+    description: |-
+      outputDir: folder for store translated images
+      outputDir should be empty else program will skip
   - task: pdf::pdf2images
     title: "pdf2images #1"
     node_id: pdf2images#1
     inputs_from:
       - handle: pdf_path
-        value: /oomol-driver/oomol-storage/1.pdf
+        value: /oomol-driver/oomol-storage/26.pdf
       - handle: image_dir
         value: /oomol-driver/oomol-storage/images
+    description: |-
+      pdf_path : pdf wait to translate
+      image_dir :  folder for store images split from pdf
   - task: pdf::images2pdf
     title: "Merge into PDF file #1"
     node_id: images2pdf#1
@@ -29,32 +35,36 @@ nodes:
         value:
           []
         from_node:
-          - node_id: dir-to-path-list#1
-            output_handle: path_array
+          - node_id: dir_to_path_list#1
+            output_handle: files
       - handle: pdf_file_path
         value:
       - handle: title
         value:
       - handle: author
         value:
-  - task: read-file::dir-to-path-list
-    title: "Dir To Path List #1"
-    node_id: dir-to-path-list#1
+    description: if failed with .DS_Store file, please remove it and try again
+  - task: oomol-file::dir_to_path_list
+    title: "Read folder #1"
+    node_id: dir_to_path_list#1
     inputs_from:
-      - handle: dir
-        value: /oomol-driver/oomol-storage/images
+      - handle: folder
         from_node:
           - node_id: translate-manga#1
             output_handle: outputDir
       - handle: sort
         value: true
-  - task: read-file::copy-file
-    title: "Copy File  #1"
-    node_id: copy-file#1
+      - handle: traverse
+        value: false
+      - handle: absolute_path
+        value: true
+  - task: oomol-file::copy_file
+    title: "Copy file #1"
+    node_id: copy_file#1
     inputs_from:
       - handle: source_file
         from_node:
           - node_id: images2pdf#1
             output_handle: pdf_file_path
       - handle: destination_dir
-        value: /oomol-driver/oomol-storage/output
+        value: /oomol-driver/oomol-storage

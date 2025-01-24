@@ -1,4 +1,4 @@
-version: 0.0.1
+version: 0.0.2
 scripts:
   # Script executed when the container is first loaded
   # eg: bootstrap: pip install pandas
@@ -8,11 +8,11 @@ scripts:
     apt-get update && apt-get install libgl1 -y
     if [ ! -d "./manga-image-translator" ]; then
       git clone https://github.com/a1528zhang/manga-image-translator.git
-      cd ./manga-image-translator && pip install -r requirements.txt
     fi
+    cd ./manga-image-translator && pip install -r requirements.txt
 dependencies:
   pdf: 0.0.3
-  read-file: 0.0.10
+  oomol-file: 0.0.7
 icon: ./icon.png
 name: manga-translator
 description: Translate Manga pics & pdf
