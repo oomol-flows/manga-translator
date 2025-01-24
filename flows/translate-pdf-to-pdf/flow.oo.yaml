@@ -9,7 +9,7 @@ nodes:
           - node_id: pdf2images#1
             output_handle: image_dir
       - handle: outputDir
-        value: /oomol-driver/oomol-storage/output
+        value: /oomol-driver/oomol-storage/translated
       - handle: outputLanguage
         value: CHS
     icon: ":twemoji:globe-with-meridians:"
@@ -38,7 +38,7 @@ nodes:
           - node_id: dir_to_path_list#1
             output_handle: files
       - handle: pdf_file_path
-        value:
+        value: /oomol-driver/oomol-storage/out.pdf
       - handle: title
         value:
       - handle: author
@@ -58,13 +58,3 @@ nodes:
         value: false
       - handle: absolute_path
         value: true
-  - task: oomol-file::copy_file
-    title: "Copy file #1"
-    node_id: copy_file#1
-    inputs_from:
-      - handle: source_file
-        from_node:
-          - node_id: images2pdf#1
-            output_handle: pdf_file_path
-      - handle: destination_dir
-        value: /oomol-driver/oomol-storage

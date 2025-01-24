@@ -1,4 +1,4 @@
-version: 0.0.2
+version: 0.0.3
 scripts:
   # Script executed when the container is first loaded
   # eg: bootstrap: pip install pandas
@@ -11,9 +11,13 @@ scripts:
     fi
     cd ./manga-image-translator && pip install -r requirements.txt
 dependencies:
-  pdf: 0.0.3
+  pdf: 0.0.5
   oomol-file: 0.0.7
 icon: ./icon.png
 name: manga-translator
 description: Translate Manga pics & pdf
 displayName: Manga Translator
+repository: "https://github.com/a1528zhang/oomol-manga-translator"
+releaseNotes: |-
+  1. remove redundant block
+  2. add repo url
