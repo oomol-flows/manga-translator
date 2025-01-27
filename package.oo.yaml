@@ -1,4 +1,4 @@
-version: 0.0.3
+version: 0.0.4
 scripts:
   # Script executed when the container is first loaded
   # eg: bootstrap: pip install pandas
@@ -6,6 +6,7 @@ scripts:
     npm install
     pip install -r requirements.txt
     apt-get update && apt-get install libgl1 -y
+    apt-get install libglib2.0-0 -y
     if [ ! -d "./manga-image-translator" ]; then
       git clone https://github.com/a1528zhang/manga-image-translator.git
     fi
@@ -18,6 +19,4 @@ name: manga-translator
 description: Translate Manga pics & pdf
 displayName: Manga Translator
 repository: "https://github.com/a1528zhang/oomol-manga-translator"
-releaseNotes: |-
-  1. remove redundant block
-  2. add repo url
+releaseNotes: update lib
