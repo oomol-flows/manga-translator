@@ -1,13 +1,13 @@
-version: 0.0.5
+version: 0.0.7
 scripts:
   # Script executed when the container is first loaded
   # eg: bootstrap: pip install pandas
   bootstrap: |
+    export DEBIAN_FRONTEND=noninteractive
     npm install
     pip install -r requirements.txt
     apt-get update && apt-get install libgl1 -y
     apt-get install libglib2.0-0 -y
-    export DEBIAN_FRONTEND=noninteractive
     if [ ! -d "./manga-image-translator" ]; then
       git clone https://github.com/a1528zhang/manga-image-translator.git
     fi
