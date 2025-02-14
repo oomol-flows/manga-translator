@@ -21,7 +21,7 @@ nodes:
     node_id: pdf2images#1
     inputs_from:
       - handle: pdf_path
-        value: /oomol-driver/oomol-storage/2.pdf
+        value: /oomol-driver/oomol-storage/26.pdf
       - handle: image_dir
         value: /oomol-driver/oomol-storage/images
     description: |-

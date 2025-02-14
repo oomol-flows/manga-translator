@@ -22,7 +22,7 @@ async def run(args: Namespace):
 
     if args.mode == 'local':
         if not args.input:
-            raise Exception('No input image was supplied. Use -i <image_path>')
+            raise Exception('No input image was supplied.')
         from manga_translator.mode.local import MangaTranslatorLocal
         translator = MangaTranslatorLocal(args_dict)
 

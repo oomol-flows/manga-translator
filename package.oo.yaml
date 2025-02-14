@@ -1,4 +1,4 @@
-version: 0.0.7
+version: 0.0.8
 scripts:
   # Script executed when the container is first loaded
   # eg: bootstrap: pip install pandas
@@ -19,5 +19,5 @@ icon: ./icon.png
 name: manga-translator
 description: Translate Manga pics & pdf
 displayName: Manga Translator
-releaseNotes: fix bootstrap script
+releaseNotes: add chinese readme
 repository: https://github.com/a1528zhang/oomol-manga-translator
