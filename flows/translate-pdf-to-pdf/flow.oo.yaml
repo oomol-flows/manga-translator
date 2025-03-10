@@ -10,23 +10,40 @@ nodes:
             output_handle: image_dir
       - handle: outputDir
         value: /oomol-driver/oomol-storage/output
+        from_node:
+          - node_id: +javascript#2
+            output_handle: outputDir
       - handle: outputLanguage
         value: CHS
     icon: ":twemoji:globe-with-meridians:"
-    description: |-
+    description: |
+      This node is used to translate all images in the specified image folder.
+      该节点用于翻译指定图片文件夹中的所有图片
+
       outputDir: folder for store translated images
-      outputDir should be empty else program will skip
+      outputDir should be empty else program will skip.
+      outputLanguage: The language output by the translator.
+      outputDir: 用于存放翻译完成后的图片的文件夹，
+      outputDir 在运行前需要为空，否则程序会跳过翻译流程。
+      outputLanguage: 翻译器输出的语言。
   - task: pdf::pdf2images
     title: "pdf2images #1"
     node_id: pdf2images#1
     inputs_from:
       - handle: pdf_path
-        value: /oomol-driver/oomol-storage/26.pdf
       - handle: image_dir
-        value: /oomol-driver/oomol-storage/images
+        value: ""
+        from_node:
+          - node_id: +javascript#3
+            output_handle: outputDir
     description: |-
+      This node is used to split PDF files into images.
+      该节点用于将 pdf 文件拆分为图片
+
       pdf_path : pdf wait to translate
       image_dir :  folder for store images split from pdf
+      pdf_path: 需要要翻译的 pdf 文件的路径
+      image_dir: 用于存放将 pdf 拆分为图片后的地址
   - task: pdf::images2pdf
     title: "Merge into PDF file #1"
     node_id: images2pdf#1
@@ -38,12 +55,26 @@ nodes:
           - node_id: dir_to_path_list#1
             output_handle: files
       - handle: pdf_file_path
-        value: /oomol-driver/oomol-storage/out.pdf
+        value: /oomol-driver/oomol-storage/111.pdf
+        from_node:
+          - node_id: +javascript#1
+            output_handle: path
       - handle: title
         value:
       - handle: author
         value:
-    description: if failed with .DS_Store file, please remove it and try again
+    description: |-
+      This node merges a series of image addresses into a single PDF file.
+      该节点将一系列的图片地址合并为一个 pdf 文件
+      if failed with .DS_Store file, please remove it and try again
+      如果在这一步执行失败同时报错因为有 .DS_Store 文件, 删掉这个文件再重试
+
+      pdf_file_path: the output path of the PDF file.
+      title: the output file name.
+      author: file author
+      pdf_file_path: 输出的 pdf 文件路径
+      title: 输出的文件名
+      author: 文件作者
   - task: oomol-file::dir_to_path_list
     title: "Read folder #1"
     node_id: dir_to_path_list#1
@@ -58,3 +89,111 @@ nodes:
         value: false
       - handle: absolute_path
         value: true
+    description: |+
+      This node is used to read the translated images, sort them, and output a sequence of image paths.
+      该节点用于读取翻译后的图片，并进行排序，输出一串图片路径
+
+      sort: whether to perform sorting.
+      traverse: whether to reverse the order.
+      absolute_path: whether to output the absolute path of the files.
+      sort: 是否进行排序
+      traverse: 是否逆序
+      absolute_path: 是否输出文件绝对路径
+
+  - task:
+      ui:
+        default_width: 450
+      inputs_def:
+        - handle: pdf_file_path
+          description: Input
+          json_schema:
+            type: string
+            ui:widget: save
+      outputs_def:
+        - handle: path
+          description: Output
+          json_schema:
+            type: string
+      executor:
+        name: nodejs
+        options:
+          entry: scriptlets/+javascript#1.js
+    title: "Pdf path"
+    icon: ":skill-icons:javascript:"
+    node_id: +javascript#1
+    inputs_from:
+      - handle: pdf_file_path
+        value: /oomol-driver/oomol-storage/output.pdf
+    description: |-
+      This node is used to select the path of a generated PDF file.
+      该节点用于选择一个生成的 pdf 文件的路径
+
+      pdf_file_path: the output path of the PDF file.
+      pdf_file_path: 输出的 pdf 文件路径
+  - node_id: +javascript#2
+    node_type: task_node
+    title: "Ensure output dir #2"
+    icon: ":skill-icons:javascript:"
+    description: |-
+      This node is used to ensure that the folder for output images exists.
+      该节点用于确保输出图片的文件夹存在
+
+      outputDir: the folder where the translated images are stored.
+      outputDir: 翻译后的图片存放的文件夹
+
+      Note: Ensure that the output folder is empty before translation, otherwise the translation will be skipped.
+      注意，翻译前需要保证输出文件夹是空的，否则会跳过翻译
+    inputs_from:
+      - handle: outputDir
+        value: /oomol-driver/oomol-storage/output_images
+    task:
+      ui:
+        default_width: 450
+      inputs_def:
+        - handle: outputDir
+          description: Input
+          json_schema:
+            type: string
+            ui:widget: save
+      outputs_def:
+        - handle: outputDir
+          description: Output
+          json_schema:
+            type: string
+      executor:
+        name: nodejs
+        options:
+          entry: scriptlets/+javascript#2.js
+          spawn: false
+  - node_id: +javascript#3
+    node_type: task_node
+    title: "Ensure output dir #3"
+    icon: ":skill-icons:javascript:"
+    description: |-
+      This node is used to ensure that the folder for output images exists.
+      该节点用于确保输出图片的文件夹存在
+
+      outputDir: the folder where the images are stored.
+      outputDir: 图片存放的文件夹
+    inputs_from:
+      - handle: outputDir
+        value: /oomol-driver/oomol-storage/pdf_to_images
+    task:
+      ui:
+        default_width: 450
+      inputs_def:
+        - handle: outputDir
+          description: Input
+          json_schema:
+            type: string
+            ui:widget: save
+      outputs_def:
+        - handle: outputDir
+          description: Output
+          json_schema:
+            type: string
+      executor:
+        name: nodejs
+        options:
+          entry: scriptlets/+javascript#3.js
+          spawn: false

@@ -1,0 +1,31 @@
+{
+  "nodes": {
+    "translate-manga#1": {
+      "contentWidth": 542.8309844021295,
+      "rfNode": {
+        "position": {
+          "x": 331.75136111411837,
+          "y": 74.66509633614528
+        }
+      }
+    },
+    "+javascript#1": {
+      "contentWidth": 450,
+      "rfNode": {
+        "position": {
+          "x": -218.09607027046397,
+          "y": 74.66509633614528
+        }
+      }
+    },
+    "dir_to_path_list#1": {
+      "contentWidth": 350,
+      "rfNode": {
+        "position": {
+          "x": 950.915588894155,
+          "y": 74.66509633614528
+        }
+      }
+    }
+  }
+}

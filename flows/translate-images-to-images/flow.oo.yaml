@@ -1,0 +1,105 @@
+nodes:
+  - task: self::translate-manga
+    title: "Translate Manga #1"
+    node_id: translate-manga#1
+    inputs_from:
+      - handle: sourceDir
+        value: /oomol-driver/oomol-storage/manga
+        from_node:
+          - node_id: +javascript#1
+            output_handle: sourceDir
+      - handle: outputDir
+        value: /oomol-driver/oomol-storage/translated
+        from_node:
+          - node_id: +javascript#1
+            output_handle: outputDir
+      - handle: outputLanguage
+        value: CHS
+    description: |-
+      This node can directly translate all images in the specified folder and output them to the designated folder.
+      该节点可以直接将指定文件夹内的图片全部翻译并输出到指定的文件夹
+
+      sourceDir: the folder to be translated.
+      sourceDir: 要翻译的文件夹
+      outputDir: the folder where the translated images are stored.
+      outputDir: 翻译后的图片存放的文件夹
+      outputLanguage: the language output by the translator.
+      outputLanguage：翻译器输出的语言
+  - task:
+      ui:
+        default_width: 450
+      inputs_def:
+        - handle: sourceDir
+          json_schema:
+            type: string
+            ui:widget: save
+        - handle: outputDir
+          description: Input
+          json_schema:
+            type: string
+            ui:widget: save
+      outputs_def:
+        - handle: sourceDir
+          json_schema:
+            type: string
+        - handle: outputDir
+          description: Output
+          json_schema:
+            type: string
+      executor:
+        name: nodejs
+        options:
+          entry: scriptlets/+javascript#1.js
+    title: Ensure output dir
+    icon: ":skill-icons:javascript:"
+    node_id: +javascript#1
+    inputs_from:
+      - handle: outputDir
+        value: /oomol-driver/oomol-storage/images_output
+      - handle: sourceDir
+        value: /oomol-driver/oomol-storage/images_input
+    description: |-
+      This node is used to ensure that the folder for output images exists.
+      该节点用于确保输入输出图片的文件夹存在
+
+      sourceDir: the folder to be translated.
+      sourceDir: 要翻译的文件夹
+      outputDir: the folder where the translated images are stored.
+      outputDir: 翻译后的图片存放的文件夹
+
+      Note: Ensure that the output folder is empty before translation, otherwise the translation will be skipped.
+      注意，翻译前需要保证输出文件夹是空的，否则会跳过翻译
+  - node_id: dir_to_path_list#1
+    node_type: task_node
+    title: "Read folder #2"
+    description: >+
+      This node is used to read the translated images, sort them, and output a
+      sequence of image paths.
+
+      该节点用于读取翻译后的图片，并进行排序，输出一串图片路径
+
+
+      sort: whether to perform sorting.
+
+      traverse: whether to reverse the order.
+
+      absolute_path: whether to output the absolute path of the files.
+
+      sort: 是否进行排序
+
+      traverse: 是否逆序
+
+      absolute_path: 是否输出文件绝对路径
+
+    inputs_from:
+      - handle: folder
+        from_node:
+          - node_id: translate-manga#1
+            output_handle: outputDir
+      - handle: sort
+        value: true
+      - handle: traverse
+        value: false
+      - handle: absolute_path
+        value: true
+    task: oomol-file::dir_to_path_list

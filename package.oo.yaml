@@ -1,4 +1,4 @@
-version: 0.0.8
+version: 0.0.9
 scripts:
   # Script executed when the container is first loaded
   # eg: bootstrap: pip install pandas
@@ -10,14 +10,24 @@ scripts:
     apt-get install libglib2.0-0 -y
     if [ ! -d "./manga-image-translator" ]; then
       git clone https://github.com/a1528zhang/manga-image-translator.git
+    else
+      cd ./manga-image-translator
+      git pull
+      cd ..
     fi
     cd ./manga-image-translator && pip install -r requirements.txt
 dependencies:
-  pdf: 0.0.5
+  pdf: 0.0.7
   oomol-file: 0.0.7
 icon: ./icon.png
 name: manga-translator
 description: Translate Manga pics & pdf
 displayName: Manga Translator
-releaseNotes: add chinese readme
-repository: https://github.com/a1528zhang/oomol-manga-translator
+releaseNotes: |-
+  1. Optimize the process to ensure smooth execution without selecting parameters for the first run.
+  2. Add Chinese and English descriptions for all nodes.
+  3. Adjust the size of the input images to match the original input images.
+
+  1. 优化流程，让第一次执行不用选参数能够运行顺利
+  2. 增加所有节点的中英文说明
+  3. 输入图片的尺寸调整到跟输入图片一致

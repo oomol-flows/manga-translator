@@ -56,6 +56,6 @@
     "min_text_length": 0,
     "ignore_bubble": 0
   },
-  "kernel_size": 3,
+  "kernel_size": 1,
   "mask_dilation_offset": 0
 }
