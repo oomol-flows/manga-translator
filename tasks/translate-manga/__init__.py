@@ -5,7 +5,11 @@ from argparse import Namespace
 
 async def main(params: dict, context: Context):
   os.environ["DEEPSEEK_API_KEY"] = context.oomol_llm_env.get("api_key")
-  os.environ["DEEPSEEK_API_BASE"]= context.oomol_llm_env.get("base_url") + "/v1"
+  oomol_base_url = context.oomol_llm_env.get("base_url")
+  if not oomol_base_url.endswith("/v1"):
+    oomol_base_url= oomol_base_url + "/v1"
+
+  os.environ["DEEPSEEK_API_BASE"]= oomol_base_url
   from run import run
 
   inputDir = params['sourceDir']

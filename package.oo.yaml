@@ -1,4 +1,4 @@
-version: 0.0.9
+version: 0.0.10
 scripts:
   # Script executed when the container is first loaded
   # eg: bootstrap: pip install pandas
@@ -23,11 +23,7 @@ icon: ./icon.png
 name: manga-translator
 description: Translate Manga pics & pdf
 displayName: Manga Translator
-releaseNotes: |-
-  1. Optimize the process to ensure smooth execution without selecting parameters for the first run.
-  2. Add Chinese and English descriptions for all nodes.
-  3. Adjust the size of the input images to match the original input images.
+releaseNotes: |
+  fix: call translate api falied
 
-  1. 优化流程，让第一次执行不用选参数能够运行顺利
-  2. 增加所有节点的中英文说明
-  3. 输入图片的尺寸调整到跟输入图片一致
+  修复：调用翻译 api 时错误
