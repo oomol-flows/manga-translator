@@ -1,3 +1,5 @@
+# pyright: reportExplicitAny=false
+
 from typing import cast, final, Any
 from typing_extensions import override
 
@@ -43,13 +45,12 @@ class WrappedTranslator(CommonTranslator):
     "IND": "Indonesian"
   }
 
-  def __init__(self, **kargs):
+  def __init__(self, **_):
     super().__init__()
-    print("init", kargs)
 
   @override
   def parse_args(self, args: TranslatorConfig):
-    print(args)
+    pass
 
   @override
   async def _translate(self, from_lang: str, to_lang: str, queries: list[str]) -> list[str]:
