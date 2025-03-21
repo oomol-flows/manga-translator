@@ -8,11 +8,6 @@ from manga_translator.config import TranslatorConfig
 from manga_translator.translators import TRANSLATORS
 from manga_translator.translators.common import CommonTranslator
 
-
-def replace_offline_translator():
-  cast(Any, TRANSLATORS)[Translator.deepseek] = WrappedTranslator
-  print("replace", TRANSLATORS[Translator.deepseek])
-
 @final
 class WrappedTranslator(CommonTranslator):
   _MAX_REQUESTS_PER_MINUTE = 9999
@@ -55,3 +50,5 @@ class WrappedTranslator(CommonTranslator):
   @override
   async def _translate(self, from_lang: str, to_lang: str, queries: list[str]) -> list[str]:
     return [f"{from_lang} -> {to_lang}" for _ in queries]
+
+cast(Any, TRANSLATORS)[Translator.deepseek] = WrappedTranslator

@@ -9,27 +9,21 @@ class Outputs(typing.TypedDict):
 #endregion
 
 import os
+import json
 
-from typing import cast
+from typing import cast, Any
 from natsort import natsorted
+from PIL import Image
 from oocana import Context
-from shared import replace_offline_translator
+from shared import Config
 
-replace_offline_translator()
+# wait shared update os.sys.path
+from manga_translator import MangaTranslator, Config as MangaConfig
 
-from manga.manga_translator.mode.local import MangaTranslatorLocal
-
-def to_dict(**kwargs) -> dict:
+def to_dict(**kwargs) -> dict[str, Any]:
   return kwargs
 
 async def main(params: Inputs, context: Context) -> Outputs:
-  # os.environ["DEEPSEEK_API_KEY"] = context.oomol_llm_env.get("api_key")
-  # oomol_base_url = context.oomol_llm_env.get("base_url")
-  # if not oomol_base_url.endswith("/v1"):
-  #   oomol_base_url= oomol_base_url + "/v1"
-  # os.environ["DEEPSEEK_API_BASE"]= oomol_base_url
-
-
   inputDir = params["input_dir"]
   outputDir = params["output_dir"]
   lang = params["lang"]
@@ -61,8 +55,25 @@ async def main(params: Inputs, context: Context) -> Outputs:
     config_file=config_path,
     output_lang=lang,
   )
-  translator = MangaTranslatorLocal(cast(dict, args))
-  await translator.translate_path(inputDir, outputDir, args)
+  translator = MangaTranslator(args)
+
+  with open(config_path, "r", encoding="utf-8") as file:
+    config_data = json.load(file)
+    config_data["translator"] = {
+      **config_data["translator"],
+      "base_url": context.oomol_llm_env["base_url_v1"],
+      "key": context.oomol_llm_env["api_key"],
+      "model": context.oomol_llm_env["models"][0],
+    }
+    config: MangaConfig = cast(Any, Config(**config_data))
+
+  for file in natsorted(os.listdir(inputDir)):
+    with Image.open(os.path.join(inputDir, file)) as image:
+      image = Image.open(os.path.join(inputDir, file))
+      ctx = await translator.translate(image, config)
+      result: Image.Image | None = ctx.result
+      if result:
+        result.save(os.path.join(outputDir, file))
 
   return {
     "output_files": natsorted(os.listdir(outputDir)),

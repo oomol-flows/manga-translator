@@ -9,6 +9,7 @@ disable=
   missing-class-docstring,
   missing-function-docstring,
   redefined-builtin,
+  reportExplicitAny,
   too-few-public-methods,
   too-many-return-statements,
   fixme,
