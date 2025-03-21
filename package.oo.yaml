@@ -1,8 +1,11 @@
-version: 0.0.1
+version: 0.1.0
+icon: ./icon.png
 scripts:
   # Script executed when the container is first loaded
   # eg: bootstrap: pip install pandas
   bootstrap: |
-    npm install
+    set -e
+    apt-get update && apt-get install libgl1 -y
+    apt-get install libglib2.0-0 -y
+    pip install --upgrade pip
     pip install -r requirements.txt
-icon: ./icon.png
