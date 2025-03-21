@@ -1,0 +1,22 @@
+{
+  "nodes": {
+    "pdf2images#1": {
+      "contentWidth": 450,
+      "rfNode": {
+        "position": {
+          "x": -30,
+          "y": 0
+        }
+      }
+    },
+    "manga#1": {
+      "contentWidth": 450,
+      "rfNode": {
+        "position": {
+          "x": 525.030785244474,
+          "y": 0
+        }
+      }
+    }
+  }
+}

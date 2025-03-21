@@ -1,0 +1,11 @@
+{
+  "executionEnvironments": [
+    {
+      "root": ".",
+      "extraPaths": [
+        "/app/workspace/manga",
+        "/root/.local/share/uv/python/cpython-3.10.12-linux-aarch64-gnu/lib/python3.10/site-packages",
+      ],
+    }
+  ],
+}
