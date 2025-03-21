@@ -10,18 +10,25 @@ class Outputs(typing.TypedDict):
 
 import os
 
+from typing import cast
 from natsort import natsorted
 from oocana import Context
+from shared import replace_offline_translator
+
+replace_offline_translator()
+
+from manga.manga_translator.mode.local import MangaTranslatorLocal
 
 def to_dict(**kwargs) -> dict:
   return kwargs
 
 async def main(params: Inputs, context: Context) -> Outputs:
-  os.environ["DEEPSEEK_API_KEY"] = context.oomol_llm_env.get("api_key")
-  oomol_base_url = context.oomol_llm_env.get("base_url")
-  if not oomol_base_url.endswith("/v1"):
-    oomol_base_url= oomol_base_url + "/v1"
-  os.environ["DEEPSEEK_API_BASE"]= oomol_base_url
+  # os.environ["DEEPSEEK_API_KEY"] = context.oomol_llm_env.get("api_key")
+  # oomol_base_url = context.oomol_llm_env.get("base_url")
+  # if not oomol_base_url.endswith("/v1"):
+  #   oomol_base_url= oomol_base_url + "/v1"
+  # os.environ["DEEPSEEK_API_BASE"]= oomol_base_url
+
 
   inputDir = params["input_dir"]
   outputDir = params["output_dir"]
@@ -54,8 +61,7 @@ async def main(params: Inputs, context: Context) -> Outputs:
     config_file=config_path,
     output_lang=lang,
   )
-  from .manga_creator import create
-  translator = create(args)
+  translator = MangaTranslatorLocal(cast(dict, args))
   await translator.translate_path(inputDir, outputDir, args)
 
   return {
