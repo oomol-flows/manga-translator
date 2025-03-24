@@ -6,4 +6,4 @@ sys.path.append(
 )
 
 from .translator import *
-from .config import *
+from .manga import *

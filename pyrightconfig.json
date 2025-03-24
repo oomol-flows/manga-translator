@@ -1,4 +1,6 @@
 {
+  "reportAny": "none",
+  "reportExplicitAny": "none",
   "executionEnvironments": [
     {
       "root": ".",
