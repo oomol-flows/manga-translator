@@ -14,7 +14,7 @@ from typing import cast
 from natsort import natsorted
 from PIL import Image
 from oocana import Context
-from shared import create_config, create_manga_translator
+from shared.manga_translator import create_config, create_manga_translator
 
 async def main(params: Inputs, context: Context) -> Outputs:
   inputDir = params["input_dir"]
