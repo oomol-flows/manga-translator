@@ -1,0 +1,39 @@
+{
+  "nodes": {
+    "translate-manga-page#1": {
+      "contentWidth": 477.8866422073417,
+      "rfNode": {
+        "position": {
+          "x": 525.030785244474,
+          "y": 361.4303711218737
+        }
+      }
+    },
+    "file_to_binary#1": {
+      "contentWidth": 450,
+      "rfNode": {
+        "position": {
+          "x": -30,
+          "y": 406.5823746281935
+        }
+      }
+    },
+    "image_preview#1": {
+      "contentWidth": 782.6345824413372,
+      "rfNode": {
+        "position": {
+          "x": 1579.4597721784244,
+          "y": 624.5823746281935
+        }
+      }
+    },
+    "binary_save_as_file#1": {
+      "rfNode": {
+        "position": {
+          "x": 1087.2260528434153,
+          "y": 624.5823746281935
+        }
+      }
+    }
+  }
+}

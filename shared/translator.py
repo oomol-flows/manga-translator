@@ -1,54 +1,15 @@
-# pyright: reportExplicitAny=false
+from oocana import Context
 
-from typing import cast, final, Any
-from typing_extensions import override
 
-from manga_translator import Translator
-from manga_translator.config import TranslatorConfig
-from manga_translator.translators import TRANSLATORS
-from manga_translator.translators.common import CommonTranslator
-
-@final
-class WrappedTranslator(CommonTranslator):
-  _MAX_REQUESTS_PER_MINUTE = 9999
-  _INVALID_REPEAT_COUNT = 0 # this's useless
-  _LANGUAGE_CODE_MAP = {
-    "CHS": "Simplified Chinese",
-    "CHT": "Traditional Chinese",
-    "CSY": "Czech",
-    "NLD": "Dutch",
-    "ENG": "English",
-    "FRA": "French",
-    "DEU": "German",
-    "HUN": "Hungarian",
-    "ITA": "Italian",
-    "JPN": "Japanese",
-    "KOR": "Korean",
-    "PLK": "Polish",
-    "PTB": "Portuguese",
-    "ROM": "Romanian",
-    "RUS": "Russian",
-    "ESP": "Spanish",
-    "TRK": "Turkish",
-    "UKR": "Ukrainian",
-    "VIN": "Vietnamese",
-    "CNR": "Montenegrin",
-    "SRP": "Serbian",
-    "HRV": "Croatian",
-    "ARA": "Arabic",
-    "THA": "Thai",
-    "IND": "Indonesian"
-  }
-
-  def __init__(self, **_):
-    super().__init__()
-
-  @override
-  def parse_args(self, args: TranslatorConfig):
+class Translator:
+  def __init__(self, context: Context) -> None:
     pass
 
-  @override
-  async def _translate(self, from_lang: str, to_lang: str, queries: list[str]) -> list[str]:
-    return [f"{from_lang} -> {to_lang}" for _ in queries]
-
-cast(Any, TRANSLATORS)[Translator.deepseek] = WrappedTranslator
+  def translate(
+      self,
+      code_map: dict[str, str],
+      source: str,
+      target: str,
+      queries: list[str],
+    ) -> list[str]:
+    return [f"{source} -> {target}" for _ in queries]

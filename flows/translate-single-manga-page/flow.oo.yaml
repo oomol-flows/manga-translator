@@ -1,0 +1,46 @@
+nodes:
+  - task: self::translate-manga-page
+    title: "Translate manga page #1"
+    node_id: translate-manga-page#1
+    inputs_from:
+      - handle: input
+        from_node:
+          - node_id: file_to_binary#1
+            output_handle: binary
+      - handle: models
+        value:
+      - handle: source_language
+        value: auto
+      - handle: target_language
+        value: CHS
+      - handle: device
+        value: CPU
+  - task: oomol-file::file_to_binary
+    title: "File to binary #1"
+    node_id: file_to_binary#1
+    inputs_from:
+      - handle: file_path
+        value: /oomol-driver/oomol-storage/source_page.png
+  - task: oomol-preview::image_preview
+    title: "Image preview #1"
+    node_id: image_preview#1
+    inputs_from:
+      - handle: image_path
+        from_node:
+          - node_id: binary_save_as_file#1
+            output_handle: file_path
+  - task: oomol-file::binary_save_as_file
+    title: "Binary save as file #1"
+    node_id: binary_save_as_file#1
+    inputs_from:
+      - handle: binary
+        from_node:
+          - node_id: translate-manga-page#1
+            output_handle: output
+      - handle: suffix
+        value:
+        from_node:
+          - node_id: translate-manga-page#1
+            output_handle: ext
+      - handle: file_path
+        value:
