@@ -2,7 +2,7 @@ import os
 import sys
 
 sys.path.append(
-  os.path.abspath(os.path.join(__file__, "..", "..", "manga")),
+  os.path.abspath(os.path.join(__file__, "..", "..", "..", "manga")),
 )
 
 from .types import *
