@@ -24,7 +24,7 @@ nodes:
         value: false
       - handle: absolute_path
         value: true
-  - task: self::manga-invoker
+  - task: self::translate-manga
     title: "Manga #1"
     node_id: manga-invoker#1
     inputs_from:
