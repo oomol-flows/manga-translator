@@ -27,7 +27,6 @@ class Outputs(TypedDict):
   ext: ImageExt
 
 async def main(params: Inputs, context: Context) -> Outputs:
-  llm_model = params["llm"]
   models = params["models"]
   if models is None:
     models = "/tmp/models"
@@ -39,9 +38,13 @@ async def main(params: Inputs, context: Context) -> Outputs:
     if image_format is None:
       raise ValueError("Image format is not supported")
 
-    config = create_config(
-      translator=Translator(llm_model, context).translate,
+    translator = Translator(
+      llm_model=params["llm"],
+      context=context,
+      source_language=params["source_language"],
+      target_language=params["target_language"],
     )
+    config = create_config(translator.translate)
     manga = create_manga_translator(
       use_gpu=(params["device"]=="cuda"),
       model_dir=models,

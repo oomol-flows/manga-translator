@@ -28,14 +28,17 @@ class Outputs(TypedDict):
 async def main(params: Inputs, context: Context) -> Outputs:
   input_files = params["input_files"]
   output_folder = params["output_folder"]
-  llm_model = params["llm"]
   models = params["models"]
   if models is None:
     models = "/tmp/models"
 
-  config = create_config(
-    translator=Translator(llm_model, context).translate,
+  translator = Translator(
+    llm_model=params["llm"],
+    context=context,
+    source_language=params["source_language"],
+    target_language=params["target_language"],
   )
+  config = create_config(translator.translate)
   manga = create_manga_translator(
     use_gpu=(params["device"]=="cuda"),
     model_dir=models,

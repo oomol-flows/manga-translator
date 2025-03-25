@@ -83,16 +83,17 @@ nodes:
             output_handle: source_pdf
   - values:
       - handle: source_pdf
+        description: Input
         json_schema:
           type: string
           ui:widget: file
-        description: Input
+        value: /oomol-driver/downloads/manga.pdf
       - handle: target_pdf
         json_schema:
           type: string
           ui:widget: save
+        value: /oomol-driver/oomol-storage/target.pdf
         nullable: true
-        value:
     title: "Value #1"
     node_id: +value#1
   - task:

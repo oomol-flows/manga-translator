@@ -5,13 +5,21 @@ from typing import final, cast, Any
 from collections.abc import Generator
 from oocana import Context
 
+from shared.manga_translator import SourceLanguage, TargetLanguage
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage, BaseMessageChunk
 
 
 @final
 class Translator:
-  def __init__(self, llm_model: dict[str, Any], context: Context) -> None:
+  def __init__(
+      self,
+      llm_model: dict[str, Any],
+      context: Context,
+      source_language: SourceLanguage,
+      target_language: TargetLanguage,
+    ) -> None:
+
     env = context.oomol_llm_env
     model: str = llm_model["model"]
     temperature: float = float(llm_model["temperature"])
@@ -21,19 +29,20 @@ class Translator:
       model=model,
       temperature=temperature,
     )
+    self._source_language: SourceLanguage = source_language
+    self._target_language: TargetLanguage = target_language
 
-  def translate(
-      self,
-      code_map: dict[str, str],
-      source: str,
-      target: str,
-      queries: list[str],
-    ) -> list[str]:
+  def translate(self, code_map: dict[str, str], queries: list[str]) -> list[str]:
+    source: str = self._source_language
+    target: str = self._target_language
 
+    target = code_map[target]
     if source == "auto":
       source = ""
+    else:
+      source = code_map[source]
 
-    system = self._gen_admin_prompt(target, source)
+    system = self._gen_admin_prompt(source, target)
     translated_list: list[str] = []
 
     for translated in self._translate_text_by_text(system, queries):
@@ -71,14 +80,24 @@ class Translator:
 
     yield line_buffer.getvalue()
 
-  def _gen_admin_prompt(self, target_lan: str, source_lan: str) -> str:
+  def _gen_admin_prompt(self, source: str, target: str) -> str:
+    users_what: str = ""
+    first_line_suffix: str = ""
+
+    if source == "":
+      users_what = "in an unknown language "
+      first_line_suffix = " (please judge the language of user-submitted text by yourself)"
+    else:
+      users_what = source + " "
+
     return f"""
-      You are a translator and need to translate the user's {source_lan} text into {target_lan}.
-      I want you to replace simplified A0-level words and sentences with more beautiful and elegant, upper level {target_lan} words and sentences. Keep the meaning same, but make them more literary.
-      I want you to only reply the translation and nothing else, do not write explanations.
-      A number and colon are added to the top of each line of text entered by the user. This number is only used to align the translation text for you and has no meaning in itself. You should delete the number in your mind to understand the user's original text.
-      Your translation results should be split into a number of lines, the number of lines is equal to the number of lines in the user's original text. The content of each line should correspond to the corresponding line of the user's original text.
-      All user submitted text must be translated. The translated lines must not be missing, added, misplaced, or have their order changed. They must correspond exactly to the original text of the user.
+      You are a translator who needs to translate user-submitted {users_what}text into {target}{first_line_suffix}.
+      Your translation should keep the original meaning intact, but be more literary.
+      I hope you only reply to the translation, not to anything else, and do not write explanations.
+      A number and colon will be added to the top of each line of text entered by the user. This number is only used to align the translated text for you and has no meaning by itself. You should delete this number in your mind to understand the user's original text.
+      Your translation results should be divided into a number of lines, the number of lines is equal to the number of lines in the user's original text. The content of each line should correspond to the corresponding line of the user's original text.
+      All user-submitted texts must be translated. The translated lines must not be lost, added, misplaced, or changed in order. They must correspond exactly to the user's original text.
+      The content must be translated into the correct language, and direct replies to the original text are prohibited.
 
       Here is an example. First, the user submits the original text in English (this is just an example):
       1: IV
