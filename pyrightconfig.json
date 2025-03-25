@@ -1,6 +1,9 @@
 {
   "reportAny": "none",
   "reportExplicitAny": "none",
+  "reportUnknownMemberType": "none",
+  "reportUnknownArgumentType": "none",
+  "reportUnusedCallResult": "none",
   "executionEnvironments": [
     {
       "root": ".",
