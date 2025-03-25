@@ -8,7 +8,7 @@ from manga_translator.translators.common import CommonTranslator
 
 
 
-Translator = Callable[[dict[str, str], str, str, list[str]], list[str]]
+Translator = Callable[[dict[str, str], list[str]], list[str]]
 
 class WrappedTranslatorConfig(TranslatorConfig):
   func: Translator | None = None
@@ -58,6 +58,6 @@ class WrappedTranslator(CommonTranslator):
     if self._transalte is None:
       return [q for q in queries]
     else:
-      return self._transalte(self._LANGUAGE_CODE_MAP, from_lang, to_lang, queries)
+      return self._transalte(self._LANGUAGE_CODE_MAP, queries)
 
 cast(Any, TRANSLATORS)[MangaTranslator.deepseek] = WrappedTranslator

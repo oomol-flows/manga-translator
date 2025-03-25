@@ -15,6 +15,12 @@ nodes:
         value: CHS
       - handle: device
         value: cpu
+      - handle: llm
+        value:
+          model: deepseek-chat
+          temperature: 0
+          top_p: 0.5
+          max_tokens: 4096
   - task: oomol-file::file_to_binary
     title: "File to binary #1"
     node_id: file_to_binary#1
