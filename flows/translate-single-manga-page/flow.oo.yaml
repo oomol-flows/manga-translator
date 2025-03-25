@@ -26,7 +26,6 @@ nodes:
     node_id: file_to_binary#1
     inputs_from:
       - handle: file_path
-        value: /oomol-driver/oomol-storage/source_page.png
   - task: oomol-preview::image_preview
     title: "Image preview #1"
     node_id: image_preview#1

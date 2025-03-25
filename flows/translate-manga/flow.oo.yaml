@@ -87,12 +87,11 @@ nodes:
         json_schema:
           type: string
           ui:widget: file
-        value: /oomol-driver/downloads/manga.pdf
       - handle: target_pdf
         json_schema:
           type: string
           ui:widget: save
-        value: /oomol-driver/oomol-storage/target.pdf
+        value:
         nullable: true
     title: "Value #1"
     node_id: +value#1
