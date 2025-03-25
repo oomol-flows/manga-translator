@@ -1,6 +1,6 @@
 import os
 
-from typing import cast, TypedDict, Literal
+from typing import cast, Any, TypedDict, Literal
 from PIL.Image import open as open_image, Image
 from oocana import Context
 from shared.translator import Translator
@@ -17,6 +17,7 @@ class Inputs(TypedDict):
   output_folder: str | None
   device: Literal["cuda", "cpu"]
   models: str | None
+  llm: dict[str, Any]
   source_language: SourceLanguage
   target_language: TargetLanguage
 
@@ -27,12 +28,13 @@ class Outputs(TypedDict):
 async def main(params: Inputs, context: Context) -> Outputs:
   input_files = params["input_files"]
   output_folder = params["output_folder"]
+  llm_model = params["llm"]
   models = params["models"]
   if models is None:
     models = "/tmp/models"
 
   config = create_config(
-    translator=Translator(context).translate,
+    translator=Translator(llm_model, context).translate,
   )
   manga = create_manga_translator(
     use_gpu=(params["device"]=="cuda"),

@@ -22,6 +22,16 @@ inputs_def:
           - CUDA
           - CPU
     value: CPU
+  - handle: llm
+    json_schema:
+      ui:options:
+        title: Model
+      ui:widget: llm::model
+    value:
+      model: deepseek-chat
+      temperature: 0
+      top_p: 0.5
+      max_tokens: 4096
   - handle: models
     json_schema:
       type: string

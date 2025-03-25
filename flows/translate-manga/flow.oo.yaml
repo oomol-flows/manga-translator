@@ -42,6 +42,12 @@ nodes:
         value: auto
       - handle: target_language
         value: CHS
+      - handle: llm
+        value:
+          model: deepseek-chat
+          temperature: 0
+          top_p: 0.5
+          max_tokens: 4096
   - task: pdf::images2pdf
     title: "Merge into PDF file #1"
     node_id: images2pdf#1
@@ -80,7 +86,6 @@ nodes:
         json_schema:
           type: string
           ui:widget: file
-        value: /oomol-driver/downloads/manga.pdf
         description: Input
       - handle: target_pdf
         json_schema:

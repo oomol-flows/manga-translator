@@ -1,8 +1,9 @@
+from typing import Any
 from oocana import Context
 
 
 class Translator:
-  def __init__(self, context: Context) -> None:
+  def __init__(self, llm_model: dict[str, Any], context: Context) -> None:
     pass
 
   def translate(

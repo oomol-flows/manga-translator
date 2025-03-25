@@ -1,6 +1,6 @@
 import io
 
-from typing import cast, Literal, TypedDict
+from typing import cast, Any, Literal, TypedDict
 from oocana import Context
 from PIL.Image import open, Image
 from shared.translator import Translator
@@ -18,6 +18,7 @@ class Inputs(TypedDict):
   input: bytes
   device: Literal["cuda", "cpu"]
   models: str | None
+  llm: dict[str, Any]
   source_language: SourceLanguage
   target_language: TargetLanguage
 
@@ -26,6 +27,7 @@ class Outputs(TypedDict):
   ext: ImageExt
 
 async def main(params: Inputs, context: Context) -> Outputs:
+  llm_model = params["llm"]
   models = params["models"]
   if models is None:
     models = "/tmp/models"
@@ -38,7 +40,7 @@ async def main(params: Inputs, context: Context) -> Outputs:
       raise ValueError("Image format is not supported")
 
     config = create_config(
-      translator=Translator(context).translate,
+      translator=Translator(llm_model, context).translate,
     )
     manga = create_manga_translator(
       use_gpu=(params["device"]=="cuda"),
