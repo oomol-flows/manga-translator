@@ -1,11 +1,15 @@
 #region generated meta
 import typing
 class Inputs(typing.TypedDict):
-  input_dir: str
-  output_dir: str
-  lang: typing.Literal["CHS", "CHT", "ENG", "JPN", "KOR", "FRA", "DEU", "RUS"]
+  input_files: list[str]
+  output_folder: typing.Optional[str]
+  device: typing.Literal["cuda", "cpu"]
+  models: typing.Optional[str]
+  source_language: typing.Literal["auto", "CHS", "CHT", "CSY", "NLD", "ENG", "FRA", "DEU", "HUN", "ITA", "JPN", "KOR", "PLK", "PTB", "ROM", "RUS", "ESP", "TRK", "UKR", "VIN", "CNR", "SRP", "HRV", "ARA", "THA", "IND"]
+  target_language: typing.Literal["CHS", "CHT", "CSY", "NLD", "ENG", "FRA", "DEU", "HUN", "ITA", "JPN", "KOR", "PLK", "PTB", "ROM", "RUS", "ESP", "TRK", "UKR", "VIN", "CNR", "SRP", "HRV", "ARA", "THA", "IND"]
 class Outputs(typing.TypedDict):
   output_files: list[str]
+  output_folder: str
 #endregion
 
 import os

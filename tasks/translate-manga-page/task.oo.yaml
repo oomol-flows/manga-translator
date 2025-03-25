@@ -6,19 +6,19 @@ inputs_def:
   - handle: device
     json_schema:
       enum:
-        - CUDA
-        - CPU
+        - cuda
+        - cpu
       ui:options:
         labels:
-          - cuda
-          - cpu
+          - CUDA
+          - CPU
     value: CPU
   - handle: models
     json_schema:
       type: string
       ui:widget: dir
-    nullable: true
     value:
+    nullable: true
   - handle: source_language
     json_schema:
       enum:

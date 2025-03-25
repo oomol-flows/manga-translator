@@ -1,0 +1,131 @@
+nodes:
+  - task: pdf::pdf2images
+    title: "pdf2images #1"
+    node_id: pdf2images#1
+    inputs_from:
+      - handle: pdf_path
+        value: /oomol-driver/downloads/manga.pdf
+        from_node:
+          - node_id: +value#1
+            output_handle: source_pdf
+      - handle: image_dir
+        value:
+  - task: oomol-file::list_files_from_folder
+    title: "List files from folder #1"
+    node_id: list_files_from_folder#1
+    inputs_from:
+      - handle: folder
+        from_node:
+          - node_id: pdf2images#1
+            output_handle: image_dir
+      - handle: sort
+        value: true
+      - handle: traverse
+        value: false
+      - handle: absolute_path
+        value: true
+  - task: self::manga-invoker
+    title: "Manga #1"
+    node_id: manga-invoker#1
+    inputs_from:
+      - handle: input_files
+        from_node:
+          - node_id: list_files_from_folder#1
+            output_handle: file_paths
+      - handle: output_folder
+        value:
+      - handle: device
+        value: cpu
+      - handle: models
+        value:
+      - handle: source_language
+        value: auto
+      - handle: target_language
+        value: CHS
+  - task: pdf::images2pdf
+    title: "Merge into PDF file #1"
+    node_id: images2pdf#1
+    inputs_from:
+      - handle: image_paths
+        value:
+          []
+        from_node:
+          - node_id: manga-invoker#1
+            output_handle: output_files
+      - handle: pdf_file_path
+        value:
+        from_node:
+          - node_id: +value#1
+            output_handle: target_pdf
+      - handle: title
+        value:
+        from_node:
+          - node_id: +python#3
+            output_handle: title
+      - handle: author
+        value:
+        from_node:
+          - node_id: +python#3
+            output_handle: author
+  - task: pdf::pdf2meta
+    title: "PDF to meta #1"
+    node_id: pdf2meta#1
+    inputs_from:
+      - handle: pdf
+        from_node:
+          - node_id: +value#1
+            output_handle: source_pdf
+  - values:
+      - handle: source_pdf
+        json_schema:
+          type: string
+          ui:widget: file
+        value: /oomol-driver/downloads/manga.pdf
+        description: Input
+      - handle: target_pdf
+        json_schema:
+          type: string
+          ui:widget: save
+        nullable: true
+        value:
+    title: "Value #1"
+    node_id: +value#1
+  - task:
+      ui:
+        default_width: 450
+      inputs_def:
+        - handle: name
+          description: Input
+          json_schema:
+            type: string
+        - handle: meta
+          json_schema:
+            type: object
+            additionalProperties:
+              type: string
+      outputs_def:
+        - handle: title
+          description: Output
+          json_schema:
+            type: string
+          nullable: true
+        - handle: author
+          json_schema:
+            type: string
+          nullable: true
+      executor:
+        name: python
+        options:
+          entry: scriptlets/+python#3.py
+    title: Extract name & author
+    icon: ":logos:python:"
+    node_id: +python#3
+    inputs_from:
+      - handle: name
+        from_node:
+          - node_id: pdf2meta#1
+            output_handle: name
+      - handle: meta
+        from_node:
+          - node_id: pdf2meta#1
+            output_handle: meta
