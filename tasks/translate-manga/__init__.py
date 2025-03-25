@@ -25,6 +25,7 @@ class Outputs(TypedDict):
   output_folder: str
 
 async def main(params: Inputs, context: Context) -> Outputs:
+  input_files = params["input_files"]
   output_folder = params["output_folder"]
   models = params["models"]
   if models is None:
@@ -45,7 +46,8 @@ async def main(params: Inputs, context: Context) -> Outputs:
   output_files: list[str] = []
   os.makedirs(output_folder, exist_ok=True)
 
-  for i, input_file_path in enumerate(params["input_files"]):
+  for i, input_file_path in enumerate(input_files):
+    context.report_progress(100.0 * (i / len(input_files)))
     with open(input_file_path, mode="rb") as file:
       image = open_image(file)
       image_format: str | None = image.format
@@ -62,6 +64,8 @@ async def main(params: Inputs, context: Context) -> Outputs:
       output_file = os.path.join(output_folder, output_file_name)
       output_image.save(output_file)
       output_files.append(output_file)
+
+  context.report_progress(100.0)
 
   return {
     "output_files": output_files,
