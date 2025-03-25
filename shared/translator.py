@@ -1,7 +1,7 @@
 import re
 import io
 
-from typing import final, cast, Any
+from typing import final, cast, Any, Callable
 from collections.abc import Generator
 from oocana import Context
 
@@ -9,6 +9,8 @@ from shared.manga_translator import SourceLanguage, TargetLanguage
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage, BaseMessageChunk
 
+
+ProgressReporter = Callable[[float], None]
 
 @final
 class Translator:
@@ -18,6 +20,7 @@ class Translator:
       context: Context,
       source_language: SourceLanguage,
       target_language: TargetLanguage,
+      report_progress: ProgressReporter,
     ) -> None:
 
     env = context.oomol_llm_env
@@ -31,6 +34,7 @@ class Translator:
     )
     self._source_language: SourceLanguage = source_language
     self._target_language: TargetLanguage = target_language
+    self._report_progress: ProgressReporter = report_progress
 
   def translate(self, code_map: dict[str, str], queries: list[str]) -> list[str]:
     source: str = self._source_language
@@ -45,8 +49,9 @@ class Translator:
     system = self._gen_admin_prompt(source, target)
     translated_list: list[str] = []
 
-    for translated in self._translate_text_by_text(system, queries):
+    for i, translated in enumerate(self._translate_text_by_text(system, queries)):
       translated_list.append(translated)
+      self._report_progress((i + 1) / len(queries))
 
     return translated_list
 

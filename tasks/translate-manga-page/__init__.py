@@ -43,6 +43,7 @@ async def main(params: Inputs, context: Context) -> Outputs:
       context=context,
       source_language=params["source_language"],
       target_language=params["target_language"],
+      report_progress=lambda p: context.report_progress(p * 100.0),
     )
     config = create_config(translator.translate)
     manga = create_manga_translator(

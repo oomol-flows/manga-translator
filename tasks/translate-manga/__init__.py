@@ -32,11 +32,15 @@ async def main(params: Inputs, context: Context) -> Outputs:
   if models is None:
     models = "/tmp/models"
 
+  completed_files: int = 0
   translator = Translator(
     llm_model=params["llm"],
     context=context,
     source_language=params["source_language"],
     target_language=params["target_language"],
+    report_progress=lambda p: context.report_progress(
+      progress=100.0 * ((completed_files + p) / len(input_files))
+    ),
   )
   config = create_config(translator.translate)
   manga = create_manga_translator(
@@ -52,7 +56,7 @@ async def main(params: Inputs, context: Context) -> Outputs:
   os.makedirs(output_folder, exist_ok=True)
 
   for i, input_file_path in enumerate(input_files):
-    context.report_progress(100.0 * (i / len(input_files)))
+    completed_files = i
     with open(input_file_path, mode="rb") as file:
       image = open_image(file)
       image_format: str | None = image.format
