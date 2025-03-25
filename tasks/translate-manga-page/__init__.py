@@ -27,6 +27,8 @@ class Outputs(TypedDict):
   ext: ImageExt
 
 async def main(params: Inputs, context: Context) -> Outputs:
+  source_language = params["source_language"]
+  target_language = params["target_language"]
   models = params["models"]
   if models is None:
     models = "/tmp/models"
@@ -41,11 +43,11 @@ async def main(params: Inputs, context: Context) -> Outputs:
     translator = Translator(
       llm_model=params["llm"],
       context=context,
-      source_language=params["source_language"],
-      target_language=params["target_language"],
+      source_language=source_language,
+      target_language=target_language,
       report_progress=lambda p: context.report_progress(p * 100.0),
     )
-    config = create_config(translator.translate)
+    config = create_config(target_language, translator.translate)
     manga = create_manga_translator(
       use_gpu=(params["device"]=="cuda"),
       model_dir=models,

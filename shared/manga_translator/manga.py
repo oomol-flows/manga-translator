@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from manga_translator.config import RenderConfig, UpscaleConfig, DetectorConfig, ColorizerConfig, InpainterConfig, OcrConfig
 from manga_translator import MangaTranslator, Config as MangaConfig
 
+from .types import TargetLanguage
 from .translator import Translator, WrappedTranslatorConfig
 
 # clone from manga_translator.config.Config
@@ -56,7 +57,7 @@ def create_manga_translator(use_gpu: bool, model_dir: str | None) -> MangaTransl
     "prep_manual": False,
   })
 
-def create_config(translator: Translator) -> MangaConfig:
+def create_config(target_language: TargetLanguage, translator: Translator) -> MangaConfig:
   base_json: dict[str, Any] = {
     "filter_text": None,
     "render": {
@@ -81,7 +82,7 @@ def create_config(translator: Translator) -> MangaConfig:
     },
     "translator": {
       "translator": "deepseek",
-      "target_lang": "ENG",
+      "target_lang": target_language,
       "no_text_lang_skip": False,
       "skip_lang": None,
       "gpt_config": None,
