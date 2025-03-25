@@ -1,8 +1,17 @@
 inputs_def:
-  - handle: input
+  - handle: input_files
     description: Input
     json_schema:
-      contentMediaType: oomol/bin
+      type: array
+      items:
+        type: string
+        ui:widget: file
+  - handle: output_folder
+    json_schema:
+      type: string
+      ui:widget: dir
+    value:
+    nullable: true
   - handle: device
     json_schema:
       enum:
@@ -134,26 +143,21 @@ inputs_def:
           - Bahasa Indonesia
     nullable: false
 outputs_def:
-  - handle: output
-    description: Output
+  - handle: output_files
     json_schema:
-      contentMediaType: oomol/bin
-  - handle: ext
+      type: array
+      items:
+        type: string
+        ui:widget: save
+  - handle: output_folder
     json_schema:
-      enum:
-        - .jpeg
-        - .png
-        - .gif
-        - .bmp
-        - .tiff
-        - .webp
-      ui:options:
-        {}
+      type: string
+      ui:widget: dir
 ui:
-  default_width: 477.8866422073417
+  default_width: 450
 executor:
   name: python
   options:
     spawn: false
     entry: __init__.py
-title: Translate manga page
+title: Translate manga

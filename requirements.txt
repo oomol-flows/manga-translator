@@ -1,5 +1,3 @@
-natsort==8.4.0
-
 # for manga-images-translator
 networkx
 torch
