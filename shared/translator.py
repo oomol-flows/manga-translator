@@ -26,11 +26,13 @@ class Translator:
     env = context.oomol_llm_env
     model: str = llm_model["model"]
     temperature: float = float(llm_model["temperature"])
+    top_p: float = float(llm_model["top_p"])
     self._model = ChatOpenAI(
       api_key=cast(Any, env["api_key"]),
       base_url=env["base_url_v1"],
       model=model,
       temperature=temperature,
+      top_p=top_p,
     )
     self._source_language: SourceLanguage = source_language
     self._target_language: TargetLanguage = target_language
