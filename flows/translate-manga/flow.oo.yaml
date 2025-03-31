@@ -45,8 +45,8 @@ nodes:
       - handle: llm
         value:
           model: deepseek-chat
-          temperature: 0
-          top_p: 0.5
+          temperature: 1
+          top_p: 0.8
           max_tokens: 4096
   - task: pdf::images2pdf
     title: "Merge into PDF file #1"
