@@ -13,3 +13,8 @@ dependencies:
   oomol-file: 0.0.9
   oomol-preview: 0.0.3
   pdf: 0.0.8
+name: manga-translator
+displayName: Manga Translator
+repository: https://github.com/oomol-flows/manga-translator
+releaseNotes: refactor to support new oomol API
+description: Translate Manga pics & PDF
