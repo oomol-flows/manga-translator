@@ -21,7 +21,7 @@ inputs_def:
         labels:
           - CUDA
           - CPU
-    value: CPU
+    value: cpu
   - handle: llm
     json_schema:
       ui:options:
