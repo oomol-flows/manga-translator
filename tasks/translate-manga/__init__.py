@@ -34,6 +34,9 @@ async def main(params: Inputs, context: Context) -> Outputs:
   if models is None:
     models = "/tmp/models"
 
+  if len(input_files) == 0:
+    raise ValueError("No input_files provided")
+
   completed_files: int = 0
   translator = Translator(
     llm_model=params["llm"],
