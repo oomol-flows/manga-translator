@@ -61,6 +61,4 @@ fastapi==0.115.12
 pydantic==2.10.6
 python-multipart==0.0.20
 paddleocr==2.10.0
-paddlepaddle==2.6.2
-# paddlepaddle-gpu; sys_platform != 'darwin'
 rich==13.9.4

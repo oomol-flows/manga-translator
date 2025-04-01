@@ -1,4 +1,4 @@
-version: 0.1.0
+version: 0.1.1
 icon: ./icon.png
 scripts:
   # Script executed when the container is first loaded
@@ -9,12 +9,18 @@ scripts:
     apt-get install libglib2.0-0 -y
     pip install --upgrade pip
     pip install -r requirements.txt
+    if command -v nvidia-smi &> /dev/null; then
+      pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
+      pip install paddlepaddle-gpu==2.6.2
+    else
+      pip install paddlepaddle==2.6.2
+    fi
 dependencies:
-  oomol-file: 0.0.9
+  oomol-file: 0.0.10
   oomol-preview: 0.0.3
   pdf: 0.0.9
 name: manga-translator
 displayName: Manga Translator
 repository: https://github.com/oomol-flows/manga-translator
-releaseNotes: refactor to support new oomol API
+releaseNotes: support CUDA.
 description: Translate Manga pics & PDF
