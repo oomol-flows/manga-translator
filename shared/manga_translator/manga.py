@@ -1,4 +1,5 @@
 import re
+import torch
 
 from typing import cast, Any
 from pydantic import BaseModel
@@ -41,6 +42,10 @@ class Config(BaseModel):
       return self._filter_text
 
 def create_manga_translator(use_gpu: bool, model_dir: str | None) -> MangaTranslator:
+  if use_gpu and not torch.cuda.is_available():
+    use_gpu = False
+    print("Warn: CUDA is not available, use CPU instead")
+
   return MangaTranslator({
     "use_gpu": use_gpu,
     "model_dir": model_dir,

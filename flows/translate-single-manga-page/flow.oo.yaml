@@ -14,7 +14,7 @@ nodes:
       - handle: target_language
         value: CHS
       - handle: device
-        value: cpu
+        value: cuda
       - handle: llm
         value:
           model: deepseek-chat

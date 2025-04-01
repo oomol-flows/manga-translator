@@ -35,7 +35,7 @@ nodes:
       - handle: output_folder
         value:
       - handle: device
-        value: cpu
+        value: cuda
       - handle: models
         value:
       - handle: source_language
