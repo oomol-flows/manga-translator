@@ -12,7 +12,7 @@ inputs_def:
         labels:
           - CUDA
           - CPU
-    value: CPU
+    value: cpu
   - handle: models
     json_schema:
       type: string
