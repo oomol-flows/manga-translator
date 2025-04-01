@@ -1,4 +1,4 @@
-version: 0.1.0
+version: 0.1.1
 icon: ./icon.png
 scripts:
   # Script executed when the container is first loaded
@@ -22,5 +22,5 @@ dependencies:
 name: manga-translator
 displayName: Manga Translator
 repository: https://github.com/oomol-flows/manga-translator
-releaseNotes: refactor to support new oomol API
+releaseNotes: support CUDA.
 description: Translate Manga pics & PDF
