@@ -9,6 +9,12 @@ scripts:
     apt-get install libglib2.0-0 -y
     pip install --upgrade pip
     pip install -r requirements.txt
+    if command -v nvidia-smi &> /dev/null; then
+      pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
+      pip install paddlepaddle-gpu==2.6.2
+    else
+      pip install paddlepaddle==2.6.2
+    fi
 dependencies:
   oomol-file: 0.0.9
   oomol-preview: 0.0.3
