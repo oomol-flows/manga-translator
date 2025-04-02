@@ -1,4 +1,4 @@
-version: 0.1.1
+version: 0.1.2
 icon: ./icon.png
 scripts:
   # Script executed when the container is first loaded
@@ -22,5 +22,5 @@ dependencies:
 name: manga-translator
 displayName: Manga Translator
 repository: https://github.com/oomol-flows/manga-translator
-releaseNotes: support CUDA.
+releaseNotes: "fix: cannot handle JPGE."
 description: Translate Manga pics & PDF
