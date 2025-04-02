@@ -4,6 +4,7 @@ from typing import cast, Any, Literal, TypedDict
 from oocana import Context
 from PIL.Image import open, Image
 from shared.translator import Translator
+from shared.image import parse_format, save_image
 from shared.manga_translator import (
   create_config,
   create_manga_translator,
@@ -40,6 +41,7 @@ async def main(params: Inputs, context: Context) -> Outputs:
     if image_format is None:
       raise ValueError("Image format is not supported")
 
+    image_format, image_ext = parse_format(image_format)
     translator = Translator(
       llm_model=params["llm"],
       context=context,
@@ -59,10 +61,10 @@ async def main(params: Inputs, context: Context) -> Outputs:
     raise ValueError("Translation failed")
 
   with io.BytesIO() as output:
-    output_image.save(output, format=image_format)
+    save_image(output_image, output, image_format)
     output_bytes = output.getvalue()
 
   return {
     "output": output_bytes,
-    "ext": cast(ImageExt, "." + image_format.lower()),
+    "ext": cast(ImageExt, image_ext),
    }
