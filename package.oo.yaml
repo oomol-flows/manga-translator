@@ -1,4 +1,4 @@
-version: 0.1.2
+version: 0.1.3
 icon: ./icon.png
 scripts:
   # Script executed when the container is first loaded
@@ -18,9 +18,9 @@ scripts:
 dependencies:
   oomol-file: 0.0.10
   oomol-preview: 0.0.3
-  pdf: 0.0.9
+  pdf: 0.0.10
 name: manga-translator
 displayName: Manga Translator
 repository: https://github.com/oomol-flows/manga-translator
-releaseNotes: "fix: cannot handle JPGE."
+releaseNotes: upgrade pdf lib
 description: Translate Manga pics & PDF
