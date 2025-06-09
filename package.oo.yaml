@@ -7,8 +7,8 @@ scripts:
     set -e
     apt-get update && apt-get install libgl1 -y
     apt-get install libglib2.0-0 -y
+    poetry install --no-root
     pip install --upgrade pip
-    pip install -r requirements.txt
     if command -v nvidia-smi &> /dev/null; then
       pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
       pip install paddlepaddle-gpu==2.6.2
