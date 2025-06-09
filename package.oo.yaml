@@ -1,4 +1,4 @@
-version: 0.1.3
+version: 0.1.4
 icon: ./icon.png
 scripts:
   # Script executed when the container is first loaded
@@ -7,8 +7,10 @@ scripts:
     set -e
     apt-get update && apt-get install libgl1 -y
     apt-get install libglib2.0-0 -y
+    poetry install --no-root
+
+    # 存在 poetry 和 pip 混用，目前没什么办法，以后优化
     pip install --upgrade pip
-    pip install -r requirements.txt
     if command -v nvidia-smi &> /dev/null; then
       pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
       pip install paddlepaddle-gpu==2.6.2
@@ -17,10 +19,10 @@ scripts:
     fi
 dependencies:
   oomol-file: 0.0.10
-  oomol-preview: 0.0.3
-  pdf: 0.0.10
+  oomol-preview: 0.0.4
+  pdf: 0.0.11
 name: manga-translator
 displayName: Manga Translator
 repository: https://github.com/oomol-flows/manga-translator
-releaseNotes: upgrade pdf lib
+releaseNotes: migrate to poetry
 description: Translate Manga pics & PDF
