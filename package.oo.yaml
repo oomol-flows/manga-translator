@@ -17,8 +17,8 @@ scripts:
     fi
 dependencies:
   oomol-file: 0.0.10
-  oomol-preview: 0.0.3
-  pdf: 0.0.10
+  oomol-preview: 0.0.4
+  pdf: 0.0.11
 name: manga-translator
 displayName: Manga Translator
 repository: https://github.com/oomol-flows/manga-translator
