@@ -1,0 +1,188 @@
+nodes:
+  - node_id: translate-manga-copy#1
+    title: "Translate pdf manga #1"
+    inputs_from:
+      - handle: pdf_path
+        value: /oomol-driver/downloads/manga.pdf
+        from_flow:
+          - input_handle: item
+      - handle: pdf_file_path
+        value: /oomol-driver/oomol-storage/new_pdf
+        from_node:
+          - node_id: +typescript#1
+            output_handle: pdf_file_path
+      - handle: device
+        value: cuda
+        from_node:
+          - node_id: +typescript#1
+            output_handle: device
+      - handle: source_language
+        value: auto
+        from_node:
+          - node_id: +typescript#1
+            output_handle: source_language
+      - handle: target_language
+        value: CHS
+        from_node:
+          - node_id: +typescript#1
+            output_handle: target_language
+    subflow: self::translate_pdf_manga
+  - node_id: +typescript#1
+    title: "TypeScript #1"
+    icon: ":skill-icons:typescript:"
+    task:
+      ui:
+        default_width: 450
+      inputs_def:
+        - handle: args
+          json_schema:
+            {}
+          kind: primitive
+          nullable: false
+      outputs_def:
+        - handle: pdf_file_path
+          json_schema:
+            type: string
+            ui:widget: save
+          kind: primitive
+          nullable: true
+        - handle: device
+          json_schema:
+            enum:
+              - cuda
+              - cpu
+            ui:options:
+              labels:
+                - CUDA
+                - CPU
+          kind: primitive
+          nullable: false
+        - handle: source_language
+          json_schema:
+            enum:
+              - auto
+              - CHS
+              - CHT
+              - CSY
+              - NLD
+              - ENG
+              - FRA
+              - DEU
+              - HUN
+              - ITA
+              - JPN
+              - KOR
+              - PLK
+              - PTB
+              - ROM
+              - RUS
+              - ESP
+              - TRK
+              - UKR
+              - VIN
+              - CNR
+              - SRP
+              - HRV
+              - ARA
+              - THA
+              - IND
+            ui:options:
+              labels:
+                - auto
+                - 简体中文
+                - 繁體中文
+                - Čeština
+                - Nederlands
+                - English
+                - Français
+                - Deutsch
+                - Magyar
+                - Italiano
+                - 日本語
+                - 한국어
+                - Polski
+                - Português
+                - Română
+                - Русский
+                - Español
+                - Türkçe
+                - Українська
+                - Tiếng Việt
+                - Crnogorski
+                - Српски
+                - Hrvatski
+                - العربية
+                - ไทย
+                - Bahasa Indonesia
+          kind: primitive
+          nullable: false
+        - handle: target_language
+          json_schema:
+            enum:
+              - CHS
+              - CHT
+              - CSY
+              - NLD
+              - ENG
+              - FRA
+              - DEU
+              - HUN
+              - ITA
+              - JPN
+              - KOR
+              - PLK
+              - PTB
+              - ROM
+              - RUS
+              - ESP
+              - TRK
+              - UKR
+              - VIN
+              - CNR
+              - SRP
+              - HRV
+              - ARA
+              - THA
+              - IND
+            ui:options:
+              labels:
+                - 简体中文
+                - 繁體中文
+                - Čeština
+                - Nederlands
+                - English
+                - Français
+                - Deutsch
+                - Magyar
+                - Italiano
+                - 日本語
+                - 한국어
+                - Polski
+                - Português
+                - Română
+                - Русский
+                - Español
+                - Türkçe
+                - Українська
+                - Tiếng Việt
+                - Crnogorski
+                - Српски
+                - Hrvatski
+                - العربية
+                - ไทย
+                - Bahasa Indonesia
+          kind: primitive
+          nullable: false
+      executor:
+        name: nodejs
+        options:
+          entry: scriptlets/+scriptlet#1.ts
+    inputs_from:
+      - handle: args
+        from_flow:
+          - input_handle: args
+outputs_from:
+  - handle: item
+    from_node:
+      - node_id: translate-manga-copy#1
+        output_handle: pdf_file_path

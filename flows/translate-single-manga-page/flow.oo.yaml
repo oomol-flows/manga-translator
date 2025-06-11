@@ -1,5 +1,5 @@
 nodes:
-  - task: self::translate-manga-page
+  - task: self::translate_single_page
     title: "Translate manga page #1"
     node_id: translate-manga-page#1
     inputs_from:

@@ -24,7 +24,7 @@ nodes:
         value: false
       - handle: absolute_path
         value: true
-  - task: self::translate-manga
+  - task: self::translate_pages
     title: "Manga #1"
     node_id: manga-invoker#1
     inputs_from:
@@ -87,11 +87,12 @@ nodes:
         json_schema:
           type: string
           ui:widget: file
+        value: /oomol-driver/oomol-storage/pdfs/咒术.pdf
       - handle: target_pdf
         json_schema:
           type: string
           ui:widget: save
-        value:
+        value: /oomol-driver/oomol-storage/tttooo
         nullable: true
     title: "Value #1"
     node_id: +value#1
