@@ -3,16 +3,16 @@
     "pdf2images#1": {
       "rfNode": {
         "position": {
-          "x": 481,
-          "y": 105.5
+          "x": 486,
+          "y": 40.5
         }
       }
     },
     "list_files_from_folder#1": {
       "rfNode": {
         "position": {
-          "x": 967,
-          "y": 65
+          "x": 972,
+          "y": 0
         }
       }
     },
@@ -20,8 +20,8 @@
       "contentWidth": 450,
       "rfNode": {
         "position": {
-          "x": 1576,
-          "y": 0
+          "x": 1581,
+          "y": 38
         }
       },
       "sections": {
@@ -37,25 +37,16 @@
     "images2pdf#1": {
       "rfNode": {
         "position": {
-          "x": 2215,
-          "y": 349.5
+          "x": 2220,
+          "y": 387.5
         }
       }
     },
     "pdf2meta#1": {
       "rfNode": {
         "position": {
-          "x": 967,
-          "y": 806.5
-        }
-      }
-    },
-    "+value#1": {
-      "contentWidth": 415,
-      "rfNode": {
-        "position": {
-          "x": 0,
-          "y": 424
+          "x": 972,
+          "y": 844.5
         }
       }
     },
@@ -63,8 +54,26 @@
       "contentWidth": 696.3799623634864,
       "rfNode": {
         "position": {
-          "x": 1453,
-          "y": 542
+          "x": 1458,
+          "y": 580
+        }
+      }
+    }
+  },
+  "pseudoNodes": {
+    "input": {
+      "rfNode": {
+        "position": {
+          "x": 0,
+          "y": 422.5
+        }
+      }
+    },
+    "output": {
+      "rfNode": {
+        "position": {
+          "x": 2706,
+          "y": 486.5
         }
       }
     }

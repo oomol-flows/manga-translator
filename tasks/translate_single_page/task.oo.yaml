@@ -166,4 +166,5 @@ executor:
   options:
     spawn: false
     entry: __init__.py
-title: Translate manga page
+title: Translate single page
+icon: ":carbon:image:"
