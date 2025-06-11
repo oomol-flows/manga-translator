@@ -2,10 +2,24 @@ nodes:
   - node_id: pdf_batch_process#4
     title: "Pdf batch process #4"
     inputs_from:
-      - handle: folder
+      - handle: source_dir
         value: /oomol-driver/oomol-storage/pdfs
       - handle: pdf_file_path
-        value: /oomol-driver/oomol-storage/new_pdf/new_pdf
+        value: /oomol-driver/oomol-storage/uu
+      - handle: device
+        value: cuda
+      - handle: source_language
+        value: JPN
+      - handle: target_language
+        value: CHS
+    subflow: self::pdf_batch_process
+  - node_id: pdf_batch_process#1
+    title: "Pdf batch process #1"
+    inputs_from:
+      - handle: source_dir
+        value: /oomol-driver/oomol-storage/pdfs
+      - handle: save_dir
+        value: /oomol-driver/oomol-storage/uu
       - handle: device
         value: cuda
       - handle: source_language

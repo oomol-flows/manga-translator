@@ -5,7 +5,7 @@ nodes:
       - handle: folder
         value: /oomol-driver/oomol-storage/pdfs
         from_flow:
-          - input_handle: folder
+          - input_handle: source_dir
       - handle: sort
         value: false
       - handle: traverse
@@ -42,32 +42,32 @@ nodes:
   - node_id: iter_args#1
     title: "Iter Args #1"
     inputs_from:
-      - handle: pdf_file_path
-        from_node:
-          []
+      - handle: save_dir
         from_flow:
-          - input_handle: pdf_file_path
-      - handle: device
+          - input_handle: save_dir
         from_node:
           []
+      - handle: device
         from_flow:
           - input_handle: device
-      - handle: source_language
         from_node:
           []
+      - handle: source_language
         from_flow:
           - input_handle: source_language
-      - handle: target_language
         from_node:
           []
+      - handle: target_language
         from_flow:
           - input_handle: target_language
+        from_node:
+          []
     task: array::iter_args
     inputs_def:
-      - handle: pdf_file_path
+      - handle: save_dir
         json_schema:
           type: string
-          ui:widget: save
+          ui:widget: dir
         kind: primitive
         nullable: true
       - handle: device
@@ -198,19 +198,20 @@ nodes:
         kind: primitive
         nullable: false
 inputs_def:
-  - handle: folder
+  - handle: source_dir
     description: Input
     json_schema:
       type: string
       ui:widget: dir
     kind: primitive
     nullable: false
-  - handle: pdf_file_path
+  - handle: save_dir
     json_schema:
       type: string
-      ui:widget: save
+      ui:widget: dir
     kind: primitive
     nullable: true
+    value:
   - handle: device
     json_schema:
       enum:

@@ -68,7 +68,7 @@ nodes:
       - handle: pdf_file_path
         value:
         from_flow:
-          - input_handle: pdf_file_path
+          - input_handle: save_dir
         from_node:
           []
       - handle: title
@@ -131,19 +131,18 @@ nodes:
             output_handle: meta
 inputs_def:
   - handle: pdf_path
+    description: Input
     json_schema:
       type: string
       ui:widget: file
     kind: primitive
     nullable: false
-    description: Input
-  - handle: pdf_file_path
+  - handle: save_dir
     json_schema:
       type: string
-      ui:widget: save
+      ui:widget: dir
     kind: primitive
     nullable: true
-    value:
   - handle: device
     json_schema:
       enum:
@@ -154,8 +153,8 @@ inputs_def:
           - CUDA
           - CPU
     kind: primitive
-    nullable: false
     value: cuda
+    nullable: false
   - handle: source_language
     json_schema:
       enum:
@@ -214,8 +213,8 @@ inputs_def:
           - ไทย
           - Bahasa Indonesia
     kind: primitive
-    nullable: false
     value: auto
+    nullable: false
   - handle: target_language
     json_schema:
       enum:
@@ -272,8 +271,8 @@ inputs_def:
           - ไทย
           - Bahasa Indonesia
     kind: primitive
-    nullable: false
     value: CHS
+    nullable: false
 outputs_def:
   - handle: pdf_file_path
     json_schema:
