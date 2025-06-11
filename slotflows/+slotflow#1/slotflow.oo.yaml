@@ -6,11 +6,6 @@ nodes:
         value: /oomol-driver/downloads/manga.pdf
         from_flow:
           - input_handle: item
-      - handle: pdf_file_path
-        value: /oomol-driver/oomol-storage/new_pdf
-        from_node:
-          - node_id: +typescript#1
-            output_handle: pdf_file_path
       - handle: device
         value: cuda
         from_node:
@@ -26,6 +21,10 @@ nodes:
         from_node:
           - node_id: +typescript#1
             output_handle: target_language
+      - handle: save_dir
+        from_node:
+          - node_id: +typescript#1
+            output_handle: save_dir
     subflow: self::translate_pdf_manga
   - node_id: +typescript#1
     title: "TypeScript #1"
@@ -40,10 +39,10 @@ nodes:
           kind: primitive
           nullable: false
       outputs_def:
-        - handle: pdf_file_path
+        - handle: save_dir
           json_schema:
             type: string
-            ui:widget: save
+            ui:widget: dir
           kind: primitive
           nullable: true
         - handle: device
