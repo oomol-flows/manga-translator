@@ -9,9 +9,3 @@ You can set config in `tasks/translate-manga/config.json`. Options check [Config
 Translate use your own OOMOL Tokens.
 
 First run will download some AI Model, it will take some time.
-
-> ⚠️ **Note:** When using source code, you need to execute one more line of command in the `terminal`
-
-```shell
-./scripts/setup.sh # Execute the initialization script
-```

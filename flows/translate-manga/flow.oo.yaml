@@ -4,7 +4,6 @@ nodes:
     node_id: pdf2images#1
     inputs_from:
       - handle: pdf_path
-        value: /oomol-driver/downloads/manga.pdf
         from_node:
           - node_id: +value#1
             output_handle: source_pdf
@@ -24,7 +23,7 @@ nodes:
         value: false
       - handle: absolute_path
         value: true
-  - task: self::translate_pages
+  - task: self::translate-manga
     title: "Manga #1"
     node_id: manga-invoker#1
     inputs_from:
@@ -87,12 +86,11 @@ nodes:
         json_schema:
           type: string
           ui:widget: file
-        value: /oomol-driver/oomol-storage/book/manga.pdf
       - handle: target_pdf
         json_schema:
           type: string
           ui:widget: save
-        value: /oomol-driver/oomol-storage/test
+        value:
         nullable: true
     title: "Value #1"
     node_id: +value#1

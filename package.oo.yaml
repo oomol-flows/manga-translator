@@ -1,4 +1,4 @@
-version: 0.1.5
+version: 0.1.4
 icon: ./icon.png
 scripts:
   # Script executed when the container is first loaded
@@ -18,12 +18,11 @@ scripts:
       pip install paddlepaddle==2.6.2
     fi
 dependencies:
-  oomol-file: 0.0.11
+  oomol-file: 0.0.10
   oomol-preview: 0.0.4
-  pdf: 0.0.13
-  array: 0.0.9
+  pdf: 0.0.11
 name: manga-translator
 displayName: Manga Translator
 repository: https://github.com/oomol-flows/manga-translator
-releaseNotes: update pdf batch
+releaseNotes: migrate to poetry
 description: Translate Manga pics & PDF
