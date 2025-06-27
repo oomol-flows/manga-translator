@@ -170,4 +170,4 @@ executor:
   options:
     spawn: false
     entry: __init__.py
-title: Translate manga
+title: Translate manga images

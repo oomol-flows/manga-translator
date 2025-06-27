@@ -49,3 +49,4 @@ nodes:
             output_handle: ext
       - handle: file_path
         value:
+icon: ":carbon:image:"
