@@ -1,0 +1,24 @@
+nodes:
+  - node_id: translate-manga-pdf#2
+    title: "translate-manga-pdf #2"
+    inputs_from:
+      - handle: pdf_path
+      - handle: pdf_file_path
+        value:
+      - handle: device
+        value: cuda
+      - handle: models
+        value: null
+      - handle: source_language
+        value: auto
+      - handle: target_language
+        value: CHS
+      - handle: llm
+        value:
+          model: deepseek-v3-250324
+          temperature: 1
+          top_p: 0.8
+          max_tokens: 4096
+    subflow: self::translate-manga-pdf
+title: translate-manga-pdf
+icon: ":carbon:document-pdf:"
