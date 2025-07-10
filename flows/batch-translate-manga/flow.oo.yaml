@@ -338,5 +338,5 @@ nodes:
               - CPU
         value: cpu
         nullable: false
-title: batch-translate-manga
+title: batch translate manga
 icon: ":carbon:batch-job:"

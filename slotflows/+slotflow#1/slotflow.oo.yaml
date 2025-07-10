@@ -9,7 +9,7 @@ nodes:
       - handle: pdf_file_path
         value: /oomol-driver/oomol-storage/pdfs/pdfs
         from_flow:
-          - input_handle: pdf_files_dir
+          []
       - handle: device
         value: cuda
         from_flow:

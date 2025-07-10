@@ -134,7 +134,7 @@ nodes:
         from_node:
           - node_id: pdf2meta#1
             output_handle: meta
-title: Translate-manga-pdf
+title: Translate manga PDF
 inputs_def:
   - handle: pdf_path
     description: Input

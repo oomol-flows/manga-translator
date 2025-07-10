@@ -20,5 +20,5 @@ nodes:
           top_p: 0.8
           max_tokens: 4096
     subflow: self::translate-manga-pdf
-title: translate-manga-pdf
+title: translate manga PDF
 icon: ":carbon:document-pdf:"
