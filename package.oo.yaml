@@ -20,7 +20,6 @@ scripts:
 dependencies:
   oomol-file: 0.0.13
   oomol-preview: 0.0.4
-  pdf: 0.0.13
   array: 0.1.0
   manga-tools: 0.0.1
 name: manga-translator
