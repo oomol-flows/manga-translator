@@ -22,6 +22,7 @@ dependencies:
   oomol-preview: 0.0.4
   pdf: 0.0.13
   array: 0.1.0
+  manga-tools: 0.0.1
 name: manga-translator
 displayName: Manga Translator
 repository: https://github.com/oomol-flows/manga-translator

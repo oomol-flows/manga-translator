@@ -1,0 +1,65 @@
+{
+  "nodes": {
+    "manga-invoker#1": {
+      "contentWidth": 450,
+      "rfNode": {
+        "position": {
+          "x": 1335.5178083934957,
+          "y": 122.37172377048107
+        }
+      },
+      "sections": {
+        "inputs": {
+          "collapsed": {
+            "input_files": {
+              "[]": true
+            }
+          }
+        }
+      }
+    },
+    "unarchive2images#1": {
+      "rfNode": {
+        "position": {
+          "x": 773.5105793860646,
+          "y": 420.73512272480355
+        }
+      }
+    },
+    "archive#1": {
+      "rfNode": {
+        "position": {
+          "x": 1979.60948387164,
+          "y": 492.12366990786535
+        }
+      }
+    },
+    "+python#1": {
+      "contentWidth": 600.5593667724036,
+      "rfNode": {
+        "position": {
+          "x": 1248.6440281946982,
+          "y": 762.7351227248035
+        }
+      }
+    }
+  },
+  "pseudoNodes": {
+    "input": {
+      "rfNode": {
+        "position": {
+          "x": 203.39542751595877,
+          "y": 137.43390417605383
+        }
+      }
+    },
+    "output": {
+      "rfNode": {
+        "position": {
+          "x": 2457.769294713074,
+          "y": 744.1236699078654
+        }
+      }
+    }
+  }
+}

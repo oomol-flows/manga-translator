@@ -1,39 +1,12 @@
 nodes:
-  - task: pdf::pdf2images
-    title: "pdf2images #1"
-    node_id: pdf2images#1
-    inputs_from:
-      - handle: pdf_path
-        from_flow:
-          - input_handle: pdf_path
-        from_node:
-          []
-      - handle: image_dir
-        value:
-        from_flow:
-          - input_handle: image_dir
-  - task: oomol-file::list_files_from_folder
-    title: "List files from folder #1"
-    node_id: list_files_from_folder#1
-    inputs_from:
-      - handle: folder
-        from_node:
-          - node_id: pdf2images#1
-            output_handle: image_dir
-      - handle: sort
-        value: true
-      - handle: traverse
-        value: false
-      - handle: absolute_path
-        value: true
   - task: self::translate-manga-images
     title: "Manga #1"
     node_id: manga-invoker#1
     inputs_from:
       - handle: input_files
         from_node:
-          - node_id: list_files_from_folder#1
-            output_handle: file_paths
+          - node_id: unarchive2images#1
+            output_handle: images
       - handle: output_folder
         value:
       - handle: device
@@ -43,7 +16,7 @@ nodes:
       - handle: models
         value:
         from_flow:
-          - input_handle: models_dir
+          - input_handle: models
       - handle: source_language
         value: auto
         from_flow:
@@ -60,100 +33,130 @@ nodes:
           max_tokens: 4096
         from_flow:
           - input_handle: llm
-  - task: pdf::images2pdf
-    title: "Merge into PDF file #1"
-    node_id: images2pdf#1
+  - node_id: unarchive2images#1
+    title: "Unarchive to images #1"
     inputs_from:
-      - handle: image_paths
+      - handle: archive_path
+        from_flow:
+          - input_handle: book_path
+    subflow: manga-tools::unarchive2images
+  - node_id: archive#1
+    title: "Archive images #1"
+    inputs_from:
+      - handle: images
         value:
           []
         from_node:
           - node_id: manga-invoker#1
             output_handle: output_files
-      - handle: pdf_file_path
-        value:
+      - handle: format
+        value: null
+        from_node:
+          - node_id: +python#1
+            output_handle: format
+      - handle: pack_path
+        value: null
         from_flow:
-          - input_handle: pdf_files_dir
-        from_node:
-          []
+          - input_handle: translated_path
       - handle: title
-        value:
+        value: null
         from_node:
-          - node_id: +python#3
+          - node_id: unarchive2images#1
             output_handle: title
       - handle: author
-        value:
+        value: null
         from_node:
-          - node_id: +python#3
+          - node_id: unarchive2images#1
             output_handle: author
-  - task: pdf::pdf2meta
-    title: "PDF to meta #1"
-    node_id: pdf2meta#1
-    inputs_from:
-      - handle: pdf
-        from_flow:
-          - input_handle: pdf_path
+      - handle: reading_order
+        value: to-right
         from_node:
-          []
-  - task:
+          - node_id: unarchive2images#1
+            output_handle: reading_order
+    task: manga-tools::archive
+  - node_id: +python#1
+    title: "Filter CBR"
+    icon: ":logos:python:"
+    task:
       ui:
         default_width: 450
       inputs_def:
-        - handle: name
-          description: Input
+        - handle: format
           json_schema:
-            type: string
-        - handle: meta
-          json_schema:
-            type: object
-            additionalProperties:
-              type: string
+            enum:
+              - cbz
+              - cbr
+              - epub
+              - pdf
+            ui:options:
+              labels:
+                - CBZ
+                - CBR
+                - EPUB
+                - PDF
+          nullable: false
       outputs_def:
-        - handle: title
-          description: Output
+        - handle: format
           json_schema:
-            type: string
-          nullable: true
-        - handle: author
-          json_schema:
-            type: string
+            enum:
+              - cbz
+              - epub
+              - pdf
+            ui:options:
+              labels:
+                - CBZ
+                - EPUB
+                - PDF
           nullable: true
       executor:
         name: python
         options:
-          entry: scriptlets/+python#3.py
-    title: Extract name & author
-    icon: ":logos:python:"
-    node_id: +python#3
+          entry: scriptlets/+scriptlet#1.py
     inputs_from:
-      - handle: name
+      - handle: format
         from_node:
-          - node_id: pdf2meta#1
-            output_handle: name
-      - handle: meta
-        from_node:
-          - node_id: pdf2meta#1
-            output_handle: meta
-title: Translate manga PDF
+          - node_id: unarchive2images#1
+            output_handle: format
+title: Translate manga book
 inputs_def:
-  - handle: pdf_path
-    description: Input
+  - handle: book_path
     json_schema:
       type: string
       ui:widget: file
+      ui:options:
+        excludeAll: false
+        filters:
+          - name: CBZ
+            extensions:
+              - cbz
+          - name: CBR
+            extensions:
+              - cbr
+          - name: EPUB
+            extensions:
+              - epub
+          - name: PDF
+            extensions:
+              - pdf
     nullable: false
-  - handle: pdf_file_path
+  - handle: translated_path
     json_schema:
       type: string
       ui:widget: save
       ui:options:
+        excludeAll: true
         filters:
-          - name: pdf
+          - name: CBZ
+            extensions:
+              - cbz
+          - name: EPUB
+            extensions:
+              - epub
+          - name: PDF
             extensions:
               - pdf
-        excludeAll: true
-    value:
     nullable: true
+    value:
   - handle: device
     json_schema:
       enum:
@@ -293,20 +296,34 @@ inputs_def:
         title: Model
       ui:widget: llm::model
     value:
-      model: deepseek-v3-250324
+      model: oomol-chat
       temperature: 1
       top_p: 0.8
       max_tokens: 4096
     nullable: false
 outputs_def:
-  - handle: pdf_file_path
+  - handle: translated_path
     json_schema:
       type: string
       ui:widget: save
+      ui:options:
+        excludeAll: true
+        filters:
+          - name: CBZ
+            extensions:
+              - cbz
+          - name: CBR
+            extensions:
+              - cbr
+          - name: EPUB
+            extensions:
+              - epub
+          - name: PDF
+            extensions:
+              - pdf
     nullable: false
-    description: Output
 outputs_from:
-  - handle: pdf_file_path
+  - handle: translated_path
     from_node:
-      - node_id: images2pdf#1
-        output_handle: pdf_file_path
+      - node_id: archive#1
+        output_handle: pack_path
