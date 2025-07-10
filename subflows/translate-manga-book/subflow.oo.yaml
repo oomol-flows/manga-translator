@@ -1,0 +1,329 @@
+nodes:
+  - task: self::translate-manga-images
+    title: "Manga #1"
+    node_id: manga-invoker#1
+    inputs_from:
+      - handle: input_files
+        from_node:
+          - node_id: unarchive2images#1
+            output_handle: images
+      - handle: output_folder
+        value:
+      - handle: device
+        value: cuda
+        from_flow:
+          - input_handle: device
+      - handle: models
+        value:
+        from_flow:
+          - input_handle: models
+      - handle: source_language
+        value: auto
+        from_flow:
+          - input_handle: source_language
+      - handle: target_language
+        value: CHS
+        from_flow:
+          - input_handle: target_language
+      - handle: llm
+        value:
+          model: deepseek-chat
+          temperature: 1
+          top_p: 0.8
+          max_tokens: 4096
+        from_flow:
+          - input_handle: llm
+  - node_id: unarchive2images#1
+    title: "Unarchive to images #1"
+    inputs_from:
+      - handle: archive_path
+        from_flow:
+          - input_handle: book_path
+    subflow: manga-tools::unarchive2images
+  - node_id: archive#1
+    title: "Archive images #1"
+    inputs_from:
+      - handle: images
+        value:
+          []
+        from_node:
+          - node_id: manga-invoker#1
+            output_handle: output_files
+      - handle: format
+        value: null
+        from_node:
+          - node_id: +python#1
+            output_handle: format
+      - handle: pack_path
+        value: null
+        from_flow:
+          - input_handle: translated_path
+      - handle: title
+        value: null
+        from_node:
+          - node_id: unarchive2images#1
+            output_handle: title
+      - handle: author
+        value: null
+        from_node:
+          - node_id: unarchive2images#1
+            output_handle: author
+      - handle: reading_order
+        value: to-right
+        from_node:
+          - node_id: unarchive2images#1
+            output_handle: reading_order
+    task: manga-tools::archive
+  - node_id: +python#1
+    title: "Filter CBR"
+    icon: ":logos:python:"
+    task:
+      ui:
+        default_width: 450
+      inputs_def:
+        - handle: format
+          json_schema:
+            enum:
+              - cbz
+              - cbr
+              - epub
+              - pdf
+            ui:options:
+              labels:
+                - CBZ
+                - CBR
+                - EPUB
+                - PDF
+          nullable: false
+      outputs_def:
+        - handle: format
+          json_schema:
+            enum:
+              - cbz
+              - epub
+              - pdf
+            ui:options:
+              labels:
+                - CBZ
+                - EPUB
+                - PDF
+          nullable: true
+      executor:
+        name: python
+        options:
+          entry: scriptlets/+scriptlet#1.py
+    inputs_from:
+      - handle: format
+        from_node:
+          - node_id: unarchive2images#1
+            output_handle: format
+title: Translate manga book
+inputs_def:
+  - handle: book_path
+    json_schema:
+      type: string
+      ui:widget: file
+      ui:options:
+        excludeAll: false
+        filters:
+          - name: CBZ
+            extensions:
+              - cbz
+          - name: CBR
+            extensions:
+              - cbr
+          - name: EPUB
+            extensions:
+              - epub
+          - name: PDF
+            extensions:
+              - pdf
+    nullable: false
+  - handle: translated_path
+    json_schema:
+      type: string
+      ui:widget: save
+      ui:options:
+        excludeAll: true
+        filters:
+          - name: CBZ
+            extensions:
+              - cbz
+          - name: EPUB
+            extensions:
+              - epub
+          - name: PDF
+            extensions:
+              - pdf
+    nullable: true
+    value:
+  - handle: device
+    json_schema:
+      enum:
+        - cuda
+        - cpu
+      ui:options:
+        labels:
+          - CUDA
+          - CPU
+    value: cuda
+    nullable: false
+  - handle: models
+    json_schema:
+      type: string
+      ui:widget: dir
+    value:
+    nullable: true
+  - handle: source_language
+    json_schema:
+      enum:
+        - auto
+        - CHS
+        - CHT
+        - CSY
+        - NLD
+        - ENG
+        - FRA
+        - DEU
+        - HUN
+        - ITA
+        - JPN
+        - KOR
+        - PLK
+        - PTB
+        - ROM
+        - RUS
+        - ESP
+        - TRK
+        - UKR
+        - VIN
+        - CNR
+        - SRP
+        - HRV
+        - ARA
+        - THA
+        - IND
+      ui:options:
+        labels:
+          - auto
+          - 简体中文
+          - 繁體中文
+          - Čeština
+          - Nederlands
+          - English
+          - Français
+          - Deutsch
+          - Magyar
+          - Italiano
+          - 日本語
+          - 한국어
+          - Polski
+          - Português
+          - Română
+          - Русский
+          - Español
+          - Türkçe
+          - Українська
+          - Tiếng Việt
+          - Crnogorski
+          - Српски
+          - Hrvatski
+          - العربية
+          - ไทย
+          - Bahasa Indonesia
+    value: auto
+    nullable: false
+  - handle: target_language
+    json_schema:
+      enum:
+        - CHS
+        - CHT
+        - CSY
+        - NLD
+        - ENG
+        - FRA
+        - DEU
+        - HUN
+        - ITA
+        - JPN
+        - KOR
+        - PLK
+        - PTB
+        - ROM
+        - RUS
+        - ESP
+        - TRK
+        - UKR
+        - VIN
+        - CNR
+        - SRP
+        - HRV
+        - ARA
+        - THA
+        - IND
+      ui:options:
+        labels:
+          - 简体中文
+          - 繁體中文
+          - Čeština
+          - Nederlands
+          - English
+          - Français
+          - Deutsch
+          - Magyar
+          - Italiano
+          - 日本語
+          - 한국어
+          - Polski
+          - Português
+          - Română
+          - Русский
+          - Español
+          - Türkçe
+          - Українська
+          - Tiếng Việt
+          - Crnogorski
+          - Српски
+          - Hrvatski
+          - العربية
+          - ไทย
+          - Bahasa Indonesia
+    value: CHS
+    nullable: false
+  - handle: llm
+    json_schema:
+      ui:options:
+        title: Model
+      ui:widget: llm::model
+    value:
+      model: oomol-chat
+      temperature: 1
+      top_p: 0.8
+      max_tokens: 4096
+    nullable: false
+outputs_def:
+  - handle: translated_path
+    json_schema:
+      type: string
+      ui:widget: save
+      ui:options:
+        excludeAll: true
+        filters:
+          - name: CBZ
+            extensions:
+              - cbz
+          - name: CBR
+            extensions:
+              - cbr
+          - name: EPUB
+            extensions:
+              - epub
+          - name: PDF
+            extensions:
+              - pdf
+    nullable: false
+outputs_from:
+  - handle: translated_path
+    from_node:
+      - node_id: archive#1
+        output_handle: pack_path
