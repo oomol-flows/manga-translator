@@ -26,7 +26,7 @@ def main(params: Inputs, context: Context) -> Outputs:
   if output_path is None:
     output_path = Path(context.session_dir)
     output_path = output_path / "manga-translator"
-    output_path = output_path / f"{context.job_id}"
+    output_path = output_path / context.job_id
   else:
     output_path = Path(output_path)
 
@@ -48,5 +48,5 @@ def main(params: Inputs, context: Context) -> Outputs:
     ))
   return {
     "items": items,
-    "translated_folder_path": output_path,
+    "translated_folder_path": str(output_path),
   }
