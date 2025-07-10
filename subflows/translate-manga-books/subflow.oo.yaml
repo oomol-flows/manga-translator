@@ -1,0 +1,422 @@
+inputs_def:
+  - handle: books_folder_path
+    json_schema:
+      type: string
+      ui:widget: dir
+  - handle: translated_folder_path
+    json_schema:
+      type: string
+      ui:widget: dir
+    nullable: true
+    value:
+  - handle: formats
+    json_schema:
+      type: array
+      uniqueItems: true
+      items:
+        enum:
+          - .pdf
+          - .cbz
+          - .cbr
+          - .epub
+      ui:options:
+        labels:
+          - PDF
+          - CBZ
+          - CBR
+          - EPUB
+    nullable: false
+    value:
+      - .pdf
+      - .cbz
+      - .cbr
+      - .epub
+  - handle: device
+    json_schema:
+      enum:
+        - cuda
+        - cpu
+      ui:options:
+        labels:
+          - CUDA
+          - CPU
+    nullable: false
+    value: cuda
+  - handle: models
+    json_schema:
+      type: string
+      ui:widget: dir
+    nullable: true
+    value:
+  - handle: source_language
+    json_schema:
+      enum:
+        - auto
+        - CHS
+        - CHT
+        - CSY
+        - NLD
+        - ENG
+        - FRA
+        - DEU
+        - HUN
+        - ITA
+        - JPN
+        - KOR
+        - PLK
+        - PTB
+        - ROM
+        - RUS
+        - ESP
+        - TRK
+        - UKR
+        - VIN
+        - CNR
+        - SRP
+        - HRV
+        - ARA
+        - THA
+        - IND
+      ui:options:
+        labels:
+          - auto
+          - 简体中文
+          - 繁體中文
+          - Čeština
+          - Nederlands
+          - English
+          - Français
+          - Deutsch
+          - Magyar
+          - Italiano
+          - 日本語
+          - 한국어
+          - Polski
+          - Português
+          - Română
+          - Русский
+          - Español
+          - Türkçe
+          - Українська
+          - Tiếng Việt
+          - Crnogorski
+          - Српски
+          - Hrvatski
+          - العربية
+          - ไทย
+          - Bahasa Indonesia
+    nullable: false
+    value: auto
+  - handle: target_language
+    json_schema:
+      enum:
+        - CHS
+        - CHT
+        - CSY
+        - NLD
+        - ENG
+        - FRA
+        - DEU
+        - HUN
+        - ITA
+        - JPN
+        - KOR
+        - PLK
+        - PTB
+        - ROM
+        - RUS
+        - ESP
+        - TRK
+        - UKR
+        - VIN
+        - CNR
+        - SRP
+        - HRV
+        - ARA
+        - THA
+        - IND
+      ui:options:
+        labels:
+          - 简体中文
+          - 繁體中文
+          - Čeština
+          - Nederlands
+          - English
+          - Français
+          - Deutsch
+          - Magyar
+          - Italiano
+          - 日本語
+          - 한국어
+          - Polski
+          - Português
+          - Română
+          - Русский
+          - Español
+          - Türkçe
+          - Українська
+          - Tiếng Việt
+          - Crnogorski
+          - Српски
+          - Hrvatski
+          - العربية
+          - ไทย
+          - Bahasa Indonesia
+    nullable: false
+  - handle: llm
+    json_schema:
+      ui:options:
+        title: Model
+      ui:widget: llm::model
+    value:
+      model: oomol-chat
+      temperature: 0
+      top_p: 0.5
+      max_tokens: 4096
+outputs_def:
+  - handle: translated_folder_path
+    json_schema:
+      type: array
+      items:
+        type: string
+        ui:widget: dir
+    nullable: false
+nodes:
+  - node_id: +python#1
+    title: "Search manga files"
+    icon: ":logos:python:"
+    task:
+      ui:
+        default_width: 450
+      inputs_def:
+        - handle: books_folder_path
+          json_schema:
+            type: string
+            ui:widget: dir
+          nullable: false
+        - handle: translated_folder_path
+          json_schema:
+            type: string
+            ui:widget: dir
+          nullable: true
+        - handle: formats
+          json_schema:
+            type: array
+            uniqueItems: true
+            items:
+              enum:
+                - .pdf
+                - .cbz
+                - .cbr
+                - .epub
+            ui:options:
+              labels:
+                - PDF
+                - CBZ
+                - CBR
+                - EPUB
+          nullable: false
+      outputs_def:
+        - handle: items
+          json_schema:
+            type: array
+            items:
+              type: array
+              items:
+                type: object
+                additionalProperties: false
+                properties:
+                  input:
+                    type: string
+                  output:
+                    type: string
+        - handle: translated_folder_path
+          json_schema:
+            type: array
+            items:
+              type: string
+              ui:widget: dir
+      executor:
+        name: python
+        options:
+          entry: scriptlets/+scriptlet#1.py
+    inputs_from:
+      - handle: books_folder_path
+        from_flow:
+          - input_handle: books_folder_path
+      - handle: translated_folder_path
+        value:
+        from_flow:
+          - input_handle: translated_folder_path
+      - handle: formats
+        from_flow:
+          - input_handle: formats
+  - node_id: map#1
+    title: "Map #1"
+    inputs_from:
+      - handle: array
+        from_node:
+          - node_id: +python#1
+            output_handle: items
+    subflow: array::map
+    slots:
+      - slot_node_id: +slot#2
+        slotflow: self::+slotflow#1
+        inputs_from:
+          - handle: device
+            from_flow:
+              - input_handle: device
+          - handle: models
+            from_flow:
+              - input_handle: models
+          - handle: source_language
+            from_flow:
+              - input_handle: source_language
+          - handle: target_language
+            from_flow:
+              - input_handle: target_language
+          - handle: llm
+            from_flow:
+              - input_handle: llm
+        inputs_def:
+          - handle: device
+            json_schema:
+              enum:
+                - cuda
+                - cpu
+              ui:options:
+                labels:
+                  - CUDA
+                  - CPU
+            nullable: false
+          - handle: models
+            json_schema:
+              type: string
+              ui:widget: dir
+            nullable: true
+          - handle: source_language
+            json_schema:
+              enum:
+                - auto
+                - CHS
+                - CHT
+                - CSY
+                - NLD
+                - ENG
+                - FRA
+                - DEU
+                - HUN
+                - ITA
+                - JPN
+                - KOR
+                - PLK
+                - PTB
+                - ROM
+                - RUS
+                - ESP
+                - TRK
+                - UKR
+                - VIN
+                - CNR
+                - SRP
+                - HRV
+                - ARA
+                - THA
+                - IND
+              ui:options:
+                labels:
+                  - auto
+                  - 简体中文
+                  - 繁體中文
+                  - Čeština
+                  - Nederlands
+                  - English
+                  - Français
+                  - Deutsch
+                  - Magyar
+                  - Italiano
+                  - 日本語
+                  - 한국어
+                  - Polski
+                  - Português
+                  - Română
+                  - Русский
+                  - Español
+                  - Türkçe
+                  - Українська
+                  - Tiếng Việt
+                  - Crnogorski
+                  - Српски
+                  - Hrvatski
+                  - العربية
+                  - ไทย
+                  - Bahasa Indonesia
+            nullable: false
+          - handle: target_language
+            json_schema:
+              enum:
+                - CHS
+                - CHT
+                - CSY
+                - NLD
+                - ENG
+                - FRA
+                - DEU
+                - HUN
+                - ITA
+                - JPN
+                - KOR
+                - PLK
+                - PTB
+                - ROM
+                - RUS
+                - ESP
+                - TRK
+                - UKR
+                - VIN
+                - CNR
+                - SRP
+                - HRV
+                - ARA
+                - THA
+                - IND
+              ui:options:
+                labels:
+                  - 简体中文
+                  - 繁體中文
+                  - Čeština
+                  - Nederlands
+                  - English
+                  - Français
+                  - Deutsch
+                  - Magyar
+                  - Italiano
+                  - 日本語
+                  - 한국어
+                  - Polski
+                  - Português
+                  - Română
+                  - Русский
+                  - Español
+                  - Türkçe
+                  - Українська
+                  - Tiếng Việt
+                  - Crnogorski
+                  - Српски
+                  - Hrvatski
+                  - العربية
+                  - ไทย
+                  - Bahasa Indonesia
+            nullable: false
+          - handle: llm
+            json_schema:
+              ui:options:
+                title: Model
+              ui:widget: llm::model
+            nullable: false
+title: Translate manga books (batch)
+outputs_from:
+  - handle: translated_folder_path
+    from_node:
+      - node_id: +python#1
+        output_handle: translated_folder_path

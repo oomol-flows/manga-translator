@@ -1,0 +1,28 @@
+title: translate manga books (batch)
+nodes:
+  - node_id: translate-manga-books#1
+    title: "Translate manga books (batch) #1"
+    inputs_from:
+      - handle: books_folder_path
+      - handle: translated_folder_path
+        value: null
+      - handle: formats
+        value:
+          - .pdf
+          - .cbz
+          - .cbr
+          - .epub
+      - handle: device
+        value: cuda
+      - handle: models
+        value: null
+      - handle: source_language
+        value: auto
+      - handle: target_language
+      - handle: llm
+        value:
+          model: oomol-chat
+          temperature: 0
+          top_p: 0.5
+          max_tokens: 4096
+    subflow: self::translate-manga-books

@@ -1,0 +1,45 @@
+{
+  "nodes": {
+    "+python#1": {
+      "contentWidth": 557.9345541136648,
+      "rfNode": {
+        "position": {
+          "x": 773.5215954012449,
+          "y": -123.37357618919945
+        }
+      },
+      "sections": {
+        "scriptlet": {
+          "manualHeight": 919.1560735886559
+        }
+      }
+    },
+    "map#1": {
+      "rfNode": {
+        "position": {
+          "x": 1514.7519681537553,
+          "y": -106.67816462548555
+        }
+      }
+    }
+  },
+  "pseudoNodes": {
+    "input": {
+      "contentWidth": 598.1024653455111,
+      "rfNode": {
+        "position": {
+          "x": 0,
+          "y": -100
+        }
+      }
+    },
+    "output": {
+      "rfNode": {
+        "position": {
+          "x": 2021.1221634460146,
+          "y": 261.400634240533
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "nodes": {
+    "translate-manga-book#1": {
+      "rfNode": {
+        "position": {
+          "x": 1027.1344453024892,
+          "y": -136.42681370431558
+        }
+      }
+    },
+    "object-extractor#1": {
+      "rfNode": {
+        "position": {
+          "x": 504.71851644241167,
+          "y": -297.40247276832775
+        }
+      }
+    }
+  },
+  "pseudoNodes": {
+    "input": {
+      "rfNode": {
+        "position": {
+          "x": 0,
+          "y": -100
+        }
+      }
+    },
+    "output": {
+      "rfNode": {
+        "position": {
+          "x": 1542.9913389327023,
+          "y": -136.42681370431558
+        }
+      }
+    }
+  }
+}
