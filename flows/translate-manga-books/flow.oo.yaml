@@ -19,6 +19,7 @@ nodes:
       - handle: source_language
         value: auto
       - handle: target_language
+        value: CHS
       - handle: llm
         value:
           model: oomol-chat
@@ -26,3 +27,4 @@ nodes:
           top_p: 0.5
           max_tokens: 4096
     subflow: self::translate-manga-books
+icon: ":carbon:stacked-scrolling-1:"
