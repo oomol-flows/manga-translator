@@ -21,4 +21,4 @@ nodes:
           max_tokens: 4096
     subflow: self::translate-manga-book
 title: translate manga book
-icon: ":carbon:document-pdf:"
+icon: ":carbon:book:"

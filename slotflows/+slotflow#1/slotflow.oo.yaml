@@ -1,0 +1,59 @@
+nodes:
+  - node_id: translate-manga-book#1
+    title: "Translate manga book #1"
+    inputs_from:
+      - handle: book_path
+        from_node:
+          - node_id: object-extractor#1
+            output_handle: input
+      - handle: translated_path
+        value: null
+        from_node:
+          - node_id: object-extractor#1
+            output_handle: output
+      - handle: device
+        value: cuda
+        from_flow:
+          - input_handle: device
+      - handle: models
+        value: null
+        from_flow:
+          - input_handle: models
+      - handle: source_language
+        value: auto
+        from_flow:
+          - input_handle: source_language
+      - handle: target_language
+        value: CHS
+        from_flow:
+          - input_handle: target_language
+      - handle: llm
+        value:
+          model: oomol-chat
+          temperature: 1
+          top_p: 0.8
+          max_tokens: 4096
+        from_flow:
+          - input_handle: llm
+    subflow: self::translate-manga-book
+  - node_id: object-extractor#1
+    title: "Extract object #1"
+    inputs_from:
+      - handle: object
+        from_flow:
+          - input_handle: item
+      - handle: disable_additional_properties
+        value: true
+    task: oomol-transform::object-extractor
+    outputs_def:
+      - handle: input
+        json_schema:
+          type: string
+      - handle: output
+        json_schema:
+          type: string
+outputs_from:
+  - handle: item
+    from_node:
+      - node_id: translate-manga-book#1
+        output_handle: translated_path
