@@ -7,6 +7,13 @@
           "x": 516,
           "y": 0
         }
+      },
+      "sections": {
+        "inputs": {
+          "groupCollapsed": {
+            "more": true
+          }
+        }
       }
     },
     "file_to_binary#1": {

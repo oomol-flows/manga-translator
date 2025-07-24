@@ -12,25 +12,6 @@ inputs_def:
       ui:widget: dir
     value:
     nullable: true
-  - handle: device
-    json_schema:
-      enum:
-        - cuda
-        - cpu
-      ui:options:
-        labels:
-          - CUDA
-          - CPU
-  - handle: llm
-    json_schema:
-      ui:options:
-        title: Model
-      ui:widget: llm::model
-    value:
-      model: deepseek-chat
-      temperature: 1
-      top_p: 0.8
-      max_tokens: 4096
   - handle: source_language
     json_schema:
       enum:
@@ -89,6 +70,8 @@ inputs_def:
           - ไทย
           - Bahasa Indonesia
     value: auto
+  - group: more
+    collapsed: true
   - handle: target_language
     json_schema:
       enum:
@@ -145,6 +128,25 @@ inputs_def:
           - ไทย
           - Bahasa Indonesia
     nullable: false
+  - handle: device
+    json_schema:
+      enum:
+        - cuda
+        - cpu
+      ui:options:
+        labels:
+          - CUDA
+          - CPU
+  - handle: llm
+    json_schema:
+      ui:options:
+        title: Model
+      ui:widget: llm::model
+    value:
+      model: deepseek-chat
+      temperature: 1
+      top_p: 0.8
+      max_tokens: 4096
 outputs_def:
   - handle: output_files
     json_schema:
@@ -157,7 +159,7 @@ outputs_def:
       type: string
       ui:widget: dir
 ui:
-  default_width: 450
+  default_width: 494.8602769400437
 executor:
   name: python
   options:

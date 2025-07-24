@@ -13,10 +13,10 @@ from oocana import LLMModelOptions
 class Inputs(typing.TypedDict):
   input_files: list[str]
   output_folder: str | None
-  device: typing.Literal["cuda", "cpu"]
-  llm: LLMModelOptions
   source_language: typing.Literal["auto", "CHS", "CHT", "CSY", "NLD", "ENG", "FRA", "DEU", "HUN", "ITA", "JPN", "KOR", "PLK", "PTB", "ROM", "RUS", "ESP", "TRK", "UKR", "VIN", "CNR", "SRP", "HRV", "ARA", "THA", "IND"]
   target_language: typing.Literal["CHS", "CHT", "CSY", "NLD", "ENG", "FRA", "DEU", "HUN", "ITA", "JPN", "KOR", "PLK", "PTB", "ROM", "RUS", "ESP", "TRK", "UKR", "VIN", "CNR", "SRP", "HRV", "ARA", "THA", "IND"]
+  device: typing.Literal["cuda", "cpu"]
+  llm: LLMModelOptions
 class Outputs(typing.TypedDict):
   output_files: list[str]
   output_folder: str
