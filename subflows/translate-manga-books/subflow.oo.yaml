@@ -1,15 +1,19 @@
 inputs_def:
   - handle: books_folder_path
+    description: The searched folder path, all manga files inside will be translated
     json_schema:
       type: string
       ui:widget: dir
   - handle: translated_folder_path
+    description: The translated manga files will be saved in this folder. If you do
+      not fill in this field, specify a specific folder.
     json_schema:
       type: string
       ui:widget: dir
     value:
     nullable: true
   - handle: target_language
+    description: translated language
     json_schema:
       enum:
         - CHS
@@ -68,6 +72,8 @@ inputs_def:
   - group: more
     collapsed: true
   - handle: source_language
+    description: The source language of the image, if set to auto, it will be
+      automatically recognized
     json_schema:
       enum:
         - auto
@@ -127,6 +133,8 @@ inputs_def:
     value: auto
     nullable: false
   - handle: device
+    description: Whether to use hardware acceleration (CUDA) to recognize images,
+      otherwise only use the CPU
     json_schema:
       enum:
         - cuda
@@ -138,6 +146,8 @@ inputs_def:
     value: cuda
     nullable: false
   - handle: formats
+    description: Which formats of manga files to translate (multiple selections),
+      unselected formats will be ignored.
     json_schema:
       type: array
       uniqueItems: true
@@ -171,6 +181,7 @@ inputs_def:
       max_tokens: 4096
 outputs_def:
   - handle: translated_folder_path
+    description: The translated manga files will be saved in this folde
     json_schema:
       type: array
       items:
@@ -409,3 +420,4 @@ outputs_from:
     from_node:
       - node_id: +python#1
         output_handle: translated_folder_path
+description: Batch translate manga book files in a folder

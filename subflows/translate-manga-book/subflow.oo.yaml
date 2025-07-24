@@ -123,6 +123,7 @@ nodes:
 title: Translate manga book
 inputs_def:
   - handle: book_path
+    description: the manga book file path to be translated
     json_schema:
       type: string
       ui:widget: file
@@ -143,6 +144,10 @@ inputs_def:
               - pdf
     nullable: false
   - handle: translated_path
+    description: The file path where the manga book will be saved after translation.
+      The extension will determine the format of the translated manga book. If
+      not filled in, a special path will be specified, and the extension will be
+      the same as the original book file (but *.cbr will be changed to *.cbz).
     json_schema:
       type: string
       ui:widget: save
@@ -161,6 +166,7 @@ inputs_def:
     value:
     nullable: true
   - handle: target_language
+    description: translated language
     json_schema:
       enum:
         - CHS
@@ -219,6 +225,8 @@ inputs_def:
   - group: more
     collapsed: true
   - handle: source_language
+    description: The source language of the manga book, if set to auto, it will be
+      automatically recognized
     json_schema:
       enum:
         - auto
@@ -278,6 +286,8 @@ inputs_def:
     value: auto
     nullable: false
   - handle: device
+    description: Whether to use hardware acceleration (CUDA) to recognize images,
+      otherwise only use the CPU
     json_schema:
       enum:
         - cuda
@@ -294,13 +304,14 @@ inputs_def:
         title: Model
       ui:widget: llm::model
     value:
-      model: oomol-chat
+      model: deepseek-chat
       temperature: 1
       top_p: 0.8
       max_tokens: 4096
     nullable: false
 outputs_def:
   - handle: translated_path
+    description: The file path where the manga book will be saved after translation
     json_schema:
       type: string
       ui:widget: save
