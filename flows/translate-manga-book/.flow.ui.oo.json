@@ -1,10 +1,18 @@
 {
   "nodes": {
     "translate-manga-book#2": {
+      "contentWidth": 490.6770063962943,
       "rfNode": {
         "position": {
           "x": 147.29381047186712,
           "y": -21.485984007273974
+        }
+      },
+      "sections": {
+        "inputs": {
+          "groupCollapsed": {
+            "more": true
+          }
         }
       }
     }

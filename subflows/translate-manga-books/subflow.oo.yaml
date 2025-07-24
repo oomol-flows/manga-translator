@@ -7,47 +7,66 @@ inputs_def:
     json_schema:
       type: string
       ui:widget: dir
+    value:
     nullable: true
-    value:
-  - handle: formats
-    json_schema:
-      type: array
-      uniqueItems: true
-      items:
-        enum:
-          - .pdf
-          - .cbz
-          - .cbr
-          - .epub
-      ui:options:
-        labels:
-          - PDF
-          - CBZ
-          - CBR
-          - EPUB
-    nullable: false
-    value:
-      - .pdf
-      - .cbz
-      - .cbr
-      - .epub
-  - handle: device
+  - handle: target_language
     json_schema:
       enum:
-        - cuda
-        - cpu
+        - CHS
+        - CHT
+        - CSY
+        - NLD
+        - ENG
+        - FRA
+        - DEU
+        - HUN
+        - ITA
+        - JPN
+        - KOR
+        - PLK
+        - PTB
+        - ROM
+        - RUS
+        - ESP
+        - TRK
+        - UKR
+        - VIN
+        - CNR
+        - SRP
+        - HRV
+        - ARA
+        - THA
+        - IND
       ui:options:
         labels:
-          - CUDA
-          - CPU
+          - 简体中文
+          - 繁體中文
+          - Čeština
+          - Nederlands
+          - English
+          - Français
+          - Deutsch
+          - Magyar
+          - Italiano
+          - 日本語
+          - 한국어
+          - Polski
+          - Português
+          - Română
+          - Русский
+          - Español
+          - Türkçe
+          - Українська
+          - Tiếng Việt
+          - Crnogorski
+          - Српски
+          - Hrvatski
+          - العربية
+          - ไทย
+          - Bahasa Indonesia
     nullable: false
-    value: cuda
-  - handle: models
-    json_schema:
-      type: string
-      ui:widget: dir
-    nullable: true
-    value:
+  - group: more
+    collapsed: true
   - handle: source_language
     json_schema:
       enum:
@@ -105,63 +124,40 @@ inputs_def:
           - العربية
           - ไทย
           - Bahasa Indonesia
-    nullable: false
     value: auto
-  - handle: target_language
+    nullable: false
+  - handle: device
     json_schema:
       enum:
-        - CHS
-        - CHT
-        - CSY
-        - NLD
-        - ENG
-        - FRA
-        - DEU
-        - HUN
-        - ITA
-        - JPN
-        - KOR
-        - PLK
-        - PTB
-        - ROM
-        - RUS
-        - ESP
-        - TRK
-        - UKR
-        - VIN
-        - CNR
-        - SRP
-        - HRV
-        - ARA
-        - THA
-        - IND
+        - cuda
+        - cpu
       ui:options:
         labels:
-          - 简体中文
-          - 繁體中文
-          - Čeština
-          - Nederlands
-          - English
-          - Français
-          - Deutsch
-          - Magyar
-          - Italiano
-          - 日本語
-          - 한국어
-          - Polski
-          - Português
-          - Română
-          - Русский
-          - Español
-          - Türkçe
-          - Українська
-          - Tiếng Việt
-          - Crnogorski
-          - Српски
-          - Hrvatski
-          - العربية
-          - ไทย
-          - Bahasa Indonesia
+          - CUDA
+          - CPU
+    value: cuda
+    nullable: false
+  - handle: formats
+    json_schema:
+      type: array
+      uniqueItems: true
+      items:
+        enum:
+          - .pdf
+          - .cbz
+          - .cbr
+          - .epub
+      ui:options:
+        labels:
+          - PDF
+          - CBZ
+          - CBR
+          - EPUB
+    value:
+      - .pdf
+      - .cbz
+      - .cbr
+      - .epub
     nullable: false
   - handle: llm
     json_schema:
@@ -262,22 +258,6 @@ nodes:
     slots:
       - slot_node_id: +slot#2
         slotflow: self::+slotflow#1
-        inputs_from:
-          - handle: device
-            from_flow:
-              - input_handle: device
-          - handle: models
-            from_flow:
-              - input_handle: models
-          - handle: source_language
-            from_flow:
-              - input_handle: source_language
-          - handle: target_language
-            from_flow:
-              - input_handle: target_language
-          - handle: llm
-            from_flow:
-              - input_handle: llm
         inputs_def:
           - handle: device
             json_schema:
@@ -289,11 +269,6 @@ nodes:
                   - CUDA
                   - CPU
             nullable: false
-          - handle: models
-            json_schema:
-              type: string
-              ui:widget: dir
-            nullable: true
           - handle: source_language
             json_schema:
               enum:
@@ -414,6 +389,20 @@ nodes:
                 title: Model
               ui:widget: llm::model
             nullable: false
+        inputs_from:
+          - handle: device
+            from_flow:
+              - input_handle: device
+          - handle: source_language
+            from_flow:
+              - input_handle: source_language
+          - handle: target_language
+            from_flow:
+              - input_handle: target_language
+          - handle: llm
+            from_flow:
+              - input_handle: llm
+    progressWeight: 100
 title: Translate manga books (batch)
 outputs_from:
   - handle: translated_folder_path

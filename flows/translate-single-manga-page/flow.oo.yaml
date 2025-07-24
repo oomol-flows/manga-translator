@@ -7,12 +7,9 @@ nodes:
         from_node:
           - node_id: file_to_binary#1
             output_handle: binary
-      - handle: models
-        value:
       - handle: source_language
         value: auto
       - handle: target_language
-        value: CHS
       - handle: device
         value: cuda
       - handle: llm

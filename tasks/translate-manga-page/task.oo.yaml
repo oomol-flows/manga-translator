@@ -3,22 +3,64 @@ inputs_def:
     description: Input
     json_schema:
       contentMediaType: oomol/bin
-  - handle: device
+  - handle: target_language
     json_schema:
       enum:
-        - cuda
-        - cpu
+        - CHS
+        - CHT
+        - CSY
+        - NLD
+        - ENG
+        - FRA
+        - DEU
+        - HUN
+        - ITA
+        - JPN
+        - KOR
+        - PLK
+        - PTB
+        - ROM
+        - RUS
+        - ESP
+        - TRK
+        - UKR
+        - VIN
+        - CNR
+        - SRP
+        - HRV
+        - ARA
+        - THA
+        - IND
       ui:options:
         labels:
-          - CUDA
-          - CPU
-    value: cpu
-  - handle: models
-    json_schema:
-      type: string
-      ui:widget: dir
-    value:
-    nullable: true
+          - 简体中文
+          - 繁體中文
+          - Čeština
+          - Nederlands
+          - English
+          - Français
+          - Deutsch
+          - Magyar
+          - Italiano
+          - 日本語
+          - 한국어
+          - Polski
+          - Português
+          - Română
+          - Русский
+          - Español
+          - Türkçe
+          - Українська
+          - Tiếng Việt
+          - Crnogorski
+          - Српски
+          - Hrvatski
+          - العربية
+          - ไทย
+          - Bahasa Indonesia
+    nullable: false
+  - group: more
+    collapsed: true
   - handle: source_language
     json_schema:
       enum:
@@ -77,62 +119,16 @@ inputs_def:
           - ไทย
           - Bahasa Indonesia
     value: auto
-  - handle: target_language
+  - handle: device
     json_schema:
       enum:
-        - CHS
-        - CHT
-        - CSY
-        - NLD
-        - ENG
-        - FRA
-        - DEU
-        - HUN
-        - ITA
-        - JPN
-        - KOR
-        - PLK
-        - PTB
-        - ROM
-        - RUS
-        - ESP
-        - TRK
-        - UKR
-        - VIN
-        - CNR
-        - SRP
-        - HRV
-        - ARA
-        - THA
-        - IND
+        - cuda
+        - cpu
       ui:options:
         labels:
-          - 简体中文
-          - 繁體中文
-          - Čeština
-          - Nederlands
-          - English
-          - Français
-          - Deutsch
-          - Magyar
-          - Italiano
-          - 日本語
-          - 한국어
-          - Polski
-          - Português
-          - Română
-          - Русский
-          - Español
-          - Türkçe
-          - Українська
-          - Tiếng Việt
-          - Crnogorski
-          - Српски
-          - Hrvatski
-          - العربية
-          - ไทย
-          - Bahasa Indonesia
-    nullable: false
+          - CUDA
+          - CPU
+    value: cuda
   - handle: llm
     json_schema:
       ui:options:
@@ -158,9 +154,15 @@ outputs_def:
         - .tiff
         - .webp
       ui:options:
-        {}
+        labels:
+          - JPEG
+          - PNG
+          - GIF
+          - BMP
+          - TIFF
+          - WEBP
 ui:
-  default_width: 477.8866422073417
+  default_width: 480.462819427952
 executor:
   name: python
   options:

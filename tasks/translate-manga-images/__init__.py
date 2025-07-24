@@ -1,39 +1,33 @@
 import os
 
-from typing import cast, Any, TypedDict, Literal
+from typing import cast
 from PIL.Image import open as open_image, Image
 from oocana import Context
 from shared.translator import Translator
 from shared.image import parse_format, save_image
-from shared.manga_translator import (
-  create_config,
-  create_manga_translator,
-  SourceLanguage,
-  TargetLanguage,
-)
+from shared.manga_translator import create_config, create_manga_translator
 
-
-class Inputs(TypedDict):
+#region generated meta
+import typing
+from oocana import LLMModelOptions
+class Inputs(typing.TypedDict):
   input_files: list[str]
   output_folder: str | None
-  device: Literal["cuda", "cpu"]
-  models: str | None
-  llm: dict[str, Any]
-  source_language: SourceLanguage
-  target_language: TargetLanguage
-
-class Outputs(TypedDict):
+  target_language: typing.Literal["CHS", "CHT", "CSY", "NLD", "ENG", "FRA", "DEU", "HUN", "ITA", "JPN", "KOR", "PLK", "PTB", "ROM", "RUS", "ESP", "TRK", "UKR", "VIN", "CNR", "SRP", "HRV", "ARA", "THA", "IND"]
+  source_language: typing.Literal["auto", "CHS", "CHT", "CSY", "NLD", "ENG", "FRA", "DEU", "HUN", "ITA", "JPN", "KOR", "PLK", "PTB", "ROM", "RUS", "ESP", "TRK", "UKR", "VIN", "CNR", "SRP", "HRV", "ARA", "THA", "IND"]
+  device: typing.Literal["cuda", "cpu"]
+  llm: LLMModelOptions
+class Outputs(typing.TypedDict):
   output_files: list[str]
   output_folder: str
+#endregion
+
 
 async def main(params: Inputs, context: Context) -> Outputs:
   input_files = params["input_files"]
   output_folder = params["output_folder"]
   source_language = params["source_language"]
   target_language = params["target_language"]
-  models = params["models"]
-  if models is None:
-    models = "/tmp/models"
 
   if len(input_files) == 0:
     raise ValueError("No input_files provided")
@@ -51,7 +45,7 @@ async def main(params: Inputs, context: Context) -> Outputs:
   config = create_config(target_language, translator.translate)
   manga = create_manga_translator(
     use_gpu=(params["device"]=="cuda"),
-    model_dir=models,
+    model_dir=context.pkg_data_dir,
   )
   if output_folder is None:
     output_folder = os.path.join(

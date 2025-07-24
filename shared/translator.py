@@ -3,7 +3,7 @@ import io
 
 from typing import final, cast, Any, Callable
 from collections.abc import Generator
-from oocana import Context
+from oocana import Context, LLMModelOptions
 
 from shared.manga_translator import SourceLanguage, TargetLanguage
 from langchain_openai import ChatOpenAI
@@ -16,7 +16,7 @@ ProgressReporter = Callable[[float], None]
 class Translator:
   def __init__(
       self,
-      llm_model: dict[str, Any],
+      llm_model: LLMModelOptions,
       context: Context,
       source_language: SourceLanguage,
       target_language: TargetLanguage,

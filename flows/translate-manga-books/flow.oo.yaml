@@ -14,15 +14,12 @@ nodes:
           - .epub
       - handle: device
         value: cuda
-      - handle: models
-        value: null
       - handle: source_language
         value: auto
       - handle: target_language
-        value: CHS
       - handle: llm
         value:
-          model: oomol-chat
+          model: deepseek-chat
           temperature: 0
           top_p: 0.5
           max_tokens: 4096
