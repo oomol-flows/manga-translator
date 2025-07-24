@@ -1,6 +1,7 @@
 {
   "nodes": {
     "translate-manga-books#1": {
+      "contentWidth": 573.505859375,
       "rfNode": {
         "position": {
           "x": 187.00390625,

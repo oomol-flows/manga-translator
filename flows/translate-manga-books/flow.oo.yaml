@@ -17,7 +17,6 @@ nodes:
       - handle: source_language
         value: auto
       - handle: target_language
-        value: CHS
       - handle: llm
         value:
           model: deepseek-chat

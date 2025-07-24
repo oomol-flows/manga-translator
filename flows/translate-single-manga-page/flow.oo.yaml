@@ -10,7 +10,6 @@ nodes:
       - handle: source_language
         value: auto
       - handle: target_language
-        value: CHS
       - handle: device
         value: cuda
       - handle: llm
