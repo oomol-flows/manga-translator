@@ -212,7 +212,6 @@ inputs_def:
           - العربية
           - ไทย
           - Bahasa Indonesia
-    value: CHS
     nullable: false
   - group: more
     collapsed: true

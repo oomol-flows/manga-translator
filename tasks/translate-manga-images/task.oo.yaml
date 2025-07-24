@@ -12,6 +12,64 @@ inputs_def:
       ui:widget: dir
     value:
     nullable: true
+  - handle: target_language
+    json_schema:
+      enum:
+        - CHS
+        - CHT
+        - CSY
+        - NLD
+        - ENG
+        - FRA
+        - DEU
+        - HUN
+        - ITA
+        - JPN
+        - KOR
+        - PLK
+        - PTB
+        - ROM
+        - RUS
+        - ESP
+        - TRK
+        - UKR
+        - VIN
+        - CNR
+        - SRP
+        - HRV
+        - ARA
+        - THA
+        - IND
+      ui:options:
+        labels:
+          - 简体中文
+          - 繁體中文
+          - Čeština
+          - Nederlands
+          - English
+          - Français
+          - Deutsch
+          - Magyar
+          - Italiano
+          - 日本語
+          - 한국어
+          - Polski
+          - Português
+          - Română
+          - Русский
+          - Español
+          - Türkçe
+          - Українська
+          - Tiếng Việt
+          - Crnogorski
+          - Српски
+          - Hrvatski
+          - العربية
+          - ไทย
+          - Bahasa Indonesia
+    nullable: false
+  - group: more
+    collapsed: true
   - handle: source_language
     json_schema:
       enum:
@@ -70,64 +128,6 @@ inputs_def:
           - ไทย
           - Bahasa Indonesia
     value: auto
-  - group: more
-    collapsed: true
-  - handle: target_language
-    json_schema:
-      enum:
-        - CHS
-        - CHT
-        - CSY
-        - NLD
-        - ENG
-        - FRA
-        - DEU
-        - HUN
-        - ITA
-        - JPN
-        - KOR
-        - PLK
-        - PTB
-        - ROM
-        - RUS
-        - ESP
-        - TRK
-        - UKR
-        - VIN
-        - CNR
-        - SRP
-        - HRV
-        - ARA
-        - THA
-        - IND
-      ui:options:
-        labels:
-          - 简体中文
-          - 繁體中文
-          - Čeština
-          - Nederlands
-          - English
-          - Français
-          - Deutsch
-          - Magyar
-          - Italiano
-          - 日本語
-          - 한국어
-          - Polski
-          - Português
-          - Română
-          - Русский
-          - Español
-          - Türkçe
-          - Українська
-          - Tiếng Việt
-          - Crnogorski
-          - Српски
-          - Hrvatski
-          - العربية
-          - ไทย
-          - Bahasa Indonesia
-    nullable: false
   - handle: device
     json_schema:
       enum:
@@ -137,6 +137,7 @@ inputs_def:
         labels:
           - CUDA
           - CPU
+    value: cuda
   - handle: llm
     json_schema:
       ui:options:
