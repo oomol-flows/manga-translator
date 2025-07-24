@@ -21,7 +21,6 @@ inputs_def:
         labels:
           - CUDA
           - CPU
-    value: cpu
   - handle: llm
     json_schema:
       ui:options:
@@ -32,12 +31,6 @@ inputs_def:
       temperature: 1
       top_p: 0.8
       max_tokens: 4096
-  - handle: models
-    json_schema:
-      type: string
-      ui:widget: dir
-    value:
-    nullable: true
   - handle: source_language
     json_schema:
       enum:

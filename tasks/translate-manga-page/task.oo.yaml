@@ -12,13 +12,6 @@ inputs_def:
         labels:
           - CUDA
           - CPU
-    value: cpu
-  - handle: models
-    json_schema:
-      type: string
-      ui:widget: dir
-    value:
-    nullable: true
   - handle: source_language
     json_schema:
       enum:

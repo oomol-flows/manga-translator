@@ -1,38 +1,30 @@
 import io
 
-from typing import cast, Any, Literal, TypedDict
+from typing import cast, Literal
 from oocana import Context
 from PIL.Image import open, Image
 from shared.translator import Translator
 from shared.image import parse_format, save_image
-from shared.manga_translator import (
-  create_config,
-  create_manga_translator,
-  SourceLanguage,
-  TargetLanguage,
-)
+from shared.manga_translator import create_config, create_manga_translator
 
-
-ImageExt = Literal[".jpeg", ".png", ".gif", ".bmp", ".tiff", ".webp"]
-
-class Inputs(TypedDict):
+#region generated meta
+import typing
+from oocana import LLMModelOptions
+class Inputs(typing.TypedDict):
   input: bytes
-  device: Literal["cuda", "cpu"]
-  models: str | None
-  llm: dict[str, Any]
-  source_language: SourceLanguage
-  target_language: TargetLanguage
-
-class Outputs(TypedDict):
+  device: typing.Literal["cuda", "cpu"]
+  source_language: typing.Literal["auto", "CHS", "CHT", "CSY", "NLD", "ENG", "FRA", "DEU", "HUN", "ITA", "JPN", "KOR", "PLK", "PTB", "ROM", "RUS", "ESP", "TRK", "UKR", "VIN", "CNR", "SRP", "HRV", "ARA", "THA", "IND"]
+  target_language: typing.Literal["CHS", "CHT", "CSY", "NLD", "ENG", "FRA", "DEU", "HUN", "ITA", "JPN", "KOR", "PLK", "PTB", "ROM", "RUS", "ESP", "TRK", "UKR", "VIN", "CNR", "SRP", "HRV", "ARA", "THA", "IND"]
+  llm: LLMModelOptions
+class Outputs(typing.TypedDict):
   output: bytes
-  ext: ImageExt
+  ext: typing.Literal[".jpeg", ".png", ".gif", ".bmp", ".tiff", ".webp"]
+#endregion
+
 
 async def main(params: Inputs, context: Context) -> Outputs:
   source_language = params["source_language"]
   target_language = params["target_language"]
-  models = params["models"]
-  if models is None:
-    models = "/tmp/models"
 
   with io.BytesIO(params["input"]) as input_file:
     image = open(input_file)
@@ -52,7 +44,7 @@ async def main(params: Inputs, context: Context) -> Outputs:
     config = create_config(target_language, translator.translate)
     manga = create_manga_translator(
       use_gpu=(params["device"]=="cuda"),
-      model_dir=models,
+      model_dir=context.pkg_data_dir,
     )
     ctx = await manga.translate(image, config)
     output_image = cast(Image | None, ctx.result)
@@ -66,5 +58,5 @@ async def main(params: Inputs, context: Context) -> Outputs:
 
   return {
     "output": output_bytes,
-    "ext": cast(ImageExt, image_ext),
+    "ext": cast(Literal[".jpeg", ".png", ".gif", ".bmp", ".tiff", ".webp"], image_ext),
    }
