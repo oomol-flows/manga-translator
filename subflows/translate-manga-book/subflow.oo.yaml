@@ -54,10 +54,6 @@ nodes:
         from_node:
           - node_id: +python#1
             output_handle: format
-      - handle: pack_path
-        value: null
-        from_flow:
-          - input_handle: translated_path
       - handle: title
         value: null
         from_node:
@@ -73,6 +69,10 @@ nodes:
         from_node:
           - node_id: unarchive2images#1
             output_handle: reading_order
+      - handle: archive_path
+        value:
+        from_flow:
+          - input_handle: translated_path
     task: manga-tools::archive
   - node_id: +python#1
     title: "Filter CBR"
@@ -155,8 +155,8 @@ inputs_def:
           - name: PDF
             extensions:
               - pdf
-    nullable: true
     value:
+    nullable: true
   - handle: device
     json_schema:
       enum:
@@ -168,12 +168,6 @@ inputs_def:
           - CPU
     value: cuda
     nullable: false
-  - handle: models
-    json_schema:
-      type: string
-      ui:widget: dir
-    value:
-    nullable: true
   - handle: source_language
     json_schema:
       enum:
@@ -326,4 +320,4 @@ outputs_from:
   - handle: translated_path
     from_node:
       - node_id: archive#1
-        output_handle: pack_path
+        output_handle: archive_path

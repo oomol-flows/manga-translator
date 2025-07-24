@@ -14,8 +14,6 @@ nodes:
           - .epub
       - handle: device
         value: cuda
-      - handle: models
-        value: null
       - handle: source_language
         value: auto
       - handle: target_language

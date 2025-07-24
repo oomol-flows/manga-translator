@@ -1,14 +1,12 @@
 nodes:
   - node_id: translate-manga-book#2
-    title: "Translate manga book #2"
+    title: "Translate manga book #1"
     inputs_from:
       - handle: book_path
       - handle: translated_path
         value: null
       - handle: device
         value: cuda
-      - handle: models
-        value: null
       - handle: source_language
         value: auto
       - handle: target_language

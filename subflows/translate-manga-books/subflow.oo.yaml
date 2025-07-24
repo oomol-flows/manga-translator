@@ -7,8 +7,8 @@ inputs_def:
     json_schema:
       type: string
       ui:widget: dir
-    nullable: true
     value:
+    nullable: true
   - handle: formats
     json_schema:
       type: array
@@ -25,12 +25,12 @@ inputs_def:
           - CBZ
           - CBR
           - EPUB
-    nullable: false
     value:
       - .pdf
       - .cbz
       - .cbr
       - .epub
+    nullable: false
   - handle: device
     json_schema:
       enum:
@@ -40,14 +40,8 @@ inputs_def:
         labels:
           - CUDA
           - CPU
-    nullable: false
     value: cuda
-  - handle: models
-    json_schema:
-      type: string
-      ui:widget: dir
-    nullable: true
-    value:
+    nullable: false
   - handle: source_language
     json_schema:
       enum:
@@ -105,8 +99,8 @@ inputs_def:
           - العربية
           - ไทย
           - Bahasa Indonesia
-    nullable: false
     value: auto
+    nullable: false
   - handle: target_language
     json_schema:
       enum:
@@ -262,22 +256,6 @@ nodes:
     slots:
       - slot_node_id: +slot#2
         slotflow: self::+slotflow#1
-        inputs_from:
-          - handle: device
-            from_flow:
-              - input_handle: device
-          - handle: models
-            from_flow:
-              - input_handle: models
-          - handle: source_language
-            from_flow:
-              - input_handle: source_language
-          - handle: target_language
-            from_flow:
-              - input_handle: target_language
-          - handle: llm
-            from_flow:
-              - input_handle: llm
         inputs_def:
           - handle: device
             json_schema:
@@ -289,11 +267,6 @@ nodes:
                   - CUDA
                   - CPU
             nullable: false
-          - handle: models
-            json_schema:
-              type: string
-              ui:widget: dir
-            nullable: true
           - handle: source_language
             json_schema:
               enum:
@@ -414,6 +387,19 @@ nodes:
                 title: Model
               ui:widget: llm::model
             nullable: false
+        inputs_from:
+          - handle: device
+            from_flow:
+              - input_handle: device
+          - handle: source_language
+            from_flow:
+              - input_handle: source_language
+          - handle: target_language
+            from_flow:
+              - input_handle: target_language
+          - handle: llm
+            from_flow:
+              - input_handle: llm
 title: Translate manga books (batch)
 outputs_from:
   - handle: translated_folder_path
