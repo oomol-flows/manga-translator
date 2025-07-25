@@ -1,4 +1,4 @@
-version: 0.1.9
+version: 0.1.10
 icon: ./icon.png
 scripts:
   # Script executed when the container is first loaded
@@ -26,5 +26,5 @@ dependencies:
 name: manga-translator
 displayName: Manga Translator
 repository: https://github.com/oomol-flows/manga-translator
-releaseNotes: support CBZ, CBR, PDF, EPUB mangas
+releaseNotes: add groups & descriptions.
 description: Translate Manga pics & PDF
