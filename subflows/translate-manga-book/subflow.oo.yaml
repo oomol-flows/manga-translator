@@ -33,7 +33,7 @@ nodes:
           max_tokens: 4096
         from_flow:
           - input_handle: llm
-    progressWeight: 5
+    progress_weight: 5
   - node_id: unarchive2images#1
     title: "Unarchive to images #1"
     inputs_from:
@@ -41,7 +41,7 @@ nodes:
         from_flow:
           - input_handle: book_path
     subflow: manga-tools::unarchive2images
-    progressWeight: 5
+    progress_weight: 5
   - node_id: archive#1
     title: "Archive images #1"
     inputs_from:
@@ -76,7 +76,7 @@ nodes:
         from_flow:
           - input_handle: translated_path
     task: manga-tools::archive
-    progressWeight: 90
+    progress_weight: 90
   - node_id: +python#1
     title: "Filter CBR"
     icon: ":logos:python:"
