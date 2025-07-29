@@ -413,7 +413,7 @@ nodes:
           - handle: llm
             from_flow:
               - input_handle: llm
-    progressWeight: 100
+    progress_weight: 100
 title: Translate manga books (batch)
 outputs_from:
   - handle: translated_folder_path
