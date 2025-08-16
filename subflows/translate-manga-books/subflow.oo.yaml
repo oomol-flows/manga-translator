@@ -173,12 +173,16 @@ inputs_def:
     json_schema:
       ui:options:
         title: Model
+        tags:
+          - text
+        excludeTags:
+          - thinking
       ui:widget: llm::model
     value:
-      model: oomol-chat
-      temperature: 0
-      top_p: 0.5
-      max_tokens: 4096
+      model: deepseek-chat
+      temperature: 0.8
+      top_p: 0.6
+      max_tokens: 8192
 outputs_def:
   - handle: translated_folder_path
     description: The translated manga files will be saved in this folde
