@@ -1,0 +1,79 @@
+name: export layer
+on:
+  push:
+    tags:
+      - '**'
+
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  get-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Get version
+        id: get_version
+        run: |
+            if [ -f package.oo.yaml ]; then
+              version=$(yq eval '.version' package.oo.yaml)
+              echo "version=$version" >> "$GITHUB_OUTPUT"
+            elif [ -f package.oo.yml ]; then
+              version=$(yq eval '.version' package.oo.yml)
+              echo "version=$version" >> "$GITHUB_OUTPUT"
+            else
+              echo "No valid package file found"
+              exit 1
+            fi
+
+  package:
+    runs-on: ubuntu-latest
+    outputs:
+      name: ${{ steps.get_name.outputs.name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Get name
+        id: get_name
+        run: |
+            if [ -f package.oo.yaml ]; then
+              name=$(yq eval '.name' package.oo.yaml)
+              echo "name=$name" >> "$GITHUB_OUTPUT"
+            elif [ -f package.oo.yml ]; then
+              name=$(yq eval '.name' package.oo.yml)
+              echo "name=$name" >> "$GITHUB_OUTPUT"
+            else
+              echo "No valid package file found"
+              exit 1
+            fi
+  
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+      - name: Install oopm
+        run: npm install -g oopm
+      - name: Publish OOMOL Package
+        uses: oomol-lab/oopm-publish-action@main
+      
+
+  export-layer:
+    needs: [get-version, package, publish]
+    permissions:
+      contents: read
+      id-token: write
+
+    uses: oomol/ovmlayer-rootfs/.github/workflows/export-package-layer.yml@main
+    with:
+      package-name: ${{needs.package.outputs.name}}
+      version: "${{ needs.get-version.outputs.version }}"
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}

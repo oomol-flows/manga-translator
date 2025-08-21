@@ -1,4 +1,4 @@
-version: 0.1.11
+version: 0.1.12
 icon: ./icon.png
 scripts:
   # Script executed when the container is first loaded
@@ -26,5 +26,5 @@ dependencies:
 name: manga-translator
 displayName: Manga Translator
 repository: https://github.com/oomol-flows/manga-translator
-releaseNotes: update weight & add tags for LLM models
+releaseNotes: update version
 description: Translate Manga pics & PDF
