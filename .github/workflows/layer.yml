@@ -41,7 +41,7 @@ jobs:
   export-layer:
     strategy:
       matrix:
-        os: [buildjet-2vcpu-ubuntu-2204, buildjet-2vcpu-ubuntu-2204-arm]
+        os: [buildjet-4vcpu-ubuntu-2204, buildjet-2vcpu-ubuntu-2204-arm]
     runs-on: ${{ matrix.os }}
     needs: [arguments-check]
     steps:
@@ -71,7 +71,7 @@ jobs:
           path: ${{ runner.temp }}/export/${{ steps.arch.outputs.architecture }}-layer.zip
 
   upload-layer:
-    runs-on: buildjet-2vcpu-ubuntu-2204
+    runs-on: buildjet-4vcpu-ubuntu-2204	
     permissions:
       contents: read
       id-token: write
