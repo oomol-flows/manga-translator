@@ -39,10 +39,7 @@ jobs:
             exit 1
           fi
   export-layer:
-    strategy:
-      matrix:
-        os: [buildjet-4vcpu-ubuntu-2204, buildjet-2vcpu-ubuntu-2204-arm]
-    runs-on: ${{ matrix.os }}
+    runs-on: buildjet-2vcpu-ubuntu-2204-arm
     needs: [arguments-check]
     outputs:
       architecture: ${{ steps.arch.outputs.architecture }}
@@ -106,6 +103,6 @@ jobs:
         run: |
           set -x
           cd ${{ runner.temp }}/export
-          payload='{"amd64": "amd64-layer.zip", "arm64": "arm64-layer.zip"}'
+          payload='{"arm64": "arm64-layer.zip"}'
           echo "Payload: $payload"
           curl --fail-with-body -X PUT -H "Authorization: github-action-${{ steps.id_token.outputs.id_token }}" -H "Content-Type: application/json" -d "$payload" ${{ inputs.registry }}/-/oomol/packages/${{ inputs.package-name }}/${{ inputs.version }}/layers/file-paths
