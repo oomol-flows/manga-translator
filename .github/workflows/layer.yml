@@ -79,6 +79,7 @@ jobs:
             coredemo.setOutput('id_token', id_token)
       - name: Upload layer
         run: |
+          cd ${{ runner.temp }}/export
           response=$(curl --fail-with-body -X POST -H "Authorization: github-action-${{ steps.id_token.outputs.id_token }}" -H "Content-Type: application/json" -d "{\"fileKey\": \"${{ steps.arch.outputs.architecture }}-layer.zip\"}" ${{ inputs.registry }}/-/oomol/packages/${{ inputs.package-name }}/${{ inputs.version }}/layers/presigned-upload-url)
           curl --fail-with-body -X PUT -H "Content-Type: application/octet-stream" -T ./${{ steps.arch.outputs.architecture }}-layer.zip "$response"
 
