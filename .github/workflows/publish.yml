@@ -41,7 +41,7 @@ jobs:
   export-layer:
     strategy:
       matrix:
-        os: [buildjet-2vcpu-ubuntu-2204, buildjet-2vcpu-ubuntu-2204-arm	]
+        os: [buildjet-2vcpu-ubuntu-2204, buildjet-2vcpu-ubuntu-2204-arm]
     runs-on: ${{ matrix.os }}
     needs: [arguments-check]
     steps:
