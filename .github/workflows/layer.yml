@@ -44,6 +44,8 @@ jobs:
         os: [buildjet-4vcpu-ubuntu-2204, buildjet-2vcpu-ubuntu-2204-arm]
     runs-on: ${{ matrix.os }}
     needs: [arguments-check]
+    outputs:
+      architecture: ${{ steps.arch.outputs.architecture }}
     steps:
       - name: architecture
         run: |
