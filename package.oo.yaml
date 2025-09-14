@@ -1,4 +1,4 @@
-version: 0.1.12
+version: 0.1.13
 icon: ./icon.png
 scripts:
   # Script executed when the container is first loaded
@@ -24,7 +24,7 @@ dependencies:
   array: 0.1.1
   oomol-transform: 0.0.5
 name: manga-translator
-displayName: Manga Translator
+displayName: "%Manga Translator%"
 repository: https://github.com/oomol-flows/manga-translator
 releaseNotes: update version
-description: Translate Manga pics & PDF
+description: "%key%"
