@@ -18,11 +18,11 @@ scripts:
       pip install paddlepaddle==2.6.2
     fi
 dependencies:
-  oomol-file: 0.0.14
-  oomol-preview: 0.1.0
-  manga-tools: 0.0.2
-  array: 0.1.1
-  oomol-transform: 0.0.5
+  oomol-file: 0.0.20
+  oomol-preview: 0.1.7
+  manga-tools: 0.0.7
+  array: 0.1.2
+  oomol-transform: 0.0.7
 name: manga-translator
 displayName: "%Manga Translator%"
 repository: https://github.com/oomol-flows/manga-translator
