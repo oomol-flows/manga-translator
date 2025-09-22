@@ -1,4 +1,4 @@
-version: 0.1.14
+version: 0.1.15
 icon: ./icon.png
 scripts:
   # Script executed when the container is first loaded
@@ -20,11 +20,11 @@ scripts:
 dependencies:
   oomol-file: 0.0.20
   oomol-preview: 0.1.7
-  manga-tools: 0.0.7
+  manga-tools: 0.0.8
   array: 0.1.2
   oomol-transform: 0.0.7
 name: manga-translator
 displayName: "%Manga Translator%"
 repository: https://github.com/oomol-flows/manga-translator
-releaseNotes: upgrade dependencies to fix progress bug
 description: "%key%"
+releaseNotes: upgrade manga-tools to fix bug
