@@ -1,4 +1,4 @@
-version: 0.1.15
+version: 0.1.16
 icon: ./icon.png
 scripts:
   # Script executed when the container is first loaded
@@ -27,4 +27,4 @@ name: manga-translator
 displayName: "%Manga Translator%"
 repository: https://github.com/oomol-flows/manga-translator
 description: "%key%"
-releaseNotes: upgrade manga-tools to fix bug
+releaseNotes: add layer
