@@ -21,7 +21,7 @@ dependencies:
   oomol-file: 0.0.20
   oomol-preview: 0.1.7
   manga-tools: 0.0.8
-  array: 0.1.2
+  array: 0.1.4
   oomol-transform: 0.0.7
 name: manga-translator
 displayName: "%Manga Translator%"
