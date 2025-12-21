@@ -15,9 +15,9 @@ nodes:
       - handle: llm
         value:
           model: deepseek-chat
-          temperature: 1
-          top_p: 0.8
-          max_tokens: 4096
+          temperature: 0.5
+          top_p: 1
+          max_tokens: 8100
   - task: oomol-file::file_to_binary
     title: "File to binary #1"
     node_id: file_to_binary#1

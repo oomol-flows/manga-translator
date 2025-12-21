@@ -1,21 +1,23 @@
 nodes:
-  - node_id: translate-manga-book#2
+  - node_id: translate-manga-book#1
     title: "Translate manga book #1"
     inputs_from:
       - handle: book_path
+        value: /oomol-driver/oomol-storage/pdfs/manga_副本.pdf
       - handle: translated_path
         value: null
-      - handle: device
-        value: cuda
+      - handle: target_language
+        value: CHS
       - handle: source_language
         value: auto
-      - handle: target_language
+      - handle: device
+        value: cuda
       - handle: llm
         value:
           model: deepseek-chat
-          temperature: 1
-          top_p: 0.8
-          max_tokens: 4096
+          temperature: 0.5
+          top_p: 1
+          max_tokens: 8100
     subflow: self::translate-manga-book
 title: translate manga book
 icon: ":carbon:book:"

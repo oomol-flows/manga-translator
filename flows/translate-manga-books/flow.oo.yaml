@@ -20,8 +20,8 @@ nodes:
       - handle: llm
         value:
           model: deepseek-chat
-          temperature: 0
-          top_p: 0.5
-          max_tokens: 4096
+          temperature: 0.5
+          top_p: 1
+          max_tokens: 8100
     subflow: self::translate-manga-books
 icon: ":carbon:stacked-scrolling-1:"
