@@ -17,8 +17,8 @@ class Inputs(typing.TypedDict):
   device: typing.Literal["cuda", "cpu"]
   llm: LLMModelOptions
 class Outputs(typing.TypedDict):
-  output: bytes
-  ext: typing.Literal[".jpeg", ".png", ".gif", ".bmp", ".tiff", ".webp"]
+  output: typing.NotRequired[bytes]
+  ext: typing.NotRequired[typing.Literal[".jpeg", ".png", ".gif", ".bmp", ".tiff", ".webp"]]
 #endregion
 
 

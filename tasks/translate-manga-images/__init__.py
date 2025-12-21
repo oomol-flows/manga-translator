@@ -18,8 +18,8 @@ class Inputs(typing.TypedDict):
   device: typing.Literal["cuda", "cpu"]
   llm: LLMModelOptions
 class Outputs(typing.TypedDict):
-  output_files: list[str]
-  output_folder: str
+  output_files: typing.NotRequired[list[str]]
+  output_folder: typing.NotRequired[str]
 #endregion
 
 

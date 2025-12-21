@@ -9,8 +9,8 @@ class Inputs(typing.TypedDict):
   translated_folder_path: str | None
   formats: list[typing.Literal[".pdf", ".cbz", ".cbr", ".epub"]]
 class Outputs(typing.TypedDict):
-  items: list[list[dict]]
-  translated_folder_path: list[str]
+  items: typing.NotRequired[list[list[dict]]]
+  translated_folder_path: typing.NotRequired[list[str]]
 #endregion
 
 

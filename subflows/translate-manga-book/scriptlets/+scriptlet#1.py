@@ -5,7 +5,7 @@ import typing
 class Inputs(typing.TypedDict):
   format: typing.Literal["cbz", "cbr", "epub", "pdf"]
 class Outputs(typing.TypedDict):
-  format: typing.Literal["cbz", "epub", "pdf"] | None
+  format: typing.NotRequired[typing.Literal["cbz", "epub", "pdf"] | None]
 #endregion
 
 def main(params: Inputs, context: Context) -> Outputs:
