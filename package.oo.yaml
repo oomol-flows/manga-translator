@@ -1,4 +1,4 @@
-version: 0.2.0
+version: 0.2.1
 icon: ./icon.png
 scripts:
   # Script executed when the container is first loaded
@@ -7,6 +7,10 @@ scripts:
     set -e
     apt-get update && apt-get install libgl1 -y
     apt-get install libglib2.0-0 -y
+
+    # Initialize git submodule for manga-image-translator
+    git submodule update --init --recursive
+
     poetry install --no-root
 
     # 存在 poetry 和 pip 混用，目前没什么办法，以后优化
@@ -17,6 +21,9 @@ scripts:
     else
       pip install paddlepaddle==2.6.2
     fi
+
+    # Install manga-image-translator from submodule
+    pip install -e ./manga
 dependencies:
   oomol-file: 0.0.20
   oomol-preview: 0.1.7
