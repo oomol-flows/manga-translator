@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__oomol__getTaskResult",
+      "mcp__oomol__listRunningTasks",
+      "mcp__oomol__refreshEditors",
+      "mcp__oomol__listBlocks",
+      "mcp__oomol__listBlockHandles",
+      "mcp__oomol__searchPackages",
+      "mcp__oomol__usePackage",
+      "Bash(poetry show:*)",
+      "Bash(git submodule update:*)",
+      "Bash(test:*)",
+      "Bash(pip install:*)",
+      "Bash(python:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
