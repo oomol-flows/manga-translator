@@ -1,6 +1,6 @@
 import os
 from typing import cast, Literal
-from oocana import Context
+from oocana import Context, LLMModelOptions
 from PIL.Image import open as open_image, Image
 from shared.translator import Translator
 from shared.image import parse_format
@@ -8,7 +8,6 @@ from shared.manga_translator import create_config, create_manga_translator
 
 #region generated meta
 import typing
-from oocana import LLMModelOptions
 class Inputs(typing.TypedDict):
   input: str
   target_language: typing.Literal["CHS", "CHT", "CSY", "NLD", "ENG", "FRA", "DEU", "HUN", "ITA", "JPN", "KOR", "PLK", "PTB", "ROM", "RUS", "ESP", "TRK", "UKR", "VIN", "CNR", "SRP", "HRV", "ARA", "THA", "IND"]

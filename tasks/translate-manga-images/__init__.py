@@ -2,14 +2,13 @@ import os
 
 from typing import cast
 from PIL.Image import open as open_image, Image
-from oocana import Context
+from oocana import Context, LLMModelOptions
 from shared.translator import Translator
 from shared.image import parse_format, save_image
 from shared.manga_translator import create_config, create_manga_translator
 
 #region generated meta
 import typing
-from oocana import LLMModelOptions
 class Inputs(typing.TypedDict):
   input_files: list[str]
   output_folder: str | None
