@@ -1,10 +1,10 @@
 from typing import cast, final, Any, Callable
 from typing_extensions import override
 
-from manga_translator import Translator as MangaTranslator
-from manga_translator.config import TranslatorConfig
-from manga_translator.translators import TRANSLATORS
-from manga_translator.translators.common import CommonTranslator
+from shared.manga_translator_core import Translator as MangaTranslator
+from shared.manga_translator_core.config import TranslatorConfig
+from shared.manga_translator_core.translators import TRANSLATORS
+from shared.manga_translator_core.translators.common import CommonTranslator
 
 
 
