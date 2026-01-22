@@ -1,25 +1,9 @@
 {
   "nodes": {
-    "file_to_binary#1": {
-      "rfNode": {
-        "position": {
-          "x": 0,
-          "y": 0
-        }
-      }
-    },
     "translate-manga-page#1": {
       "rfNode": {
         "position": {
           "x": 600,
-          "y": 0
-        }
-      }
-    },
-    "binary_save_as_file#1": {
-      "rfNode": {
-        "position": {
-          "x": 1200,
           "y": 0
         }
       }

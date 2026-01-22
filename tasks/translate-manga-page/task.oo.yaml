@@ -2,7 +2,8 @@ inputs_def:
   - handle: input
     description: The binary content of the image to be translated
     json_schema:
-      contentMediaType: oomol/bin
+      type: string
+      ui:widget: file
   - handle: target_language
     description: translated language
     json_schema:
@@ -152,7 +153,8 @@ outputs_def:
   - handle: output
     description: Translated image binary content
     json_schema:
-      contentMediaType: oomol/bin
+      type: string
+      ui:widget: file
   - handle: ext
     description: Extension indicating the type of translated image
     json_schema:

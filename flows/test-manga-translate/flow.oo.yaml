@@ -3,21 +3,15 @@ description: Simple test flow to verify manga translation functionality
 icon: ":carbon:image:"
 
 nodes:
-  - task: oomol-file::file_to_binary
-    title: "Load test image"
-    node_id: file_to_binary#1
-    inputs_from:
-      - handle: file_path
-        value: /app/workspace/icon.png
-
+  
   - task: self::translate-manga-page
     title: "Translate manga page"
     node_id: translate-manga-page#1
     inputs_from:
       - handle: input
+        value: /oomol-driver/oomol-storage/做梦/3Iguf2hE-paJ7LY-SFqPM.png
         from_node:
-          - node_id: file_to_binary#1
-            output_handle: binary
+          []
       - handle: source_language
         value: auto
       - handle: target_language
@@ -31,26 +25,10 @@ nodes:
           top_p: 1
           max_tokens: 128000
 
-  - task: oomol-file::binary_save_as_file
-    title: "Save translated image"
-    node_id: binary_save_as_file#1
-    inputs_from:
-      - handle: binary
-        from_node:
-          - node_id: translate-manga-page#1
-            output_handle: output
-      - handle: suffix
-        from_node:
-          - node_id: translate-manga-page#1
-            output_handle: ext
-      - handle: file_path
-        value: /oomol-driver/oomol-storage
-
   - task: oomol-preview::image_preview
     title: "Preview result"
     node_id: image_preview#1
     inputs_from:
       - handle: image_path
         from_node:
-          - node_id: binary_save_as_file#1
-            output_handle: file_path
+          []
