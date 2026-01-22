@@ -3,8 +3,8 @@ import torch
 
 from typing import cast, Any
 from pydantic import BaseModel
-from manga_translator.config import RenderConfig, UpscaleConfig, DetectorConfig, ColorizerConfig, InpainterConfig, OcrConfig
-from manga_translator import MangaTranslator, Config as MangaConfig
+from shared.manga_translator_core.config import RenderConfig, UpscaleConfig, DetectorConfig, ColorizerConfig, InpainterConfig, OcrConfig
+from shared.manga_translator_core import MangaTranslator, Config as MangaConfig
 
 from .types import TargetLanguage
 from .translator import Translator, WrappedTranslatorConfig

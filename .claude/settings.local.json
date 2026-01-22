@@ -12,7 +12,16 @@
       "Bash(git submodule update:*)",
       "Bash(test:*)",
       "Bash(pip install:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(tree:*)",
+      "Bash(ls:*)",
+      "mcp__oomol__runFlow",
+      "Bash(ldconfig:*)",
+      "Bash(apt-get update:*)",
+      "Bash(apt-get install:*)",
+      "Bash(find:*)",
+      "Bash(fc-list:*)"
     ],
     "deny": [],
     "ask": []
