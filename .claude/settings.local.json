@@ -20,7 +20,8 @@
       "Bash(ldconfig:*)",
       "Bash(apt-get update:*)",
       "Bash(apt-get install:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(fc-list:*)"
     ],
     "deny": [],
     "ask": []

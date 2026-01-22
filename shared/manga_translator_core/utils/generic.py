@@ -12,6 +12,7 @@ import re
 import einops
 import unicodedata
 import json
+import time
 from shapely import affinity
 from shapely.geometry import Polygon, MultiPoint
 
@@ -196,11 +197,28 @@ def download_url_with_progressbar(url: str, path: str):
         headers['Range'] = 'bytes=%d-' % downloaded_size
         headers['Accept-Encoding'] = 'deflate'
 
-    r = requests.get(url, stream=True, allow_redirects=True, headers=headers)
-    if downloaded_size and r.headers.get('Accept-Ranges') != 'bytes':
-        print('Error: Webserver does not support partial downloads. Restarting from the beginning.')
-        r = requests.get(url, stream=True, allow_redirects=True)
-        downloaded_size = 0
+    # Retry logic for SSL errors
+    max_retries = 3
+    retry_delay = 2
+    last_error = None
+
+    for attempt in range(max_retries):
+        try:
+            r = requests.get(url, stream=True, allow_redirects=True, headers=headers, timeout=30)
+            if downloaded_size and r.headers.get('Accept-Ranges') != 'bytes':
+                print('Error: Webserver does not support partial downloads. Restarting from the beginning.')
+                r = requests.get(url, stream=True, allow_redirects=True, timeout=30)
+                downloaded_size = 0
+            break
+        except (requests.exceptions.SSLError, requests.exceptions.ConnectionError) as e:
+            last_error = e
+            if attempt < max_retries - 1:
+                print(f'SSL/Connection error on attempt {attempt + 1}/{max_retries}. Retrying in {retry_delay}s...')
+                time.sleep(retry_delay)
+                retry_delay *= 2
+            else:
+                raise Exception(f'Failed to download after {max_retries} attempts: {str(e)}') from e
+
     total = int(r.headers.get('content-length', 0))
     chunk_size = 1024
 

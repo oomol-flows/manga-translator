@@ -153,6 +153,7 @@ FALLBACK_FONTS = [
     os.path.join(BASE_PATH, 'fonts/Arial-Unicode-Regular.ttf'),
     os.path.join(BASE_PATH, 'fonts/msyh.ttc'),
     os.path.join(BASE_PATH, 'fonts/msgothic.ttc'),
+    '/usr/share/fonts/SourceHanSans/SourceHanSansSC-Normal.otf',  # System fallback
 ]
 FONT_SELECTION: List[freetype.Face] = []
 font_cache = {}
@@ -161,7 +162,11 @@ def get_cached_font(path: str) -> freetype.Face:
     if not font_cache.get(path):
         # To circumvent a bug with non ascii paths in windows use memory fonts
         # https://github.com/rougier/freetype-py/issues/157#issuecomment-1683713726
-        font_cache[path] = freetype.Face(Path(path).open('rb'))
+        try:
+            font_cache[path] = freetype.Face(Path(path).open('rb'))
+        except (FileNotFoundError, OSError) as e:
+            # Font file doesn't exist, skip it
+            return None
     return font_cache[path]
 
 def set_font(font_path: str):
@@ -170,7 +175,10 @@ def set_font(font_path: str):
         selection = [font_path] + FALLBACK_FONTS
     else:
         selection = FALLBACK_FONTS
-    FONT_SELECTION = [get_cached_font(p) for p in selection]
+    # Filter out None values from fonts that couldn't be loaded
+    FONT_SELECTION = [f for f in (get_cached_font(p) for p in selection) if f is not None]
+    if not FONT_SELECTION:
+        raise RuntimeError("No fonts could be loaded. Please ensure at least one font file is available.")
 
 class namespace:
     pass
