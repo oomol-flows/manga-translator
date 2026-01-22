@@ -147,7 +147,7 @@ inputs_def:
       model: deepseek-chat
       temperature: 0.5
       top_p: 1
-      max_tokens: 8192
+      max_tokens: 8100
 outputs_def:
   - handle: output
     description: Translated image binary content

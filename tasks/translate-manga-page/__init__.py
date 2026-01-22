@@ -56,6 +56,8 @@ async def main(params: Inputs, context: Context) -> Outputs:
     save_image(output_image, output, image_format)
     output_bytes = output.getvalue()
 
+  context.report_progress(100.0)
+
   return {
     "output": output_bytes,
     "ext": cast(Literal[".jpeg", ".png", ".gif", ".bmp", ".tiff", ".webp"], image_ext),

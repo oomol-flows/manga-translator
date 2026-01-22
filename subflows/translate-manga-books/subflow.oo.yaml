@@ -180,9 +180,9 @@ inputs_def:
       ui:widget: llm::model
     value:
       model: deepseek-chat
-      temperature: 0.8
-      top_p: 0.6
-      max_tokens: 8192
+      temperature: 0.5
+      top_p: 1
+      max_tokens: 8100
 outputs_def:
   - handle: translated_folder_path
     description: The translated manga files will be saved in this folde

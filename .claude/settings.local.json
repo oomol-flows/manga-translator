@@ -21,7 +21,12 @@
       "Bash(apt-get update:*)",
       "Bash(apt-get install:*)",
       "Bash(find:*)",
-      "Bash(fc-list:*)"
+      "Bash(fc-list:*)",
+      "Bash",
+      "Read",
+      "Write",
+      "WebFetch",
+      "mcp__oomol"
     ],
     "deny": [],
     "ask": []
