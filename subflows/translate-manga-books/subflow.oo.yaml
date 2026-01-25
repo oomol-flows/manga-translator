@@ -1,19 +1,18 @@
 inputs_def:
   - handle: books_folder_path
-    description: The searched folder path, all manga files inside will be translated
+    description: "%the-searched-folder-path-all-manga-files-inside-will-be-translat%"
     json_schema:
       type: string
       ui:widget: dir
   - handle: translated_folder_path
-    description: The translated manga files will be saved in this folder. If you do
-      not fill in this field, specify a specific folder.
+    description: "%the-translated-manga-files-will-be-saved-in-this-folder-if-you-d%"
     json_schema:
       type: string
       ui:widget: dir
     value:
     nullable: true
   - handle: target_language
-    description: translated language
+    description: "%translated-language4%"
     json_schema:
       enum:
         - CHS
@@ -72,8 +71,7 @@ inputs_def:
   - group: more
     collapsed: true
   - handle: source_language
-    description: The source language of the image, if set to auto, it will be
-      automatically recognized
+    description: "%the-source-language-of-the-image-if-set-to-auto-it-will-be-autom3%"
     json_schema:
       enum:
         - auto
@@ -133,8 +131,7 @@ inputs_def:
     value: auto
     nullable: false
   - handle: device
-    description: Whether to use hardware acceleration (CUDA) to recognize images,
-      otherwise only use the CPU
+    description: "%whether-to-use-hardware-acceleration-cuda-to-recognize-images-ot4%"
     json_schema:
       enum:
         - cuda
@@ -146,8 +143,7 @@ inputs_def:
     value: cuda
     nullable: false
   - handle: formats
-    description: Which formats of manga files to translate (multiple selections),
-      unselected formats will be ignored.
+    description: "%which-formats-of-manga-files-to-translate-multiple-selections-un%"
     json_schema:
       type: array
       uniqueItems: true
@@ -180,12 +176,12 @@ inputs_def:
       ui:widget: llm::model
     value:
       model: deepseek-chat
-      temperature: 0.8
-      top_p: 0.6
-      max_tokens: 8192
+      temperature: 0.5
+      top_p: 1
+      max_tokens: 8100
 outputs_def:
   - handle: translated_folder_path
-    description: The translated manga files will be saved in this folde
+    description: "%the-translated-manga-files-will-be-saved-in-this-folde%"
     json_schema:
       type: array
       items:
@@ -194,7 +190,7 @@ outputs_def:
     nullable: false
 nodes:
   - node_id: +python#1
-    title: "Search manga files"
+    title: "%search-manga-files%"
     icon: ":logos:python:"
     task:
       ui:
@@ -263,7 +259,7 @@ nodes:
         from_flow:
           - input_handle: formats
   - node_id: map#1
-    title: "Map #1"
+    title: "%map-1%"
     inputs_from:
       - handle: array
         from_node:
@@ -418,10 +414,10 @@ nodes:
             from_flow:
               - input_handle: llm
     progress_weight: 100
-title: Translate manga books (batch)
+title: "%translate-manga-books-batch2%"
 outputs_from:
   - handle: translated_folder_path
     from_node:
       - node_id: +python#1
         output_handle: translated_folder_path
-description: Batch translate manga book files in a folder
+description: "%batch-translate-manga-book-files-in-a-folder%"

@@ -1,0 +1,20 @@
+{
+  "nodes": {
+    "translate-manga-page#1": {
+      "rfNode": {
+        "position": {
+          "x": 600,
+          "y": 0
+        }
+      }
+    },
+    "image_preview#1": {
+      "rfNode": {
+        "position": {
+          "x": 1800,
+          "y": 0
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 nodes:
   - task: self::translate-manga-page
-    title: "Translate manga page #1"
+    title: "%translate-manga-page-1%"
     node_id: translate-manga-page#1
     inputs_from:
       - handle: input
@@ -19,12 +19,12 @@ nodes:
           top_p: 1
           max_tokens: 8100
   - task: oomol-file::file_to_binary
-    title: "File to binary #1"
+    title: "%file-to-binary-1%"
     node_id: file_to_binary#1
     inputs_from:
       - handle: file_path
   - task: oomol-preview::image_preview
-    title: "Image preview #1"
+    title: "%image-preview-1%"
     node_id: image_preview#1
     inputs_from:
       - handle: image_path
@@ -32,7 +32,7 @@ nodes:
           - node_id: binary_save_as_file#1
             output_handle: file_path
   - task: oomol-file::binary_save_as_file
-    title: "Binary save as file #1"
+    title: "%binary-save-as-file-1%"
     node_id: binary_save_as_file#1
     inputs_from:
       - handle: binary
@@ -47,4 +47,4 @@ nodes:
       - handle: file_path
         value:
 icon: ":carbon:image:"
-title: translate single manga page
+title: "%translate-single-manga-page%"

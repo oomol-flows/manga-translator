@@ -1,21 +1,20 @@
 inputs_def:
   - handle: input_files
-    description: Image file path array to be translated
+    description: "%image-file-path-array-to-be-translated%"
     json_schema:
       type: array
       items:
         type: string
         ui:widget: file
   - handle: output_folder
-    description: The directory path where the translated manga pages (image files)
-      are saved. If not filled in, a special address will be set.
+    description: "%the-directory-path-where-the-translated-manga-pages-image-files%"
     json_schema:
       type: string
       ui:widget: dir
     value:
     nullable: true
   - handle: target_language
-    description: translated language
+    description: "%translated-language%"
     json_schema:
       enum:
         - CHS
@@ -74,8 +73,7 @@ inputs_def:
   - group: more
     collapsed: true
   - handle: source_language
-    description: The source language of the image, if set to auto, it will be
-      automatically recognized
+    description: "%the-source-language-of-the-image-if-set-to-auto-it-will-be-autom%"
     json_schema:
       enum:
         - auto
@@ -134,8 +132,7 @@ inputs_def:
           - Bahasa Indonesia
     value: auto
   - handle: device
-    description: Whether to use hardware acceleration (CUDA) to recognize images,
-      otherwise only use the CPU
+    description: "%whether-to-use-hardware-acceleration-cuda-to-recognize-images-ot%"
     json_schema:
       enum:
         - cuda
@@ -156,19 +153,19 @@ inputs_def:
       ui:widget: llm::model
     value:
       model: deepseek-chat
-      temperature: 0.8
-      top_p: 0.6
-      max_tokens: 8192
+      temperature: 0.6
+      top_p: 0.8
+      max_tokens: 8100
 outputs_def:
   - handle: output_files
-    description: Array of image file path for each page of the manga after translation
+    description: "%array-of-image-file-path-for-each-page-of-the-manga-after-transl%"
     json_schema:
       type: array
       items:
         type: string
         ui:widget: save
   - handle: output_folder
-    description: The folder path where the translated manga page images are saved
+    description: "%the-folder-path-where-the-translated-manga-page-images-are-saved%"
     json_schema:
       type: string
       ui:widget: dir
@@ -179,5 +176,5 @@ executor:
   options:
     spawn: false
     entry: __init__.py
-title: Translate manga images
-description: Translate a set of images as a manga book
+title: "%translate-manga-images%"
+description: "%translate-a-set-of-images-as-a-manga-book%"

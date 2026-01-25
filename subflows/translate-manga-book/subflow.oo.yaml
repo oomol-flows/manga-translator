@@ -1,6 +1,6 @@
 nodes:
   - task: self::translate-manga-images
-    title: "Manga #1"
+    title: "%manga-1%"
     node_id: manga-invoker#1
     inputs_from:
       - handle: input_files
@@ -35,7 +35,7 @@ nodes:
           - input_handle: llm
     progress_weight: 5
   - node_id: unarchive2images#1
-    title: "Unarchive to images #1"
+    title: "%unarchive-to-images-1%"
     inputs_from:
       - handle: archive_path
         from_flow:
@@ -43,7 +43,7 @@ nodes:
     subflow: manga-tools::unarchive2images
     progress_weight: 5
   - node_id: archive#1
-    title: "Archive images #1"
+    title: "%archive-images-1%"
     inputs_from:
       - handle: images
         value:
@@ -78,7 +78,7 @@ nodes:
     task: manga-tools::archive
     progress_weight: 90
   - node_id: +python#1
-    title: "Filter CBR"
+    title: "%filter-cbr%"
     icon: ":logos:python:"
     task:
       ui:
@@ -120,10 +120,10 @@ nodes:
         from_node:
           - node_id: unarchive2images#1
             output_handle: format
-title: Translate manga book
+title: "%translate-manga-book2%"
 inputs_def:
   - handle: book_path
-    description: the manga book file path to be translated
+    description: "%the-manga-book-file-path-to-be-translated%"
     json_schema:
       type: string
       ui:widget: file
@@ -144,10 +144,7 @@ inputs_def:
               - pdf
     nullable: false
   - handle: translated_path
-    description: The file path where the manga book will be saved after translation.
-      The extension will determine the format of the translated manga book. If
-      not filled in, a special path will be specified, and the extension will be
-      the same as the original book file (but *.cbr will be changed to *.cbz).
+    description: "%the-file-path-where-the-manga-book-will-be-saved-after-translati%"
     json_schema:
       type: string
       ui:widget: save
@@ -166,7 +163,7 @@ inputs_def:
     value:
     nullable: true
   - handle: target_language
-    description: translated language
+    description: "%translated-language3%"
     json_schema:
       enum:
         - CHS
@@ -225,8 +222,7 @@ inputs_def:
   - group: more
     collapsed: true
   - handle: source_language
-    description: The source language of the manga book, if set to auto, it will be
-      automatically recognized
+    description: "%the-source-language-of-the-manga-book-if-set-to-auto-it-will-be%"
     json_schema:
       enum:
         - auto
@@ -286,8 +282,7 @@ inputs_def:
     value: auto
     nullable: false
   - handle: device
-    description: Whether to use hardware acceleration (CUDA) to recognize images,
-      otherwise only use the CPU
+    description: "%whether-to-use-hardware-acceleration-cuda-to-recognize-images-ot3%"
     json_schema:
       enum:
         - cuda
@@ -309,13 +304,13 @@ inputs_def:
       ui:widget: llm::model
     value:
       model: deepseek-chat
-      temperature: 0.8
-      top_p: 0.6
-      max_tokens: 8192
+      temperature: 0.5
+      top_p: 1
+      max_tokens: 8100
     nullable: false
 outputs_def:
   - handle: translated_path
-    description: The file path where the manga book will be saved after translation
+    description: "%the-file-path-where-the-manga-book-will-be-saved-after-translati2%"
     json_schema:
       type: string
       ui:widget: save

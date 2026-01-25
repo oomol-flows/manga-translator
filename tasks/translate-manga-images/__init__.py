@@ -2,7 +2,7 @@ import os
 
 from typing import cast
 from PIL.Image import open as open_image, Image
-from oocana import Context
+from oocana import Context, LLMModelOptions
 from shared.translator import Translator
 from shared.image import parse_format, save_image
 from shared.manga_translator import create_config, create_manga_translator
@@ -56,7 +56,6 @@ async def main(params: Inputs, context: Context) -> Outputs:
   os.makedirs(output_folder, exist_ok=True)
 
   for i, input_file_path in enumerate(input_files):
-    completed_files = i
     origin_ext_name = os.path.splitext(input_file_path)[1]
 
     with open(input_file_path, mode="rb") as input:
@@ -64,12 +63,14 @@ async def main(params: Inputs, context: Context) -> Outputs:
       image_format: str | None = image.format
       if image_format is None:
         print(f"Image {input_file_path} format is not supported")
+        completed_files += 1
         continue
 
       image_format, ext_name = parse_format(image_format, origin_ext_name)
       ctx = await manga.translate(image, config)
       output_image = cast(Image | None, ctx.result)
       if output_image is None:
+        completed_files += 1
         continue
 
       output_file_name = f"{i + 1}{ext_name}"
@@ -78,6 +79,8 @@ async def main(params: Inputs, context: Context) -> Outputs:
 
       with open(output_file, "wb") as output:
         save_image(output_image, output, image_format)
+
+      completed_files += 1
 
   context.report_progress(100.0)
 
