@@ -1,11 +1,11 @@
-title: Test Manga Translation
-description: Simple test flow to verify manga translation functionality
+title: "%test-manga-translation%"
+description: "%simple-test-flow-to-verify-manga-translation-functionality%"
 icon: ":carbon:image:"
 
 nodes:
-  
+
   - task: self::translate-manga-page
-    title: "Translate manga page"
+    title: "%translate-manga-page%"
     node_id: translate-manga-page#1
     inputs_from:
       - handle: input
@@ -26,7 +26,7 @@ nodes:
           max_tokens: 128000
 
   - task: oomol-preview::image_preview
-    title: "Preview result"
+    title: "%preview-result%"
     node_id: image_preview#1
     inputs_from:
       - handle: image_path

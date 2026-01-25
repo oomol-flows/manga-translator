@@ -1,6 +1,6 @@
 nodes:
   - node_id: translate-manga-book#1
-    title: "Translate manga book #1"
+    title: "%translate-manga-book-12%"
     inputs_from:
       - handle: book_path
         from_node:
@@ -37,7 +37,7 @@ nodes:
           - input_handle: llm
     subflow: self::translate-manga-book
   - node_id: object-extractor#1
-    title: "Extract object #1"
+    title: "%extract-object-1%"
     inputs_from:
       - handle: object
         from_flow:

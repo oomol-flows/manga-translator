@@ -1,6 +1,6 @@
 nodes:
   - node_id: translate-manga-book#1
-    title: "Translate manga book #1"
+    title: "%translate-manga-book-1%"
     inputs_from:
       - handle: book_path
         value: /oomol-driver/oomol-storage/pdfs/manga_副本.pdf
@@ -19,5 +19,5 @@ nodes:
           top_p: 1
           max_tokens: 8100
     subflow: self::translate-manga-book
-title: translate manga book
+title: "%translate-manga-book%"
 icon: ":carbon:book:"

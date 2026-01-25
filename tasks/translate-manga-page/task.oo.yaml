@@ -1,11 +1,11 @@
 inputs_def:
   - handle: input
-    description: The binary content of the image to be translated
+    description: "%the-binary-content-of-the-image-to-be-translated%"
     json_schema:
       type: string
       ui:widget: file
   - handle: target_language
-    description: translated language
+    description: "%translated-language2%"
     json_schema:
       enum:
         - CHS
@@ -64,8 +64,7 @@ inputs_def:
   - group: more
     collapsed: true
   - handle: source_language
-    description: The source language of the image, if set to auto, it will be
-      automatically recognized
+    description: "%the-source-language-of-the-image-if-set-to-auto-it-will-be-autom2%"
     json_schema:
       enum:
         - auto
@@ -124,8 +123,7 @@ inputs_def:
           - Bahasa Indonesia
     value: auto
   - handle: device
-    description: Whether to use hardware acceleration (CUDA) to recognize images,
-      otherwise only use the CPU
+    description: "%whether-to-use-hardware-acceleration-cuda-to-recognize-images-ot2%"
     json_schema:
       enum:
         - cuda
@@ -151,12 +149,12 @@ inputs_def:
       max_tokens: 8100
 outputs_def:
   - handle: output
-    description: Translated image binary content
+    description: "%translated-image-binary-content%"
     json_schema:
       type: string
       ui:widget: file
   - handle: ext
-    description: Extension indicating the type of translated image
+    description: "%extension-indicating-the-type-of-translated-image%"
     json_schema:
       enum:
         - .jpeg
@@ -180,5 +178,5 @@ executor:
   options:
     spawn: false
     entry: __init__.py
-title: Translate manga page
-description: translate a manga page image
+title: "%translate-manga-page2%"
+description: "%translate-a-manga-page-image%"

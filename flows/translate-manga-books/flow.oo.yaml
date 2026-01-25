@@ -1,7 +1,7 @@
-title: translate manga books (batch)
+title: "%translate-manga-books-batch%"
 nodes:
   - node_id: translate-manga-books#1
-    title: "Translate manga books (batch) #1"
+    title: "%translate-manga-books-batch-1%"
     inputs_from:
       - handle: books_folder_path
       - handle: translated_folder_path

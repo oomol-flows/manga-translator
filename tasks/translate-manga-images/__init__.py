@@ -9,6 +9,7 @@ from shared.manga_translator import create_config, create_manga_translator
 
 #region generated meta
 import typing
+from oocana import LLMModelOptions
 class Inputs(typing.TypedDict):
   input_files: list[str]
   output_folder: str | None

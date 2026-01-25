@@ -8,6 +8,7 @@ from shared.manga_translator import create_config, create_manga_translator
 
 #region generated meta
 import typing
+from oocana import LLMModelOptions
 class Inputs(typing.TypedDict):
   input: str
   target_language: typing.Literal["CHS", "CHT", "CSY", "NLD", "ENG", "FRA", "DEU", "HUN", "ITA", "JPN", "KOR", "PLK", "PTB", "ROM", "RUS", "ESP", "TRK", "UKR", "VIN", "CNR", "SRP", "HRV", "ARA", "THA", "IND"]
