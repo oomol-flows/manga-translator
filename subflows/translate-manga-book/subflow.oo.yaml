@@ -151,12 +151,12 @@ inputs_def:
       ui:options:
         excludeAll: true
         filters:
-          - name: CBZ
-            extensions:
-              - cbz
           - name: EPUB
             extensions:
               - epub
+          - name: CBZ
+            extensions:
+              - cbz
           - name: PDF
             extensions:
               - pdf
