@@ -218,6 +218,7 @@ inputs_def:
           - العربية
           - ไทย
           - Bahasa Indonesia
+    value: CHS
     nullable: false
   - group: more
     collapsed: true
@@ -304,8 +305,8 @@ inputs_def:
       ui:widget: llm::model
     value:
       model: deepseek-chat
-      temperature: 0.5
-      top_p: 1
+      temperature: 0.6
+      top_p: 0.8
       max_tokens: 8100
     nullable: false
 outputs_def:
@@ -313,22 +314,21 @@ outputs_def:
     description: "%the-file-path-where-the-manga-book-will-be-saved-after-translati2%"
     json_schema:
       type: string
-      ui:widget: save
+      ui:widget: file
       ui:options:
-        excludeAll: true
         filters:
-          - name: CBZ
-            extensions:
+          - extensions:
               - cbz
-          - name: CBR
-            extensions:
+            name: CBZ
+          - extensions:
               - cbr
-          - name: EPUB
-            extensions:
+            name: CBR
+          - extensions:
               - epub
-          - name: PDF
-            extensions:
+            name: EPUB
+          - extensions:
               - pdf
+            name: PDF
     nullable: false
 outputs_from:
   - handle: translated_path
