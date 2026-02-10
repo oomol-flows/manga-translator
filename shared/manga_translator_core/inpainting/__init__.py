@@ -1,45 +1,44 @@
-from typing import Optional
+"""Inpainting module — routes inference to remote API server.
+
+NoneInpainter and OriginalInpainter stay local (no model needed).
+All other inpainters are handled by the API's SD inpainting endpoint.
+"""
 
 import numpy as np
+from typing import Optional
 
-from .common import CommonInpainter, OfflineInpainter
-from .inpainting_aot import AotInpainter
-from .inpainting_lama_mpe import LamaMPEInpainter, LamaLargeInpainter
-from .inpainting_sd import StableDiffusionInpainter
 from .none import NoneInpainter
 from .original import OriginalInpainter
 from ..config import Inpainter, InpainterConfig
+from ..api_client import inpaint as api_inpaint
 
-INPAINTERS = {
-    Inpainter.default: AotInpainter,
-    Inpainter.lama_large: LamaLargeInpainter,
-    Inpainter.lama_mpe: LamaMPEInpainter,
-    Inpainter.sd: StableDiffusionInpainter,
-    Inpainter.none: NoneInpainter,
-    Inpainter.original: OriginalInpainter,
-}
-inpainter_cache = {}
 
-def get_inpainter(key: Inpainter, *args, **kwargs) -> CommonInpainter:
-    if key not in INPAINTERS:
-        raise ValueError(f'Could not find inpainter for: "{key}". Choose from the following: %s' % ','.join(INPAINTERS))
-    if not inpainter_cache.get(key):
-        inpainter = INPAINTERS[key]
-        inpainter_cache[key] = inpainter(*args, **kwargs)
-    return inpainter_cache[key]
+async def prepare(inpainter_key: Inpainter, device: str = "cpu"):
+    pass  # models live on the API server
 
-async def prepare(inpainter_key: Inpainter, device: str = 'cpu'):
-    inpainter = get_inpainter(inpainter_key)
-    if isinstance(inpainter, OfflineInpainter):
-        await inpainter.download()
-        await inpainter.load(device)
 
-async def dispatch(inpainter_key: Inpainter, image: np.ndarray, mask: np.ndarray, config: Optional[InpainterConfig], inpainting_size: int = 1024, device: str = 'cpu', verbose: bool = False) -> np.ndarray:
-    inpainter = get_inpainter(inpainter_key)
-    if isinstance(inpainter, OfflineInpainter):
-        await inpainter.load(device)
+async def dispatch(
+    inpainter_key: Inpainter,
+    image: np.ndarray,
+    mask: np.ndarray,
+    config: Optional[InpainterConfig] = None,
+    inpainting_size: int = 1024,
+    device: str = "cpu",
+    verbose: bool = False,
+) -> np.ndarray:
     config = config or InpainterConfig()
-    return await inpainter.inpaint(image, mask, config, inpainting_size, verbose)
+
+    if inpainter_key == Inpainter.none:
+        inpainter = NoneInpainter()
+        return await inpainter.inpaint(image, mask, config, inpainting_size, verbose)
+
+    if inpainter_key == Inpainter.original:
+        inpainter = OriginalInpainter()
+        return await inpainter.inpaint(image, mask, config, inpainting_size, verbose)
+
+    # All model-based inpainters → API
+    return await api_inpaint(image, mask, inpainting_size)
+
 
 async def unload(inpainter_key: Inpainter):
-    inpainter_cache.pop(inpainter_key, None)
+    pass  # models live on the API server

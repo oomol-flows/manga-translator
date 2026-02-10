@@ -1,4 +1,11 @@
-from typing import Optional
+"""Translators module — offline translators route to remote API server.
+
+Online translators (deepseek, chatgpt, etc.) continue to work as before.
+Offline translators supported by our API (nllb, nllb_big, mbart50) are
+routed to the remote API. Other offline translators fall back to local.
+"""
+
+from typing import Optional, List
 
 import py3langid as langid
 
@@ -24,6 +31,14 @@ from .groq import GroqTranslator
 from .custom_openai import CustomOpenAiTranslator
 from ..config import Translator, TranslatorConfig, TranslatorChain
 from ..utils import Context
+from ..api_client import translate as api_translate
+
+# Offline translators that our API supports
+API_TRANSLATOR_MAP = {
+    Translator.nllb: "nllb",
+    Translator.nllb_big: "nllb_big",
+    Translator.mbart50: "mbart50",
+}
 
 OFFLINE_TRANSLATORS = {
     Translator.offline: SelectiveOfflineTranslator,
@@ -51,11 +66,12 @@ TRANSLATORS = {
     Translator.original: OriginalTranslator,
     Translator.sakura: SakuraTranslator,
     Translator.deepseek: DeepseekTranslator,
-    Translator.groq:GroqTranslator,
+    Translator.groq: GroqTranslator,
     Translator.custom_openai: CustomOpenAiTranslator,
     **OFFLINE_TRANSLATORS,
 }
 translator_cache = {}
+
 
 def get_translator(key: Translator, *args, **kwargs) -> CommonTranslator:
     if key not in TRANSLATORS:
@@ -65,50 +81,65 @@ def get_translator(key: Translator, *args, **kwargs) -> CommonTranslator:
         translator_cache[key] = translator(*args, **kwargs)
     return translator_cache[key]
 
+
 prepare_selective_translator(get_translator)
+
 
 async def prepare(chain: TranslatorChain):
     for key, tgt_lang in chain.chain:
+        if key in API_TRANSLATOR_MAP:
+            continue  # handled by remote API
         translator = get_translator(key)
         translator.supports_languages('auto', tgt_lang, fatal=True)
         if isinstance(translator, OfflineTranslator):
             await translator.download()
 
-# TODO: Optionally take in strings instead of TranslatorChain for simplicity
-async def dispatch(chain: TranslatorChain, queries: List[str], translator_config: Optional[TranslatorConfig] = None, use_mtpe: bool = False, args:Optional[Context] = None, device: str = 'cpu') -> List[str]:
+
+async def _translate_step(key: Translator, src_lang: str, tgt_lang: str,
+                          queries: List[str], translator_config, use_mtpe: bool,
+                          device: str) -> List[str]:
+    """Translate one step: API for supported offline translators, local otherwise."""
+    if key in API_TRANSLATOR_MAP:
+        return await api_translate(queries, src_lang, tgt_lang, API_TRANSLATOR_MAP[key])
+
+    translator = get_translator(key)
+    if isinstance(translator, OfflineTranslator):
+        await translator.load(src_lang, tgt_lang, device)
+    if translator_config:
+        translator.parse_args(translator_config)
+    return await translator.translate(src_lang, tgt_lang, queries, use_mtpe)
+
+
+async def dispatch(chain: TranslatorChain, queries: List[str],
+                   translator_config: Optional[TranslatorConfig] = None,
+                   use_mtpe: bool = False, args: Optional[Context] = None,
+                   device: str = 'cpu') -> List[str]:
     if not queries:
         return queries
 
     if chain.target_lang is not None:
-        text_lang = ISO_639_1_TO_VALID_LANGUAGES.get(langid.classify('\n'.join(queries))[0])
-        translator = None
-        flag=0
-        for key, lang in chain.chain:           
-            #if text_lang == lang:
-                #translator = get_translator(key)
-            #if translator is None:
-            translator = get_translator(chain.translators[flag])
-            if isinstance(translator, OfflineTranslator):
-                await translator.load('auto', chain.langs[flag], device)
-                pass
-            if translator_config:
-                translator.parse_args(translator_config)
-            queries = await translator.translate('auto', chain.langs[flag], queries, use_mtpe)
-            await translator.unload(device)
-            flag+=1
+        flag = 0
+        for key, lang in chain.chain:
+            translator_key = chain.translators[flag]
+            tgt_lang = chain.langs[flag]
+            queries = await _translate_step(
+                translator_key, 'auto', tgt_lang, queries,
+                translator_config, use_mtpe, device,
+            )
+            flag += 1
         return queries
+
     if args is not None:
         args['translations'] = {}
     for key, tgt_lang in chain.chain:
-        translator = get_translator(key)
-        if isinstance(translator, OfflineTranslator):
-            await translator.load('auto', tgt_lang, device)
-        if translator_config:
-            translator.parse_args(translator_config)
-        queries = await translator.translate('auto', tgt_lang, queries, use_mtpe)
+        queries = await _translate_step(
+            key, 'auto', tgt_lang, queries,
+            translator_config, use_mtpe, device,
+        )
         if args is not None:
             args['translations'][tgt_lang] = queries
     return queries
+
 
 LANGDETECT_MAP = {
     'zh-cn': 'CHS',
@@ -136,6 +167,7 @@ LANGDETECT_MAP = {
     'id': 'IND',
     'tl': 'FIL'
 }
+
 
 async def unload(key: Translator):
     translator_cache.pop(key, None)
