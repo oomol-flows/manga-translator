@@ -67,6 +67,10 @@ async def detect(
     text_threshold: float = 0.5,
     box_threshold: float = 0.7,
     unclip_ratio: float = 2.3,
+    det_rotate: bool = False,
+    det_auto_rotate: bool = False,
+    det_invert: bool = False,
+    det_gamma_correct: bool = False,
 ) -> Tuple[list, np.ndarray, np.ndarray]:
     """Call /api/detect. Returns (List[Quadrilateral], raw_mask, mask)."""
     from .utils import Quadrilateral
@@ -80,6 +84,10 @@ async def detect(
             "text_threshold": str(text_threshold),
             "box_threshold": str(box_threshold),
             "unclip_ratio": str(unclip_ratio),
+            "det_rotate": str(det_rotate).lower(),
+            "det_auto_rotate": str(det_auto_rotate).lower(),
+            "det_invert": str(det_invert).lower(),
+            "det_gamma_correct": str(det_gamma_correct).lower(),
         },
     )
     resp.raise_for_status()
@@ -101,6 +109,7 @@ async def detect(
 async def ocr(
     image: np.ndarray,
     textlines_json: List[dict],
+    ocr_min_prob: float | None = None,
 ) -> list:
     """Call /api/ocr. Returns List[Quadrilateral] with text and colors."""
     from .utils import Quadrilateral
@@ -109,7 +118,10 @@ async def ocr(
     resp = await client.post(
         "/api/ocr",
         files={"image": ("image.png", ndarray_to_png_bytes(image), "image/png")},
-        data={"textlines": json.dumps(textlines_json)},
+        data={
+            "textlines": json.dumps(textlines_json),
+            **({"ocr_min_prob": str(ocr_min_prob)} if ocr_min_prob is not None else {}),
+        },
     )
     resp.raise_for_status()
     result = resp.json()

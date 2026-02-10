@@ -26,7 +26,11 @@ async def dispatch(
         for r in regions
     ]
 
-    return await api_ocr(image, textlines_json)
+    ocr_min_prob = None
+    if config is not None:
+        ocr_min_prob = getattr(config, "ocr_min_prob", None)
+
+    return await api_ocr(image, textlines_json, ocr_min_prob=ocr_min_prob)
 
 
 async def unload(ocr_key: Ocr):
