@@ -1,0 +1,116 @@
+inputs_def:
+  - handle: file_path
+    description: "%extract-images-file-path%"
+    json_schema:
+      type: string
+      ui:widget: file
+      ui:options:
+        excludeAll: false
+        filters:
+          - name: CBZ
+            extensions:
+              - cbz
+          - name: CBR
+            extensions:
+              - cbr
+          - name: EPUB
+            extensions:
+              - epub
+          - name: PDF
+            extensions:
+              - pdf
+          - name: ZIP
+            extensions:
+              - zip
+    nullable: false
+
+outputs_def:
+  - handle: images
+    description: "%extract-images-images%"
+    json_schema:
+      type: array
+      items:
+        type: string
+        ui:widget: file
+        ui:options:
+          excludeAll: false
+          filters:
+            - name: JPEG / JPG
+              extensions:
+                - jpg
+                - jpeg
+                - jpe
+                - jif
+                - jfif
+                - jfi
+            - name: PNG
+              extensions:
+                - png
+            - name: GIF
+              extensions:
+                - gif
+            - name: WebP
+              extensions:
+                - webp
+            - name: BMP
+              extensions:
+                - bmp
+            - name: TIFF
+              extensions:
+                - tiff
+                - tif
+            - name: AVIF
+              extensions:
+                - avif
+    nullable: false
+
+  - handle: format
+    description: "%extract-images-format%"
+    json_schema:
+      enum:
+        - cbz
+        - cbr
+        - epub
+        - pdf
+        - zip
+      ui:options:
+        labels:
+          - CBZ
+          - CBR
+          - EPUB
+          - PDF
+          - ZIP
+    nullable: false
+
+  - handle: title
+    description: "%extract-images-title%"
+    json_schema:
+      type: string
+    nullable: true
+
+  - handle: author
+    description: "%extract-images-author%"
+    json_schema:
+      type: string
+    nullable: true
+
+  - handle: reading_order
+    description: "%extract-images-reading-order%"
+    json_schema:
+      enum:
+        - to-right
+        - to-left
+      ui:options:
+        labels:
+          - from left to right
+          - from right to left
+    nullable: false
+
+executor:
+  name: python
+  options:
+    entry: __init__.py
+
+title: "%extract-images-title%"
+icon: ":carbon:folder:"
+description: "%extract-images-description%"

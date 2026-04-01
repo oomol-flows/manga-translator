@@ -52,5 +52,12 @@
   "the-translated-manga-files-will-be-saved-in-this-folde": "翻译后的漫画文件将保存在此文件夹中。",
   "search-manga-files": "搜索 漫画 文件",
   "translate-manga-book-12": "翻译漫画书第 1 册",
-  "extract-object-1": "提取对象 #1"
+  "extract-object-1": "提取对象 #1",
+  "extract-images-title": "提取图片",
+  "extract-images-description": "从漫画书档案（CBZ、CBR、EPUB、PDF、ZIP）中提取图片",
+  "extract-images-file-path": "漫画书文件路径",
+  "extract-images-images": "提取的图片文件路径",
+  "extract-images-format": "档案格式",
+  "extract-images-author": "作者",
+  "extract-images-reading-order": "阅读顺序"
 }

@@ -15,6 +15,21 @@
           "y": 0
         }
       }
+    },
+    "translate-manga-book#1": {
+      "rfNode": {
+        "position": {
+          "x": 1507.5261169406897,
+          "y": 732.8656899469034
+        }
+      },
+      "sections": {
+        "inputs": {
+          "groupCollapsed": {
+            "more": true
+          }
+        }
+      }
     }
   }
 }

@@ -71,7 +71,8 @@ dependencies = [
     "websockets (==15.0.1)",
     "protobuf (==6.30.1)",
     "pydensecrf @ https://github.com/lucasb-eyer/pydensecrf/archive/2723c7fa4f2ead16ae1ce3d8afe977724bb8f87f.zip",
-    "ctranslate2 (==3.24.0)" # last version compatible with CUDA 11
+    "ctranslate2 (==3.24.0)", # last version compatible with CUDA 11
+    "pdf2image (>=1.17.0,<2.0.0)"
 ]
 
 

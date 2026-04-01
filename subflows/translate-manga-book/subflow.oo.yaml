@@ -37,10 +37,10 @@ nodes:
   - node_id: unarchive2images#1
     title: "%unarchive-to-images-1%"
     inputs_from:
-      - handle: archive_path
+      - handle: file_path
         from_flow:
           - input_handle: book_path
-    subflow: manga-tools::unarchive2images
+    task: self::extract-images
     progress_weight: 5
   - node_id: archive#1
     title: "%archive-images-1%"
@@ -91,12 +91,14 @@ nodes:
               - cbr
               - epub
               - pdf
+              - zip
             ui:options:
               labels:
                 - CBZ
                 - CBR
                 - EPUB
                 - PDF
+                - ZIP
           nullable: false
       outputs_def:
         - handle: format
@@ -142,6 +144,9 @@ inputs_def:
           - name: PDF
             extensions:
               - pdf
+          - name: ZIP
+            extensions:
+              - zip
     nullable: false
   - handle: translated_path
     description: "%the-file-path-where-the-manga-book-will-be-saved-after-translati%"

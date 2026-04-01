@@ -32,3 +32,23 @@ nodes:
       - handle: image_path
         from_node:
           []
+  - node_id: translate-manga-book#1
+    title: "翻译漫画书 #1"
+    inputs_from:
+      - handle: book_path
+        value: /oomol-driver/oomol-storage/new_book/漫画.zip
+      - handle: translated_path
+        value: null
+      - handle: target_language
+        value: CHS
+      - handle: source_language
+        value: auto
+      - handle: device
+        value: cuda
+      - handle: llm
+        value:
+          model: deepseek-chat
+          temperature: 0.6
+          top_p: 0.8
+          max_tokens: 8100
+    subflow: self::translate-manga-book
