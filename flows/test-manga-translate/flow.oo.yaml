@@ -9,7 +9,7 @@ nodes:
     node_id: translate-manga-page#1
     inputs_from:
       - handle: input
-        value: /oomol-driver/oomol-storage/做梦/3Iguf2hE-paJ7LY-SFqPM.png
+        value: /oomol-driver/oomol-storage/pdf/4_媊晝偵書偐傟傞嵢_桼堖曇_憤廤曇偍傑偗.pdf
         from_node:
           []
       - handle: source_language

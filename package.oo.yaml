@@ -1,12 +1,14 @@
-version: 0.2.7
+version: 0.2.9
 icon: ./icon.png
 scripts:
   # Script executed when the container is first loaded
   # eg: bootstrap: pip install pandas
   bootstrap: |
     set -e
-    apt-get update && apt-get install libgl1 -y
-    apt-get install libglib2.0-0 -y
+    apt-get update && apt-get install -y \
+      build-essential \
+      libgl1 \
+      libglib2.0-0
 
     poetry install --no-root
 
