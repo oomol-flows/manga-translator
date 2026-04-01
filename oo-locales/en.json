@@ -52,5 +52,12 @@
   "the-translated-manga-files-will-be-saved-in-this-folde": "The translated manga files will be saved in this folde",
   "search-manga-files": "Search manga files",
   "map-1": "Map #1",
-  "extract-object-1": "Extract object #1"
+  "extract-object-1": "Extract object #1",
+  "extract-images-title": "Extract Images",
+  "extract-images-description": "Extract images from comic book archives (CBZ, CBR, EPUB, PDF, ZIP)",
+  "extract-images-file-path": "Comic book file path",
+  "extract-images-images": "Extracted image file paths",
+  "extract-images-format": "Archive format",
+  "extract-images-author": "Author",
+  "extract-images-reading-order": "Reading order"
 }
