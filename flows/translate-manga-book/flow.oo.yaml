@@ -3,7 +3,6 @@ nodes:
     title: "%translate-manga-book-1%"
     inputs_from:
       - handle: book_path
-        value: /oomol-driver/oomol-storage/pdfs/manga_副本.pdf
       - handle: translated_path
         value: null
       - handle: target_language

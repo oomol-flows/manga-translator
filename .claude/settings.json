@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "defaultMode": "bypassPermissions",
+    "allow": [
+      "Bash",
+      "Read",
+      "Write",
+      "WebFetch",
+      "mcp__oomol"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
